@@ -86,7 +86,7 @@ void CTestScene3::Init()
 	//go->AddImg("bg", "pic\\b.bmp");
 	//go->AddBmp("bg", "bg", 0, 0, 2017, 751, 0);
 
-	go->AddImg("1", "assets/1.png");
+	go->AddImg("1", "assets/textures/1.png");
 	go->AddPic("c", "1", 0, 0, 1920, 1080);
 
 }

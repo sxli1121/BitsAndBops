@@ -1,6 +1,6 @@
 #pragma once
-#include "Vector3D.h"
-#include "matrix4X4.h"
+#include "Math/Vector3D.h"
+#include "Math/matrix4X4.h"
 #include <vector>
 
 struct Model
