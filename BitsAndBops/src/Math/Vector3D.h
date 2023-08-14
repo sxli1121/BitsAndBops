@@ -10,11 +10,10 @@ public:
 	static Vector3D Right();
 	static Vector3D Up();
 	static Vector3D Front();
-
 	Vector3D(float X=0, float Y=0, float Z=0);
-	//===计算===
-	float Length()const;//长度
-	Vector3D Normaliz()const;//单位化
+
+	float Length()const;
+	Vector3D Normaliz()const;
 	//正负
 	Vector3D operator-()const;
 	Vector3D operator+()const;

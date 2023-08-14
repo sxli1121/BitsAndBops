@@ -64,7 +64,6 @@ Vector3D& Vector3D::operator+=(const Vector3D& b)
     y += b.y;
     z += b.z;
     return *this;
-    // TODO: 在此处插入 return 语句
 }
 
 Vector3D& Vector3D::operator-=(const Vector3D& b)
@@ -73,7 +72,6 @@ Vector3D& Vector3D::operator-=(const Vector3D& b)
     y -= b.y;
     z -= b.z;
     return *this;
-    // TODO: 在此处插入 return 语句
 }
 
 float Vector3D::Dot(const Vector3D* b) const
@@ -121,6 +119,5 @@ float Vector3D::GetAngle(const Vector3D* b)const
     float Len2 = b->Length();
 
     float temp = x * b->x + y * b->y + z * b->z;
-
     return (acos(temp / (Len1 * Len2))) * 180.0f / 3.14f;;
 }

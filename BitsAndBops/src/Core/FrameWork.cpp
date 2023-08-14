@@ -1,14 +1,16 @@
-#include "XKJ.h"
-#include "GameOutput.h"
-#include "GameInput.h"
-#include "S_Manager.h"
-#include "Scene.h"
+#include "FrameWork.h"
+#include "OutputAndInput/GameOutput.h"
+#include "OutputAndInput/GameInput.h"
+#include "Core/Scene_Manager.h"
+#include "Core/Scene.h"
 
 #include <time.h>
 
+//焦点
 static BOOL g_Act;
-CKJ* CKJ::p = nullptr;
+CFrameWork* CFrameWork::frame_work = nullptr;
 
+//消息拦截
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg,
 	WPARAM wParam, LPARAM lParam)
 {
@@ -28,65 +30,65 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg,
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
-int CKJ::GetCW()
+int CFrameWork::GetClientW()
 {
-	return m_cw;
-}
-int CKJ::GetCH()
-{
-	return m_ch;
+	return m_ClientW;
 }
 
-bool CKJ::AddScene(const char* id, CScene* p)
+int CFrameWork::GetClientH()
 {
-	if(m_sm == nullptr)
+	return m_ClientH;
+}
+
+bool CFrameWork::AddScene(const char* id, CScene* p)
+{
+	if(m_SceneManage == nullptr)
 		return false;
-
-	return m_sm->AddScene(id, p);
+	return m_SceneManage->AddScene(id, p);
 }
 
-void CKJ::EraseScene(const char* id)
+void CFrameWork::EraseScene(const char* id)
 {
-	if (m_sm == nullptr)
+	if (m_SceneManage == nullptr)
 		return;
-
-	return m_sm->EraseScene(id);
+	return m_SceneManage->EraseScene(id);
 }
 
-void CKJ::SetStartScene(const char* id)
+void CFrameWork::SetStartScene(const char* id)
 {
-	m_curS = m_sm->GetScene(id);
+	m_CurScene = m_SceneManage->GetScene(id);
 }
 
-void CKJ::SetNextScene(const char* id)
+void CFrameWork::SetNextScene(const char* id)
 {
-	m_nextS = m_sm->GetScene(id);
+	m_NextScene = m_SceneManage->GetScene(id);
 }
 
-CKJ::CKJ()
+CFrameWork::CFrameWork()
 {
 	m_hWnd = 0;
-	m_sm = nullptr;
+	m_SceneManage = nullptr;
 }
 
-CKJ::CKJ(const CKJ& that)
+CFrameWork::CFrameWork(const CFrameWork& that)
 {
+
 }
 
-CKJ* CKJ::GetKJ()
+CFrameWork* CFrameWork::GetFrameWork()
 {
-	if (p == nullptr)
-		p = new CKJ;
-	return p;
+	if (frame_work == nullptr)
+		frame_work = new CFrameWork;
+	return frame_work;
 }
 
-void CKJ::Init(HINSTANCE hInstance,
+void CFrameWork::Init(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	m_cw = 1000;
-	m_ch = 800;
+	m_ClientW = 1000;
+	m_ClientH = 800;
 	g_Act = TRUE;
 	//1) 填充窗口结构体
 	WNDCLASS wc;
@@ -103,17 +105,16 @@ void CKJ::Init(HINSTANCE hInstance,
 
 	//2）注册窗口（该窗口结构体必须填充好数据）
 	RegisterClass(&wc);
-
 	int sw = GetSystemMetrics(SM_CXSCREEN);
 	int sh = GetSystemMetrics(SM_CYSCREEN);
 
 	RECT rect
 		=
 	{
-		(sw - m_cw) / 2,
-		(sh - m_ch) / 2,
-		m_cw + (sw - m_cw) / 2,
-		m_ch + (sh - m_ch) / 2
+		(sw - m_ClientW) / 2,
+		(sh - m_ClientH) / 2,
+		m_ClientW + (sw - m_ClientW) / 2,
+		m_ClientH + (sh - m_ClientH) / 2
 	};
 
 	AdjustWindowRect(&rect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, FALSE);
@@ -130,22 +131,23 @@ void CKJ::Init(HINSTANCE hInstance,
 	//5）更新窗口（窗口句柄）
 	UpdateWindow(m_hWnd);
 
-	CGO::GetGO()->Init();
-	CGameInput::GetGI()->SetHWND(m_hWnd);
-	m_curS = nullptr;
-	m_nextS = nullptr;
+	CGameOutput::GetGameOutput()->Init();
+	CGameInput::GetGameInput()->SetHWND(m_hWnd);
 
-	m_sm = new CSM;
+	m_CurScene = nullptr;
+	m_NextScene = nullptr;
+	m_SceneManage = new CSceneManage;
 }
 
-void CKJ::Run()
+void CFrameWork::Run()
 {
-	//srand((int)time(0));
+	srand((int)time(0));
 	rand();
-	if (m_curS != nullptr)
-		m_curS->Init();
-	CGO* go = CGO::GetGO();
-	CGameInput* gi = CGameInput::GetGI();
+
+	if (m_CurScene != nullptr)
+		m_CurScene->Init();
+	CGameOutput* go = CGameOutput::GetGameOutput();
+	CGameInput* gi = CGameInput::GetGameInput();
 	//6）消息循环
 	MSG msg = {};
 	while (msg.message != WM_QUIT)
@@ -158,21 +160,19 @@ void CKJ::Run()
 		}
 		else if (g_Act)
 		{
-			//核心代码
+			//输入输出初始化-当前场景运行
 			gi->Update();
 			go->Begin();
-
-			if (m_curS != nullptr)
-				m_curS->Run();
-			
+			if (m_CurScene != nullptr)
+				m_CurScene->Run();
 			go->End();
-
-			if (m_nextS)
+			//场景的切换
+			if (m_NextScene)
 			{
-				m_curS->End();
-				m_curS = m_nextS;
-				m_nextS = nullptr;
-				m_curS->Init();
+				m_CurScene->End();
+				m_CurScene = m_NextScene;
+				m_NextScene = nullptr;
+				m_CurScene->Init();
 			}
 		}
 		else
@@ -183,11 +183,12 @@ void CKJ::Run()
 	}
 }
 
-void CKJ::End()
+void CFrameWork::End()
 {
+
 }
 
-HWND CKJ::GetHWND()
+HWND CFrameWork::GetHWND()
 {
 	return m_hWnd;
 }

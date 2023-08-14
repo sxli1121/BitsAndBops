@@ -10,7 +10,7 @@
 //void Bullet::Run()
 //{
 //	//»æÖÆ
-//	CGO* go = CGO::GetGO();
+//	CGameOutput* go = CGameOutput::GetGameOutput();
 //	CMatrix33 tm, M;
 //	m_pos = m_pos + m_direction;
 //	tm.Translate(m_pos.x, m_pos.y);

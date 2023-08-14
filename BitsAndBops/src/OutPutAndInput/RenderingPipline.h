@@ -1,6 +1,6 @@
 #pragma once
-#include "Vector3D.h"
-#include "matrix4X4.h"
+#include "Math/Vector3D.h"
+#include "Math/matrix4X4.h"
 #include <vector>
 
 struct Model
@@ -9,7 +9,7 @@ struct Model
 	Vector3D* vector;
 	//顶点个数
 	int vectorlen;
-	//线段的下标
+	//线段的下标/颜色
 	int* index;
 	//线段个数
 	int iLen;
@@ -28,7 +28,6 @@ class RenderingPipline
 	//储存模型的三角形
 	std::vector<Triangle> m_Triangle;
 
-
 	//摄像机相关
 	Vector3D m_Eye;
 	Vector3D m_At;
@@ -37,6 +36,9 @@ class RenderingPipline
 	Vector3D m_CameraX;
 	Vector3D m_CameraY;
 	Vector3D m_CameraZ;
+	//近远截面
+	float m_Near;
+	float m_Far;
 
 	//视口与摄像机矩阵
 	Matrix4X4 m_ViewMatrix;
@@ -47,8 +49,7 @@ public:
 	RenderingPipline();
 	void SetCameraMatrix(Vector3D eye, Vector3D at, Vector3D up = Vector3D(0, 1, 0));
 	void SetViewMatrix(int w,int h,int offx = 0, int offy = 0 );
-	void DrawModel(const Model* model,Matrix4X4 world_matrix);
-
+	void DrawModel(const Model* model,Matrix4X4* world_matrix);
 
 };
 

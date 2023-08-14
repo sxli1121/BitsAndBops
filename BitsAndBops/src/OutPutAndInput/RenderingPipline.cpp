@@ -8,7 +8,8 @@ RenderingPipline::RenderingPipline()
 	m_CameraY = Vector3D::Up();
 	m_CameraZ = Vector3D::Front();
 	
-
+	m_Near = 10.0f;
+	m_Far = 1000.0f;
 }
 
 void RenderingPipline::SetCameraMatrix(Vector3D eye, Vector3D at, Vector3D up)
@@ -83,13 +84,13 @@ void RenderingPipline::SetViewMatrix( int w, int h,int offx, int offy)
 	//锚点变到左上角
 	m2.Translation(1, 1, 0);
 	//适应窗口大小
-	m3.Scaling(w, h, 1);
+	m3.Scaling(w/2, h/2, 1);
 	m4.Translation(offx, offy, 0);
 	m_ViewMatrix = m1 * m2 * m3 * m4;
 
 }
 
-void RenderingPipline::DrawModel(const Model* model, Matrix4X4 world_matrix)
+void RenderingPipline::DrawModel(const Model* model, Matrix4X4* world_matrix)
 {
 	m_Vector.clear();
 	//一次性开好内存-直接使用下标
@@ -98,7 +99,7 @@ void RenderingPipline::DrawModel(const Model* model, Matrix4X4 world_matrix)
 	for (int i = 0; i < model->vectorlen; i++)
 	{
 		//每一个顶点 = 顶点的本地坐标 * 世界变换矩阵
-		m_Vector[i] = model->vector[i] * world_matrix;
+		m_Vector[i] = model->vector[i] * *world_matrix;
 	}
 	
 	//摄像机变换
@@ -106,6 +107,9 @@ void RenderingPipline::DrawModel(const Model* model, Matrix4X4 world_matrix)
 	{
 		//每一个顶点 = 顶点的世界坐标 * 摄像机的坐标
 		m_Vector[i] = m_Vector[i] * m_CameraMatrix;
+		//截面
+		if (m_Vector[i].z > m_Far || m_Vector[i].z < m_Near)
+			return;
 	}
 
 	//投影变幻--1比1
@@ -125,13 +129,13 @@ void RenderingPipline::DrawModel(const Model* model, Matrix4X4 world_matrix)
 	}
 
 	//线段绘制
-	CGO* go = CGO::GetGO();
+	CGameOutput* game_output = CGameOutput::GetGameOutput();
 	for (int i = 0; i < model->iLen; i++)
 	{
-		int i1 = model->index[i * 2 + 0];
-		int i2 = model->index[i * 2 + 1];
-		go->DrawLine(m_Vector[i1].x, m_Vector[i1].y, m_Vector[i2].x, m_Vector[i2].y);
+		int i1 = model->index[i * 3 + 0];
+		int i2 = model->index[i * 3 + 1];
+		unsigned c = model->index[i * 3 + 2];
+		game_output->DrawLine(m_Vector[i1].x, m_Vector[i1].y, m_Vector[i2].x, m_Vector[i2].y,3,c);
 	}
-
 
 }

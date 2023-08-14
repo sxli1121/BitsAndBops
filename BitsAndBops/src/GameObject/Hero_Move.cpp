@@ -1,6 +1,6 @@
 #include "Hero_Move.h"
 #include "Hero.h"
-#include "GameinPut.h"
+#include "OutputAndInput/GameinPut.h"
 
 void Hero_Move::SetTag(CObject* tag)
 {
@@ -49,8 +49,8 @@ void Hero_Move::Init()
 void Hero_Move::Run()
 {
 	int dir = m_Hero->GetDir();
-	int x = m_Hero->GetX();
-	int y = m_Hero->GetY();
+	float x = m_Hero->GetX();
+	float y = m_Hero->GetY();
 	if (dir == 4)
 		x -= 2;
 	else if (dir == 6)
@@ -65,7 +65,7 @@ void Hero_Move::Run()
 	m_Am.Run();
 	if (m_Am.GetAnimationState() == AM_STOP)
 		m_Am.Animation_RePlay();
-	CGameInput* gi = CGameInput::GetGI();
+	CGameInput* gi = CGameInput::GetGameInput();
 	if (gi->GetKeyDown(_GI_K_D))
 	{
 		m_Hero->SetDir(6);

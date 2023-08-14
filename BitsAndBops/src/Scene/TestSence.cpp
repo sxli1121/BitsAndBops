@@ -5,7 +5,7 @@
 //#include <iostream>
 //void CTestScene::Init()
 //{
-//	CGO* go = CGO::GetGO();
+//	CGameOutput* go = CGameOutput::GetGameOutput();
 //	//3组动画-英雄类中
 //	m_Am = new Animation[3];
 //	m_Amlen = 3;
@@ -131,8 +131,8 @@
 //void CTestScene::Run()
 //{
 //	//绘制地面
-//	CGO* go = CGO::GetGO();
-//	CGameInput* gi = CGameInput::GetGI();
+//	CGameOutput* go = CGameOutput::GetGameOutput();
+//	CGameInput* gi = CGameInput::GetGameInput();
 //	PIC_InAnimation* pic1 = m_Am[m_AmIndex].GetPic(m_pic1);
 //	if (m_IsMove == false)
 //	{

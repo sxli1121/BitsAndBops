@@ -122,21 +122,16 @@ class CGameInput
 	int m_KeyState[_GI_KEY_NUM];
 	CGameInput();
 	CGameInput(const CGameInput& that);
-	static CGameInput* p;
+	static CGameInput* gameinput;
 public:
-	static CGameInput* GetGI();
-	//运行函数 用于更新 按键状态
-	virtual void Update();
-	//获取按键状态
-	virtual int GetState(unsigned char Key);
-	bool GetKeyDown(unsigned char Key);
-
+	static CGameInput* GetGameInput();
 	void SetHWND(HWND h);
 
-	//获取鼠标坐标函数
+	void Update();//更新按键状态
+	int GetKeyState(unsigned char Key);
+	bool GetKeyDown(unsigned char Key);
 	bool GetCursor(int* x, int* y);
+
 };
-
-
 
 #endif

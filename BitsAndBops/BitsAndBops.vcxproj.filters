@@ -18,9 +18,6 @@
     <ClCompile Include="src\Animation\Animation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\XKJ.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObject\Hero.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -69,39 +66,42 @@
     <ClCompile Include="src\CObject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameInput.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameOutput.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RenderingPipline.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\S_Manager.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TextureManager.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Tool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\ToolManage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Timer.cpp">
+    <ClCompile Include="src\Tools\Timer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Enter\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\FrameWork.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Scene_Manager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OutPutAndInput\GameInput.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OutPutAndInput\GameOutput.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OutPutAndInput\TextureManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OutPutAndInput\RenderingPipline.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OutPutAndInput\Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation\Animation.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\XKJ.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\Hero.h">
@@ -152,31 +152,37 @@
     <ClInclude Include="src\CObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameInput.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameOutput.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RenderingPipline.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\S_Manager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Scene.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TextureManager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\Tool.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\ToolManage.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Timer.h">
+    <ClInclude Include="src\Tools\Timer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Scene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\FrameWork.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Scene_Manager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OutPutAndInput\GameInput.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OutPutAndInput\GameOutput.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OutPutAndInput\TextureManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OutPutAndInput\RenderingPipline.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OutPutAndInput\Camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

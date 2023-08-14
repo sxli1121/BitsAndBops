@@ -8,6 +8,7 @@ public:
 
 	static CVector left();
 	static CVector up();
+
 	CVector(float X = 0, float Y = 0);
 	float Length()const;
 	CVector Normaliz()const;
@@ -19,8 +20,7 @@ public:
 	float operator*(const CVector& v)const;
 	CVector operator*(float f)const;
 	CVector operator/(float f)const;
-	//两个向量的夹角
-	float angle(const CVector& v);
+	float Angle(const CVector& v);
 };
 
 inline CVector operator*(float f, const CVector& v)

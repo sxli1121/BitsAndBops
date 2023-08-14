@@ -1,11 +1,11 @@
 #include "TestSence2.h"
-#include "GameOutput.h"
-#include "GameInput.h"
+#include "OutputAndInput/GameOutput.h"
+#include "OutputAndInput/GameInput.h"
 #include "Math/Matrix.h"
 #include <iostream>
 void CTestScene2::Init()
 {
-	CGO* go = CGO::GetGO();
+	CGameOutput* go = CGameOutput::GetGameOutput();
 	//3组动画-英雄类中
 	m_Am = new Animation[3];
 	m_Amlen = 3;
@@ -130,8 +130,8 @@ void CTestScene2::Init()
 void CTestScene2::Run()
 {
 	//绘制地面
-	CGO* go = CGO::GetGO();
-	CGameInput* gi = CGameInput::GetGI();
+	CGameOutput* go = CGameOutput::GetGameOutput();
+	CGameInput* gi = CGameInput::GetGameInput();
 	PIC_InAnimation* pic1 = m_Am[m_AmIndex].GetPic(m_pic1);
 	
 	std::string str = pic1->bmp_key;

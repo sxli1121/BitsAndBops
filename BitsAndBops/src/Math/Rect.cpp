@@ -71,7 +71,6 @@ void CRect::Set_Right(int right)
 void CRect::Set_Top(int top)
 {
 	m_y = top  + m_h /2;
-
 	m_top = top;
 	m_bottom = m_top + m_h - 1;
 }

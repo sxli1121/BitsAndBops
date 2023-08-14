@@ -1,5 +1,6 @@
 #pragma once
-#include "Scene.h"
+#include "Core/Scene.h"
+
 class CFightScene : public CScene
 {
 	int x;

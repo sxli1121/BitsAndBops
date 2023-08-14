@@ -1,7 +1,7 @@
 #include "StartScene.h"
-#include "GameOutput.h"
-#include "GameInput.h"
-#include "Core/XKJ.h"
+#include "OutputAndInput/GameOutput.h"
+#include "OutputAndInput/GameInput.h"
+#include "Core/FrameWork.h"
 #include "Math/vector.h"
 #include "Math/Matrix.h"
 void CStartScene::Init()
@@ -16,5 +16,5 @@ void CStartScene::Run()
 
 void CStartScene::End()
 {
-	CGO::GetGO()->Clear();
+	CGameOutput::GetGameOutput()->Clear();
 }

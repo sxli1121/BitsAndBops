@@ -8,8 +8,6 @@ class TimerClock
 {
 	//开始时间-（当前时间-epoch(原始时间戳)）
 	std::chrono::steady_clock::time_point StartTime;
-
-
 	//结束计时时间
 	//std::chrono::steady_clock::time_point EndTime;
 	//间隔时间的变量--（用来判断）
@@ -24,8 +22,6 @@ public:
 	// //更新时间
 	//std::chrono::time_point<std::chrono::nanoseconds> UpData();
 	
-
-
 	//开始计时
 	 void Begin();
 	//获取毫秒

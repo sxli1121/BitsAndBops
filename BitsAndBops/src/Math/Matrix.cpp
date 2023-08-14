@@ -46,10 +46,6 @@ void CMatrix33::Translate(float x, float y)
 	eDx = x; eDy = y;
 }
 
-/*                      m
-	eM11;eM12; 0         eM11;eM12; 0
-	eM21;eM22; 0		 eM21;eM22; 0
-	eDx; eDy;  1         eDx; eDy;  1   */
 CMatrix33 CMatrix33::operator*(const CMatrix33& m)
 {
 	CMatrix33 m2;

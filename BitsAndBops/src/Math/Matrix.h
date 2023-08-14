@@ -4,11 +4,6 @@
 class CMatrix33 : public XFORM
 {
 public:
-	/*
-	eM11;eM12;
-	eM21;eM22;
-	eDx;eDy;*/
-
 	CMatrix33();
 	//µ•Œªæÿ’Û
 	void Identity();

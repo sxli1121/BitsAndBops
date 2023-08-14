@@ -1,6 +1,6 @@
 #include "GameInput.h"
 
-CGameInput* CGameInput::p = nullptr;
+CGameInput* CGameInput::gameinput = nullptr;
 
 CGameInput::CGameInput()
 {
@@ -115,13 +115,13 @@ CGameInput::CGameInput()
 CGameInput::CGameInput(const CGameInput& that)
 {
 }
-CGameInput* CGameInput::GetGI()
+CGameInput* CGameInput::GetGameInput()
 {
-	if (p == nullptr)
-		p = new CGameInput;
-	return p;
+	if (gameinput == nullptr)
+		gameinput = new CGameInput;
+	return gameinput;
 }
-//运行函数 用于更新 按键状态
+
 void CGameInput::Update()
 {
 	//循环判断所有按键
@@ -149,8 +149,8 @@ void CGameInput::Update()
 		}
 	}
 }
-//获取按键状态
-int CGameInput::GetState(unsigned char Key)
+
+int CGameInput::GetKeyState(unsigned char Key)
 {
 	if(Key < 0 || Key >= _GI_KEY_NUM)
 		return _KS_IK;
@@ -169,17 +169,16 @@ void CGameInput::SetHWND(HWND h)
 	m_hWnd = h;
 }
 
-//获取鼠标坐标函数
-//如果鼠标坐标在客户区内 返回真 否则返回假
+
 bool CGameInput::GetCursor(int* x, int* y)
 {
 	if (m_hWnd == nullptr)
 		return false;
+
 	POINT p;
-	//获取鼠标桌面坐标
 	GetCursorPos(&p);
 
-	//根据桌面鼠标坐标位置 来 获取客户区坐标
+	//根据桌面鼠标位置获取客户区坐标
 	ScreenToClient(m_hWnd, &p);
 
 	//把客户区坐标传递出去
@@ -189,6 +188,6 @@ bool CGameInput::GetCursor(int* x, int* y)
 	//判断 鼠标点 是否在 客户区的矩形内
 	RECT r;
 	GetClientRect(m_hWnd, &r);
-	
+
 	return  TRUE == PtInRect(&r, p);
 }

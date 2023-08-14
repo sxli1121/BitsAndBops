@@ -1,5 +1,5 @@
 #pragma once
-#include "Scene.h"
+#include "Core/Scene.h"
 #include "Math/vector.h"
 class CStartScene : public CScene
 {

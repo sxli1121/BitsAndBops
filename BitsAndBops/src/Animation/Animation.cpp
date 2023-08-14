@@ -1,5 +1,5 @@
 #include "Animation.h"
-#include "GameOutput.h"
+#include "OutputAndInput/GameOutput.h"
 #include <cassert>
 
 void Animation::AddAnmiationPic(const char* BmpKey, int off_x, int off_y, int PresisitenceFre)
@@ -117,7 +117,7 @@ void Animation::Run()
 	//停止状态不绘制
 	if (m_state == AM_STOP)
 		return;
-	CGO* gameoutput = CGO::GetGO();
+	CGameOutput* gameoutput = CGameOutput::GetGameOutput();
 	PIC_InAnimation* pic = &m_PicList[m_CurPic];
 	gameoutput->DrawPic(pic->bmp_key, &m_m);
 	//不是暂停状态运行-暂停状态只绘制不播放

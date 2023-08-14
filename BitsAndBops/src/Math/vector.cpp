@@ -71,9 +71,8 @@ CVector CVector::operator/(float f) const
 	return CVector(x / f, y / f);
 }
 
-float CVector::angle(const CVector& v)
+float CVector::Angle(const CVector& v)
 {
-
 	float f1 = acos(x * v.x + y * v.y);
 	return f1;
 }

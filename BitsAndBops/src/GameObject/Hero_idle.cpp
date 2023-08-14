@@ -1,6 +1,6 @@
 #include "Hero_idle.h"
 #include "Hero.h"
-#include "GameinPut.h"
+#include "OutputAndInput/GameinPut.h"
 
 void CHero_idle::SetTag(CObject* tag)
 {
@@ -65,7 +65,7 @@ void CHero_idle::Run()
 		}
 	}
 		
-	CGameInput* gi = CGameInput::GetGI();
+	CGameInput* gi = CGameInput::GetGameInput();
 	if (gi->GetKeyDown(_GI_K_D))
 	{
 		m_Hero->SetNextAction("move");
