@@ -19,14 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\CHammerScene.cpp" />
     <ClCompile Include="src\OutPutAndInput\Camera.cpp" />
-    <ClCompile Include="src\Action.cpp" />
+    <ClCompile Include="src\GameObject\Action.cpp" />
     <ClCompile Include="src\Animation\Animation.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
-    <ClCompile Include="src\CObject.cpp" />
+    <ClCompile Include="src\GameObject\CObject.cpp" />
     <ClCompile Include="src\Core\FrameWork.cpp" />
     <ClCompile Include="src\OutPutAndInput\GameInput.cpp" />
-    <ClCompile Include="src\GameObject\Hero.cpp" />
+    <ClCompile Include="src\GameObject\Hammer.cpp" />
     <ClCompile Include="src\GameObject\Hero_idle.cpp" />
     <ClCompile Include="src\GameObject\Hero_Move.cpp" />
     <ClCompile Include="src\OutPutAndInput\GameOutput.cpp" />
@@ -49,14 +50,15 @@
     <ClCompile Include="src\ToolManage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\CHammerScene.h" />
     <ClInclude Include="src\OutPutAndInput\Camera.h" />
-    <ClInclude Include="src\Action.h" />
+    <ClInclude Include="src\GameObject\Action.h" />
     <ClInclude Include="src\Animation\Animation.h" />
     <ClInclude Include="src\Bullet.h" />
-    <ClInclude Include="src\CObject.h" />
+    <ClInclude Include="src\GameObject\CObject.h" />
     <ClInclude Include="src\Core\FrameWork.h" />
     <ClInclude Include="src\OutPutAndInput\GameInput.h" />
-    <ClInclude Include="src\GameObject\Hero.h" />
+    <ClInclude Include="src\GameObject\Hammer.h" />
     <ClInclude Include="src\GameObject\Hero_idle.h" />
     <ClInclude Include="src\GameObject\Hero_Move.h" />
     <ClInclude Include="src\OutPutAndInput\GameOutput.h" />

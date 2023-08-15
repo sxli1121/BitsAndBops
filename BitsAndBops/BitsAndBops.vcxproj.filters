@@ -18,7 +18,7 @@
     <ClCompile Include="src\Animation\Animation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Hero.cpp">
+    <ClCompile Include="src\GameObject\Hammer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\Hero_idle.cpp">
@@ -57,13 +57,13 @@
     <ClCompile Include="src\Scene\TestSence2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Action.cpp">
+    <ClCompile Include="src\GameObject\Action.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Bullet.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\CObject.cpp">
+    <ClCompile Include="src\GameObject\CObject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Tool.cpp">
@@ -99,12 +99,15 @@
     <ClCompile Include="src\OutPutAndInput\Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene\CHammerScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation\Animation.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Hero.h">
+    <ClInclude Include="src\GameObject\Hammer.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\Hero_idle.h">
@@ -143,13 +146,13 @@
     <ClInclude Include="src\Scene\TestSence2.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Action.h">
+    <ClInclude Include="src\GameObject\Action.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Bullet.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\CObject.h">
+    <ClInclude Include="src\GameObject\CObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Tool.h">
@@ -183,6 +186,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\OutPutAndInput\Camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\CHammerScene.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

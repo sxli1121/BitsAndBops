@@ -15,23 +15,6 @@ void Animation::AddAnmiationPic(const char* BmpKey, int off_x, int off_y, int Pr
 	m_size += 1;
 }
 
-void Animation::AddAttackRect(CRect* Rect, int len, int Picindex)
-{
-	assert(Rect != 0 && len >= 0 && Picindex >= 0 && Picindex <m_size);
-
-	m_PicList[Picindex].AttackRect = Rect;
-	m_PicList[Picindex].Attacklen = len;
-
-}
-
-void Animation::AddDefenseRect(CRect* Rect, int len, int Picindex)
-{
-	assert(Rect != 0 && len >= 0 && Picindex >= 0 && Picindex <m_size);
-
-	m_PicList[Picindex].DefenseRect = Rect;
-	m_PicList[Picindex].DefenseLen = len;
-}
-
 int Animation::GetAnimationState()
 {
 	return m_state;
@@ -50,9 +33,9 @@ PIC_InAnimation* Animation::GetPic(int index)
 	return  &m_PicList[index];
 }
 
-void Animation::SetMatrix(CMatrix33* m)
+void Animation::SetMatrix(Matrix33* m)
 {
-	m_m = *m;
+	m_Matrix = *m;
 }
 
 void Animation::Animation_Playing()
@@ -119,7 +102,7 @@ void Animation::Run()
 		return;
 	CGameOutput* gameoutput = CGameOutput::GetGameOutput();
 	PIC_InAnimation* pic = &m_PicList[m_CurPic];
-	gameoutput->DrawPic(pic->bmp_key, &m_m);
+	gameoutput->DrawPic(pic->bmp_key, &m_Matrix);
 	//不是暂停状态运行-暂停状态只绘制不播放
 	if (m_state != AM_PAUSE)
 	{
@@ -134,6 +117,7 @@ void Animation::Run()
 			}
 		}
 	}
+
 	
 }
 
@@ -148,27 +132,27 @@ PIC_InAnimation::PIC_InAnimation()
 	off_x = 0;
 	off_y = 0;
 	PresistenceFra = 0;
-	AttackRect = 0;
-	Attacklen = 0;
-	DefenseRect = 0;
-	DefenseLen = 0;
+	//AttackRect = 0;
+	//Attacklen = 0;
+	//DefenseRect = 0;
+	//DefenseLen = 0;
 }
 
 PIC_InAnimation::~PIC_InAnimation()
 {
-	if (AttackRect)
-	{
-		if (Attacklen > 1)
-			delete[] AttackRect;
-		else
-			delete AttackRect;
-	}
+	//if (AttackRect)
+	//{
+	//	if (Attacklen > 1)
+	//		delete[] AttackRect;
+	//	else
+	//		delete AttackRect;
+	//}
 
-	if (DefenseRect)
-	{
-		if (DefenseLen > 1)
-			delete[] DefenseRect;
-		else
-			delete DefenseRect;
-	}
+	//if (DefenseRect)
+	//{
+	//	if (DefenseLen > 1)
+	//		delete[] DefenseRect;
+	//	else
+	//		delete DefenseRect;
+	//}
 }

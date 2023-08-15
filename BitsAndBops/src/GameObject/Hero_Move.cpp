@@ -1,5 +1,5 @@
 #include "Hero_Move.h"
-#include "Hero.h"
+
 #include "OutputAndInput/GameinPut.h"
 
 void Hero_Move::SetTag(CObject* tag)
@@ -48,38 +48,38 @@ void Hero_Move::Init()
 
 void Hero_Move::Run()
 {
-	int dir = m_Hero->GetDir();
-	float x = m_Hero->GetX();
-	float y = m_Hero->GetY();
-	if (dir == 4)
-		x -= 2;
-	else if (dir == 6)
-		x += 2;
-	m_Hero->SetX(x);
-	m_Hero->SetY(y);
-	//碰撞
+	//int dir = m_Hero->GetDir();
+	//float x = m_Hero->GetX();
+	//float y = m_Hero->GetY();
+	//if (dir == 4)
+	//	x -= 2;
+	//else if (dir == 6)
+	//	x += 2;
+	//m_Hero->SetX(x);
+	//m_Hero->SetY(y);
+	////碰撞
 
-	CMatrix33 m;
-	m.Translate(x, y);
-	m_Am.SetMatrix(&m);
-	m_Am.Run();
-	if (m_Am.GetAnimationState() == AM_STOP)
-		m_Am.Animation_RePlay();
-	CGameInput* gi = CGameInput::GetGameInput();
-	if (gi->GetKeyDown(_GI_K_D))
-	{
-		m_Hero->SetDir(6);
-	}
-	else if (gi->GetKeyDown(_GI_K_A))
-	{
-		m_Hero->SetDir(4);
-	}
-	else
-	{
-		m_Hero->SetNextAction("idle");
-	}
-	//下落
-	//碰撞（成功-站立）（失败-下落）
+	//Matrix33 m;
+	//m.Translate(x, y);
+	//m_Am.SetMatrix(&m);
+	//m_Am.Run();
+	//if (m_Am.GetAnimationState() == AM_STOP)
+	//	m_Am.Animation_RePlay();
+	//CGameInput* gi = CGameInput::GetGameInput();
+	//if (gi->GetKeyDown(_GI_K_D))
+	//{
+	//	m_Hero->SetDir(6);
+	//}
+	//else if (gi->GetKeyDown(_GI_K_A))
+	//{
+	//	m_Hero->SetDir(4);
+	//}
+	//else
+	//{
+	//	m_Hero->SetNextAction("idle");
+	//}
+	////下落
+	////碰撞（成功-站立）（失败-下落）
 
 
 

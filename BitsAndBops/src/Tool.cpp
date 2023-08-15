@@ -19,17 +19,17 @@ bool CTool::GetAct()
 	return m_alive;
 }
 
-void CTool::SetPos(CVector v)
+void CTool::SetPos(Vector v)
 {
 	m_pos = v;
 }
 
-void CTool::SetDirection(CVector v)
+void CTool::SetDirection(Vector v)
 {
 	m_direction = v;
 }
 
-CVector CTool::GetPos()
+Vector CTool::GetPos()
 {
 	return m_pos;
 }

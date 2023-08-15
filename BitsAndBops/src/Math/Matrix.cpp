@@ -3,35 +3,35 @@
 #include <math.h>
 
 
-CMatrix33::CMatrix33()
+Matrix33::Matrix33()
 {
 	eM11 = 1; eM12 = 0;
 	eM21 = 0; eM22 = 1;
 	eDx = 0; eDy = 0;
 }
 
-void CMatrix33::Identity()
+void Matrix33::Identity()
 {
 	eM11 = 1; eM12 = 0;
 	eM21 = 0; eM22 = 1;
 	eDx = 0; eDy = 0;
 }
 
-void CMatrix33::Scale(float x, float y)
+void Matrix33::Scale(float x, float y)
 {
 	eM11 = x; eM12 = 0;
 	eM21 = 0; eM22 = y;
 	eDx = 0; eDy = 0;
 }
 
-void CMatrix33::Rotate_R(float r)
+void Matrix33::Rotate_R(float r)
 {
 	eM11 = cos(r); eM12 = sin(r);
 	eM21 = -eM12; eM22 = eM11;
 	eDx = 0; eDy = 0;
 }
 
-void CMatrix33::Rotate_A(float a)
+void Matrix33::Rotate_A(float a)
 {
 	float r = a * 3.14f / 180.0f;
 	eM11 = cos(r); eM12 = sin(r);
@@ -39,16 +39,16 @@ void CMatrix33::Rotate_A(float a)
 	eDx = 0; eDy = 0;
 }
 
-void CMatrix33::Translate(float x, float y)
+void Matrix33::Translate(float x, float y)
 {
 	eM11 = 1; eM12 = 0;
 	eM21 = 0; eM22 = 1;
 	eDx = x; eDy = y;
 }
 
-CMatrix33 CMatrix33::operator*(const CMatrix33& m)
+Matrix33 Matrix33::operator*(const Matrix33& m)
 {
-	CMatrix33 m2;
+	Matrix33 m2;
 	m2.eM11 = eM11 * m.eM11 + eM12 * m.eM21;
 	m2.eM12 = eM11 * m.eM12 + eM12 * m.eM22;
 

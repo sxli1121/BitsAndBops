@@ -1,77 +1,77 @@
 #include "vector.h"
 #include <math.h>
-CVector CVector::left()
+Vector Vector::right()
 {
-	return CVector(-1, 0);
+	return Vector(1, 0);
 }
-CVector CVector::up()
+Vector Vector::up()
 {
-	return CVector(0, -1);
+	return Vector(0, 1);
 }
-CVector::CVector(float X, float Y)
+Vector::Vector(float X, float Y)
 {
 	x = X;
 	y = Y;
 }
 
-float CVector::Length() const
+float Vector::Length() const
 {
 	return sqrt(x * x + y * y);
 }
 
-CVector CVector::Normaliz() const
+Vector Vector::Normaliz() const
 {
 	float len = sqrt(x * x + y * y);
 	if(len == 0)
-		return CVector();
-	return CVector(x / len, y / len);
+		return Vector();
+	return Vector(x / len, y / len);
 }
 
-CVector CVector::operator+(const CVector& v) const
+Vector Vector::operator+(const Vector& v) const
 {
-	return CVector(x + v.x, y + v.y);
+	return Vector(x + v.x, y + v.y);
 }
 
-void CVector::operator+=(const CVector& v)
+void Vector::operator+=(const Vector& v)
 {
 	x += v.x;
 	y += v.y;
 }
 
-CVector CVector::operator-(const CVector& v) const
+Vector Vector::operator-(const Vector& v) const
 {
-	return CVector(x - v.x, y - v.y);
+	return Vector(x - v.x, y - v.y);
 }
 
-CVector CVector::operator-() const
+Vector Vector::operator-() const
 {
-	return CVector(-x, -y);
+	return Vector(-x, -y);
 }
 
-void CVector::operator-=(const CVector& v)
+void Vector::operator-=(const Vector& v)
 {
 	x -= v.x;
 	y -= v.y;
 }
 
-float CVector::operator*(const CVector& v) const
+float Vector::operator*(const Vector& v) const
 {
 	return v.x * x + v.y * y;
 }
 
-CVector CVector::operator*(float f) const
+Vector Vector::operator*(float f) const
 {
-	return CVector(x * f, y * f);
+	return Vector(x * f, y * f);
 }
 
-CVector CVector::operator/(float f) const
+Vector Vector::operator/(float f) const
 {
 	if (f == 0)
-		CVector(0, 0);
-	return CVector(x / f, y / f);
+		Vector(0, 0);
+	return Vector(x / f, y / f);
 }
 
-float CVector::Angle(const CVector& v)
+float Vector::Angle(const Vector& v)
 {
 	float f1 = acos(x * v.x + y * v.y);
 	return f1;

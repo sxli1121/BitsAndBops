@@ -139,7 +139,7 @@ void CTestScene2::Run()
 	//if (gi->GetState(_GI_K_A) == _KS_DH)
 	str = '-' + str;
 
-	CMatrix33 m, sm;
+	Matrix33 m, sm;
 	m.Translate(200, 200);
 	 
 	/*go->DrawBmp(str.c_str(), &m);

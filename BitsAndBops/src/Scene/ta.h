@@ -1,12 +1,13 @@
 #pragma once
 #include "Core/Scene.h"
-#include "GameObject/Hero.h"
+//#include "GameObject/Hero.h"
 #include "Tools/Timer.h"
-#include "OutputAndInput/RenderingPipline.h"
+//#include "OutputAndInput/RenderingPipline.h"
+#include "OutputAndInput/Camera.h"
 
 class CTestScene3:public CScene
 {
-	CHero a;
+	/*CHero a;
 	TimerClock itep;
 
 	RenderingPipline rp;
@@ -15,7 +16,9 @@ class CTestScene3:public CScene
 
 	Vector3D eye;
 	Vector3D atDir;
-	Vector3D up;
+	Vector3D up;*/
+
+	Camera m_camera;
 	
 public:
 	void Init();

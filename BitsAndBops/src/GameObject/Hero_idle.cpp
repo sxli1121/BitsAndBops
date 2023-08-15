@@ -1,5 +1,5 @@
 #include "Hero_idle.h"
-#include "Hero.h"
+//#include "Hero.h"
 #include "OutputAndInput/GameinPut.h"
 
 void CHero_idle::SetTag(CObject* tag)
@@ -48,35 +48,35 @@ void CHero_idle::Init()
 
 void CHero_idle::Run()
 {
-	CMatrix33 m;
-	m.Translate(m_Hero->GetX(), m_Hero->GetY());
-	m_Am.SetMatrix(&m);
-	m_Am.Run();
-	if (m_Am.GetAnimationState() == AM_STOP)
-	{
-		if (m_LoopFram > -1 )
-		{
-			//设置当前的循环图片-从这一张图片开始播放
-			m_Am.SetCurPic(m_LoopFram);
-		}
-		else
-		{
-			m_Am.Animation_RePlay();
-		}
-	}
-		
-	CGameInput* gi = CGameInput::GetGameInput();
-	if (gi->GetKeyDown(_GI_K_D))
-	{
-		m_Hero->SetNextAction("move");
-		m_Hero->SetDir(6);
-	}
-	else if (gi->GetKeyDown(_GI_K_A))
-	{
-		m_Hero->SetNextAction("move");
-		m_Hero->SetDir(4);
-	}
-	//下落
+	//Matrix33 m;
+	//m.Translate(m_Hero->GetX(), m_Hero->GetY());
+	//m_Am.SetMatrix(&m);
+	//m_Am.Run();
+	//if (m_Am.GetAnimationState() == AM_STOP)
+	//{
+	//	if (m_LoopFram > -1 )
+	//	{
+	//		//设置当前的循环图片-从这一张图片开始播放
+	//		m_Am.SetCurPic(m_LoopFram);
+	//	}
+	//	else
+	//	{
+	//		m_Am.Animation_RePlay();
+	//	}
+	//}
+	//	
+	//CGameInput* gi = CGameInput::GetGameInput();
+	//if (gi->GetKeyDown(_GI_K_D))
+	//{
+	//	m_Hero->SetNextAction("move");
+	//	m_Hero->SetDir(6);
+	//}
+	//else if (gi->GetKeyDown(_GI_K_A))
+	//{
+	//	m_Hero->SetNextAction("move");
+	//	m_Hero->SetDir(4);
+	//}
+	////下落
 	//碰撞（成功-站立）（失败-下落）
 
 

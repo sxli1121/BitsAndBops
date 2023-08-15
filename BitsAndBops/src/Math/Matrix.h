@@ -1,10 +1,10 @@
 #pragma once
 #include "vector.h"
 #include <windows.h>
-class CMatrix33 : public XFORM
+class Matrix33 : public XFORM
 {
 public:
-	CMatrix33();
+	Matrix33();
 	//µ•Œªæÿ’Û
 	void Identity();
 	//Àı∑≈æÿ’Û
@@ -15,12 +15,12 @@ public:
 	//∆Ω“∆æÿ’Û
 	void Translate(float x, float y);
 
-	CMatrix33 operator *(const CMatrix33& m);
+	Matrix33 operator * (const Matrix33& m);
 };
 
-inline CVector operator *(const CVector& v, const CMatrix33& m)
+inline Vector operator *(const Vector& v, const Matrix33& m)
 {
-	CVector v2;
+	Vector v2;
 	v2.x = v.x * m.eM11 + v.y * m.eM21 + m.eDx;
 	v2.y = v.x * m.eM12 + v.y * m.eM22 + m.eDy;
 	return v2;

@@ -1,29 +1,29 @@
 #pragma once
 
-class CVector
+class Vector
 {
 public:
 	float x;
 	float y;
 
-	static CVector left();
-	static CVector up();
+	static Vector right();
+	static Vector up();
 
-	CVector(float X = 0, float Y = 0);
+	Vector(float X = 0, float Y = 0);
 	float Length()const;
-	CVector Normaliz()const;
-	CVector operator+(const CVector& v)const;
-	void operator+=(const CVector& v);
-	CVector operator-(const CVector& v)const;
-	CVector operator-()const;
-	void operator-=(const CVector& v);
-	float operator*(const CVector& v)const;
-	CVector operator*(float f)const;
-	CVector operator/(float f)const;
-	float Angle(const CVector& v);
+	Vector Normaliz()const;
+	Vector operator+(const Vector& v)const;
+	void operator+=(const Vector& v);
+	Vector operator-(const Vector& v)const;
+	Vector operator-()const;
+	void operator-=(const Vector& v);
+	float operator*(const Vector& v)const;
+	Vector operator*(float f)const;
+	Vector operator/(float f)const;
+	float Angle(const Vector& v);
 };
 
-inline CVector operator*(float f, const CVector& v)
+inline Vector operator*(float f, const Vector& v)
 {
-	return CVector(v.x * f, v.y * f);
+	return Vector(v.x * f, v.y * f);
 }

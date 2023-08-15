@@ -1,8 +1,9 @@
 #include "GameOutput.h"
 #include "Core/FrameWork.h"
 #include "Math/Matrix.h"
-#include "CObject.h"
+//#include "CObject.h"
 #include "TextureManager.h"
+#include "Camera.h"
 
 #include <cassert>
 
@@ -11,7 +12,7 @@ CGameOutput* CGameOutput::game_output  = nullptr;
 CGameOutput::CGameOutput()
 {
     m_MainDC = nullptr;
-    m_Tag = 0;
+    //m_Tag = 0;
 }
 CGameOutput::CGameOutput(const CGameOutput& that)
 {
@@ -49,9 +50,11 @@ bool CGameOutput::AddImg(const char* id, const char* fn)
     std::string str = id;
     //key重复判断
     assert(m_ImgMap.find(str) == m_ImgMap.end());
+
     //选入DC 创建兼容DC并返回
     MyTextureManager::Instance().Init(m_BackDC);
     HDC dc = MyTextureManager::Instance().LoadImg(fn);
+
     //DC入映射
     m_ImgMap.insert(std::pair<const char*, HDC>(id, dc));
     return true;
@@ -207,7 +210,7 @@ void CGameOutput::DrawTxt(int x, int y, const char* string,unsigned int color)
    // SetTextColor(m_BackDC, fc);
 }
 
-void CGameOutput::DrawPic(const char* key, const XFORM* m, int level)
+void CGameOutput::DrawPic(const char* key, Matrix33* m, int level)
 {
     assert(key != nullptr);
    //存在
@@ -216,28 +219,39 @@ void CGameOutput::DrawPic(const char* key, const XFORM* m, int level)
     bit = m_PicMap.find(str);
     assert(bit != m_PicMap.end());
 
+    Matrix33 cameraMatrix;
+    m_camera.CameraMove(10,10);
+    m_camera.SetCameraMatrix();
+    cameraMatrix = m_camera.GetCameraMatrix();
+    
     LAYER_BMP  tbmp;
     tbmp.Pic = &bit->second;
-    tbmp.m = * m;
+ 
     
     assert(tbmp.Pic != 0);
-    //世界坐标转换为窗口坐标
+
+   //世界坐标转换为窗口坐标
     XFORM xm;
     xm.eM11 = 1;
     xm.eM22 = 1;
     xm.eM12 = 0;
     xm.eM21 = 0;
-    xm.eDx = -m_ClientW;
-    xm.eDy = -m_ClientH;
+ /*   xm.eDx = -m_ClientW;
+    xm.eDy = -m_ClientH;*/
  
-    tbmp.m.eM11 = m->eM11 * xm.eM11 + m->eM12 * xm.eM21 + 0 * xm.eDx;
-    tbmp.m.eM12 = m->eM11 * xm.eM12 + m->eM12 * xm.eM22 + 0 * xm.eDy;
+    xm.eDx = 0;
+    xm.eDy = 0;
+
+    tbmp.Matrix.eM11 = m->eM11 * xm.eM11 + m->eM12 * xm.eM21 + 0 * xm.eDx;
+    tbmp.Matrix.eM12 = m->eM11 * xm.eM12 + m->eM12 * xm.eM22 + 0 * xm.eDy;
     //eM13 = 0;
-    tbmp.m.eM21 = m->eM21 * xm.eM11 + m->eM22 * xm.eM21 + 0 * xm.eDx;
-    tbmp.m.eM22 = m->eM21 * xm.eM12 + m->eM22 * xm.eM22 + 0 * xm.eDy;
+    tbmp.Matrix.eM21 = m->eM21 * xm.eM11 + m->eM22 * xm.eM21 + 0 * xm.eDx;
+    tbmp.Matrix.eM22 = m->eM21 * xm.eM12 + m->eM22 * xm.eM22 + 0 * xm.eDy;
     //eM23 = 0;
-    tbmp.m.eDx = m->eDx * xm.eM11 + m->eDy * xm.eM21 + 1 * xm.eDx;
-    tbmp.m.eDy = m->eDx * xm.eM12 + m->eDy * xm.eM22 + 1 * xm.eDy;
+    tbmp.Matrix.eDx = m->eDx * xm.eM11 + m->eDy * xm.eM21 + 1 * xm.eDx;
+    tbmp.Matrix.eDy = m->eDx * xm.eM12 + m->eDy * xm.eM22 + 1 * xm.eDy;
+
+    tbmp.Matrix = *m * cameraMatrix;
 
     switch (level)
     {
@@ -261,10 +275,10 @@ void CGameOutput::DrawDistantView(const char* key, float x, float y, int level, 
     //用图层的结构体记录找到的bmp key
     LAYER_BMP  tbmp;
     tbmp.Pic= &bit->second;
-    tbmp.m.eDx = x;
-    tbmp.m.eDy = y;
-    tbmp.m.eM11 = sx;
-    tbmp.m.eM22 = sy;
+    tbmp.Matrix.eDx = x;
+    tbmp.Matrix.eDy = y;
+    tbmp.Matrix.eM11 = sx;
+    tbmp.Matrix.eM22 = sy;
 
     assert(tbmp.Pic->dc != 0);
     switch (level)
@@ -286,10 +300,10 @@ void CGameOutput::DrawFront(const char* key, float x, float y, int level, float 
     //用图层的结构体记录找到的bmp key
     LAYER_BMP  tbmp;
     tbmp.Pic = &bit->second;
-    tbmp.m.eDx = x;
-    tbmp.m.eDy = y;
-    tbmp.m.eM11 = sx;
-    tbmp.m.eM22 = sy;
+    tbmp.Matrix.eDx = x;
+    tbmp.Matrix.eDy = y;
+    tbmp.Matrix.eM11 = sx;
+    tbmp.Matrix.eM22 = sy;
 
     assert(tbmp.Pic->dc != 0);
     switch (level)
@@ -334,11 +348,11 @@ void CGameOutput::Begin()
 void CGameOutput::End()
 {
 
-    if (m_Tag)
-    {
-        m_ClientX = m_Tag->GetX();
-        m_ClientY = m_Tag->GetY();
-    }
+    //if (m_Tag)
+    //{
+    //    m_ClientX = m_Tag->GetX();
+    //    m_ClientY = m_Tag->GetY();
+    //}
     PIC* bmp;
     XFORM* m;
     //绘制远景
@@ -346,13 +360,12 @@ void CGameOutput::End()
     for (int i = 0; i < len; i++)
     {
         bmp = m_DistantViewBmp1[i].Pic;
-        m = &m_DistantViewBmp1[i].m;
+        m = &m_DistantViewBmp1[i].Matrix;
         //(m->eDx - m_cx)* m->eM11   绘制位置 - 窗口的位置 * 系数  代表画在窗口中的时候 窗口位置也需要对应调整
         DrawAlpha(m_BackDC, bmp->dc, m->eDx - m_ClientX * m->eM11, m->eDy - m_ClientY * m->eM22,
             bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
 
-      /*  TransparentBlt(m_BackDC, m->eDx - m_cx * m->eM11, m->eDy - m_cy * m->eM22,
-            bmp->pw, bmp->ph, bmp->dc, bmp->sx, bmp->sy, bmp->pw, bmp->ph, bmp->c);*/
+      
         XFORM xm;
         xm.eM11 = 1;
         xm.eM22 = 1;
@@ -367,7 +380,7 @@ void CGameOutput::End()
     for (int i = 0; i < len; i++)
     {
         bmp = m_DistantViewBmp2[i].Pic;
-        m = &m_DistantViewBmp2[i].m;
+        m = &m_DistantViewBmp2[i].Matrix;
         DrawAlpha(m_BackDC, bmp->dc, m->eDx - m_ClientX * m->eM11, m->eDy - m_ClientY * m->eM22,
             bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
         //TransparentBlt(m_BackDC, m->eDx - m_cx * m->eM11, m->eDy - m_cy * m->eM22,
@@ -381,15 +394,14 @@ void CGameOutput::End()
         xm.eDy = 0;
         SetWorldTransform(m_BackDC, &xm);
     }
-   
 
     //绘制逻辑层
     len = m_LevelBmp1.size();
     for (int i = 0; i < len; i++)
     {
         bmp = m_LevelBmp1[i].Pic;
-        m = &m_LevelBmp1[i].m;
-        SetWorldTransform(m_BackDC, &m_LevelBmp1[i].m);
+        m = &m_LevelBmp1[i].Matrix;
+        SetWorldTransform(m_BackDC, &m_LevelBmp1[i].Matrix);
         DrawAlpha(m_BackDC, bmp->dc, 0, 0,
             bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
         XFORM xm;
@@ -406,8 +418,8 @@ void CGameOutput::End()
     for (int i = 0; i < len; i++)
     {
         bmp = m_LevelBmp2[i].Pic;
-        m = &m_LevelBmp2[i].m;
-        SetWorldTransform(m_BackDC, &m_LevelBmp2[i].m);
+        m = &m_LevelBmp2[i].Matrix;
+        SetWorldTransform(m_BackDC, &m_LevelBmp2[i].Matrix);
         DrawAlpha(m_BackDC, bmp->dc,0,0,
             bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
        /* TransparentBlt(m_BackDC, -bmp->pw / 2, -bmp->ph / 2,
@@ -426,8 +438,8 @@ void CGameOutput::End()
     for (int i = 0; i < len; i++)
     {
         bmp = m_LevelBmp3[i].Pic;
-        m = &m_LevelBmp3[i].m;
-        SetWorldTransform(m_BackDC, &m_LevelBmp3[i].m);
+        m = &m_LevelBmp3[i].Matrix;
+        SetWorldTransform(m_BackDC, &m_LevelBmp3[i].Matrix);
         DrawAlpha(m_BackDC, bmp->dc, 0, 0,
             bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
         XFORM xm;
@@ -445,7 +457,7 @@ void CGameOutput::End()
     for (int i = 0; i < len; i++)
     {
         bmp = m_FrontBmp1[i].Pic;
-        m = &m_FrontBmp1[i].m;
+        m = &m_FrontBmp1[i].Matrix;
         DrawAlpha(m_BackDC, bmp->dc, 0, 0,
             bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
     }
@@ -454,7 +466,7 @@ void CGameOutput::End()
     for (int i = 0; i < len; i++)
     {
         bmp = m_FrontBmp2[i].Pic;
-        m = &m_FrontBmp2[i].m;
+        m = &m_FrontBmp2[i].Matrix;
         DrawAlpha(m_BackDC, bmp->dc, 0, 0,
             bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
     }
@@ -464,17 +476,17 @@ void CGameOutput::End()
 
 void CGameOutput::SetClientXY(float cx, float cy)
 {
-    if (m_Tag == 0)
-    {
-        m_ClientX = cx;
-        m_ClientY = cy;
-    }
+//    if (//m_Tag == 0)
+//    {
+//        m_ClientX = cx;
+//        m_ClientY = cy;
+//    }
 }
 
 void CGameOutput::SetTag(const CObject* tag)
 {
     //为0 没有跟随对象
-    m_Tag = tag;
+    //m_Tag = tag;
 }
 
 

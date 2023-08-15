@@ -16,7 +16,7 @@ void CFightScene::Run()
 	XFORM xm;
 	xm.eM11 = 1;
 	xm.eM22 = 1;
-	go->DrawPic("รรืำ",&xm);
+	//go->DrawPic("รรืำ",&xm);
 }
 
 void CFightScene::End()
