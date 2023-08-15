@@ -2,78 +2,60 @@
 #include "Core/FrameWork.h"
 #include "Math/matrix.h"
 
+
 Camera::Camera()
 {
-}
-
-void Camera::Init()
-{
-	//初始化摄像机的位置与宽高
-	m_X = 0;
-	m_Y = 0;
 	CFrameWork* framework = CFrameWork::GetFrameWork();
-	m_Weight = framework->GetClientW();
-	m_Hight = framework->GetClientH();
-	//偏移量
-	m_OffsetAngle = 0;
-	m_OffsetX = 0;
-	m_OffsetY = 0;
+	m_OrthoWeight = framework->GetClientW();
+	m_OrthoHeight = framework->GetClientH();
+	CalculateMatrix();
 }
 
-void Camera::Run(const Model* pic)
+void Camera::SetAngle(float angle)
 {
-	//设置视口的矩阵
-	//m_RenderPipline.SetViewMatrix(m_X, m_Y);
-	//运行流水管线
-	//m_RenderPipline.DrawModel(pic);
-}								 
-
-void Camera::End()
-{
-
+	m_Angle = angle;
+	CalculateMatrix();
 }
 
-void Camera::CameraRotate(float angle)
+void Camera::SetPosition(float x, float y)
 {
-	m_OffsetAngle += angle;
-	if (m_OffsetAngle > 360)
-		m_OffsetAngle -= 360;
-	if (m_OffsetAngle < -360)
-		m_OffsetAngle += 360;
+	m_X = x;
+	m_Y = y;
+	CalculateMatrix();
 }
 
-void Camera::CameraMove(float x, float y)
+void Camera::SetOrthoSize(float w, float h)
 {
-	m_OffsetX += x;
-	m_OffsetY += y;
+	m_OrthoWeight = w;
+	m_OrthoHeight = h;
+	CalculateMatrix();
 }
 
-Matrix33 Camera::GetCameraMatrix()
+Matrix33 Camera::GetProjectionMatrix()
 {
-	return m_CameraMatrix;
+	return m_ProjectionMatrix;
 }
 
-void Camera::SetCameraSize(float offsetx, float offsety, float w, float h)
+Matrix33 Camera::GetViewMatrix()
 {
-	m_OffsetX = m_OffsetX + offsetx;
-	m_OffsetY = m_OffsetY + offsety;
-	m_Weight = w;
-	m_Hight = h;
+	return m_ViewMatrix;
 }
 
-void Camera::SetViewCamera(float w, float h)
+Matrix33 Camera::GetViewProjMatrix()
 {
-	m_Weight = w;
-	m_Hight = h;
+	return m_ViewProjMatrix;
 }
 
-void Camera::SetCameraMatrix()
+void Camera::CalculateMatrix()
 {
-	Matrix33 tm, rm;
-	//平移 旋转
-	tm.Translate(-m_OffsetX, -m_OffsetY);
-	rm.Rotate_A(-m_OffsetAngle);
-	m_CameraMatrix = tm * rm;
+	Matrix33 tm,rm;
+	tm.Translate(-m_X, -m_Y);
+	rm.Rotate_A(-m_Angle);
+	m_ViewMatrix = tm * rm;
 
+	Matrix33 sm;
+	sm.Scale(1.0f/m_OrthoWeight,1.0f/m_OrthoHeight);
+	m_ProjectionMatrix = sm;
+
+	m_ViewProjMatrix = m_ProjectionMatrix * m_ViewMatrix;
 }
-

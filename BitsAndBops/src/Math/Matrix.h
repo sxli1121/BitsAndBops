@@ -16,6 +16,13 @@ public:
 	void Translate(float x, float y);
 
 	Matrix33 operator * (const Matrix33& m);
+
+	inline static Matrix33 MakeTranslate(float x, float y)
+	{
+		Matrix33 m;
+		m.Translate(x, y);
+		return m;
+	}
 };
 
 inline Vector operator *(const Vector& v, const Matrix33& m)

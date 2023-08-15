@@ -66,7 +66,8 @@ private:
 	float m_ClientY;
 	//const CObject* m_Tag;     //¸úËæ¶ÔÏó
 
-	Camera m_camera;
+	Camera m_Camera;
+	Matrix33 m_ViewMatrix;
 
 	std::map<std::string, HDC> m_ImgMap;
 	std::map<std::string, PIC> m_PicMap;

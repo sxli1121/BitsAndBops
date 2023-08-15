@@ -220,14 +220,13 @@ void CGameOutput::DrawPic(const char* key, Matrix33* m, int level)
     assert(bit != m_PicMap.end());
 
     Matrix33 cameraMatrix;
-    m_camera.CameraMove(10,10);
-    m_camera.SetCameraMatrix();
-    cameraMatrix = m_camera.GetCameraMatrix();
+    m_Camera.SetPosition(10,10);
+
+    cameraMatrix = m_camera.GetProjectionMatrix();
     
     LAYER_BMP  tbmp;
     tbmp.Pic = &bit->second;
- 
-    
+
     assert(tbmp.Pic != 0);
 
    //世界坐标转换为窗口坐标
@@ -252,6 +251,18 @@ void CGameOutput::DrawPic(const char* key, Matrix33* m, int level)
     tbmp.Matrix.eDy = m->eDx * xm.eM12 + m->eDy * xm.eM22 + 1 * xm.eDy;
 
     tbmp.Matrix = *m * cameraMatrix;
+
+    //投影之后是2*2的图片 因为y是数学坐标系-需要镜像
+    Matrix33 m1, m2, m3, m4;
+    //镜像
+   // m1.Scale(1, -1);
+    //锚点变到左上角
+    m2.Translate(m_ClientX, m_ClientY);
+    //适应窗口大小
+    m3.Scale(m_ClientW, m_ClientH);
+    //m4.Translate(offx, offy);
+    m_ViewMatrix = m1 * m2 * m3 * m4;
+    tbmp.Matrix = tbmp.Matrix * m_ViewMatrix;
 
     switch (level)
     {
@@ -364,8 +375,6 @@ void CGameOutput::End()
         //(m->eDx - m_cx)* m->eM11   绘制位置 - 窗口的位置 * 系数  代表画在窗口中的时候 窗口位置也需要对应调整
         DrawAlpha(m_BackDC, bmp->dc, m->eDx - m_ClientX * m->eM11, m->eDy - m_ClientY * m->eM22,
             bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
-
-      
         XFORM xm;
         xm.eM11 = 1;
         xm.eM22 = 1;

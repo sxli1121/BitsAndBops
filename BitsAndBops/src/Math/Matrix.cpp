@@ -59,3 +59,4 @@ Matrix33 Matrix33::operator*(const Matrix33& m)
 	m2.eDy = eDx * m.eM12 + eDy * m.eM22 + m.eDy;
 	return m2;
 }
+
