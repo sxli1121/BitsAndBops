@@ -1,7 +1,7 @@
 #pragma once
 #include "Action.h"
 class CHero;
-class CHero_idle :public CAction
+class CHero_idle 
 {
 
 //	PIC_InAnimation* m_pic;
@@ -17,7 +17,7 @@ class CHero_idle :public CAction
 //	int GetDefenseRectLen();
 //	int GetPicLen();
 
-	CHero* m_Hero;    //╧рть
+	//CHero* m_Hero;    //╧рть
 public:
 	void SetTag(CObject* tag);
 	void Act_Begin();                            

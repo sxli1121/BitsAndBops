@@ -2,7 +2,7 @@
 #include "Animation/Animation.h"
 class CObject;
 
-class CAction
+class CAnimation
 {
 protected:
 	PIC_InAnimation* m_pic;
@@ -13,8 +13,8 @@ protected:
 	//是否循环播放图片
 	int m_LoopFram =-1;
 public:
-	CAction();
-	virtual ~CAction();
+	CAnimation();
+	virtual ~CAnimation();
 	//virtual void SetTag(CObject* tag);
 	virtual void Act_Begin();                            //完全重新开始--刚开始的时候生成开始动画
 	virtual void Act_Play();
@@ -25,10 +25,6 @@ public:
 	virtual void Run();
 	virtual void End();
 
-	CRect* GetAttackRect();
-	int GetAttackRectLen();
-	CRect* GetDefenseRect();
-	int GetDefenseRectLen();
 	int GetPicLen();
 };
 

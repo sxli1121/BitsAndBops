@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameObject\HammerEffect.cpp" />
     <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Scene\CHammerScene.cpp" />
     <ClCompile Include="src\OutPutAndInput\Camera.cpp" />
@@ -40,6 +41,7 @@
     <ClCompile Include="src\Math\Vector3D.cpp" />
     <ClCompile Include="src\OutPutAndInput\RenderingPipline.cpp" />
     <ClCompile Include="src\Scene\FightScene.cpp" />
+    <ClCompile Include="src\Scene\HammerStartScene.cpp" />
     <ClCompile Include="src\Scene\StartScene.cpp" />
     <ClCompile Include="src\Scene\ta.cpp" />
     <ClCompile Include="src\Scene\TestSence.cpp" />
@@ -51,6 +53,7 @@
     <ClCompile Include="src\ToolManage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameObject\HammerEffect.h" />
     <ClInclude Include="src\Audio\AudioManager.h" />
     <ClInclude Include="src\Audio\fmod.h" />
     <ClInclude Include="src\Scene\CHammerScene.h" />
@@ -73,6 +76,7 @@
     <ClInclude Include="src\OutPutAndInput\RenderingPipline.h" />
     <ClInclude Include="src\Core\Scene.h" />
     <ClInclude Include="src\Scene\FightScene.h" />
+    <ClInclude Include="src\Scene\HammerStartScene.h" />
     <ClInclude Include="src\Scene\StartScene.h" />
     <ClInclude Include="src\Scene\ta.h" />
     <ClInclude Include="src\Scene\TestSence.h" />

@@ -105,6 +105,12 @@
     <ClCompile Include="src\Audio\AudioManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\HammerEffect.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\HammerStartScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation\Animation.h">
@@ -198,6 +204,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Audio\fmod.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\HammerEffect.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\HammerStartScene.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

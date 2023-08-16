@@ -3,6 +3,7 @@
 #include "Scene/StartScene.h"
 #include "Scene/FightScene.h"
 #include "Scene/TestSence2.h"
+#include "Scene/HammerStartScene.h"
 #include "Scene/ta.h"
 #include "Math/vector.h"
 #include "Math/Matrix.h"

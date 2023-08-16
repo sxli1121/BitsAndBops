@@ -154,7 +154,7 @@ bool CAudioManager::PlayOnceAudio(const char* key)
 		return 0;
 
 	//播放音频并设置音量
-	
+
 	FSOUND_SetVolume(FSOUND_PlaySound(FSOUND_FREE, i->second), m_OnceVolume);
 	return 1;
 }

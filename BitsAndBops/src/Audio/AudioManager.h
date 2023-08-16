@@ -61,6 +61,7 @@ public:
 	bool PlayLoopAudio(const char* key);
 	//Õ£÷π“Ù¿÷
 	bool StopLoopAudio(const char* key);
+
 	//≤•∑≈“Ù–ß
 	bool PlayOnceAudio(const char* key);
 

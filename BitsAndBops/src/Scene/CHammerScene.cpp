@@ -2,13 +2,14 @@
 #include "OutputAndInput/GameOutput.h"
 #include "OutputAndInput/GameInput.h"
 #include "Math/Matrix.h"
+#include "Audio/AudioManager.h"
 
 void CHammerScene::Init()
 {
 	//加载开始图片与音效
 	CGameOutput* gameoutput = CGameOutput::GetGameOutput();
-	gameoutput->AddImg("hammer_title_screen", "Assets / Textures/FristRound /Pic/hammer_time_title_screen.png");
-	gameoutput->AddPic("hammer_title", "hammer_title_screen", 0, 0, 1920, 1080);
+	//gameoutput->AddImg("hammer_title_screen", "Assets / Textures/FristRound /Pic/hammer_time_title_screen.png");
+	//gameoutput->AddPic("hammer_title", "hammer_title_screen", 0, 0, 1920, 1080);
 
 	//运行环节图片与音效
 	//手
@@ -18,6 +19,9 @@ void CHammerScene::Init()
 	gameoutput->AddPic("hand2", "hand2", 0, 0, 1079, 1305);
 	gameoutput->AddImg("hand3", "Assets / Textures/FristRound /Pic/hand_3.png");
 	gameoutput->AddPic("hand3", "hand3", 0, 0, 1084, 1305);
+	gameoutput->AddImg("hand_smear", "Assets / Textures/FristRound /Pic/hand_smear.png");
+	gameoutput->AddPic("hand_smear", "hand_smear", 0, 0, 978, 1305);
+
 	//锤子
 	gameoutput->AddImg("hammer", "Assets / Textures/FristRound /Pic/hammer.png");
 	gameoutput->AddPic("hammer", "hammer", 0, 0, 1479, 1001);
@@ -78,14 +82,32 @@ void CHammerScene::Init()
 	gameoutput->AddImg("tryagain_sticker", "Assets / Textures/FristRound /Pic/tryagain_sticker.png");
 	gameoutput->AddPic("tryagain_sticker", "tryagain_sticker", 0, 0, 428, 344);
 
+
+	CAudioManager audio;
+	//对话框确认
+	audio.PushOnceAudio("CatTurn", "Assets/Audios/FristRound/SFX_FS_CatTurn.wav");
+	//正式背景
+	audio.PushOnceAudio("HammerTime", "Assets/Audios/FristRound/HammerTime.wav");
+	//钉子效果音效-击中
+	audio.PushOnceAudio("SFX_HT_NailHammerHit", "Assets/Audios/FristRound/SFX_HT_NailHammerHit.wav");
+	//错过倾斜
+	audio.PushOnceAudio("SFX_HT_NailMissTilt", "Assets/Audios/FristRound/SFX_HT_NailMissTilt.wav");
+	//稍微偏差
+	audio.PushOnceAudio("SFX_HT_NailPlace", "Assets/Audios/FristRound/SFX_HT_NailPlace.wav");
 }
 
 void CHammerScene::Run()
 {
 	CGameOutput* gameoutput = CGameOutput::GetGameOutput();
-	Matrix33 tm;
-	tm.Translate(0, 0);
-	gameoutput->DrawPic("hammer_title", &tm,6);
+	//根据时间判定是否成功
+	//时间固定记录在头文件中
+	//
+
+	//音乐的播放（背景音乐）- 一直播放 如果暂停 replay
+	// 音效 -（只播放一次） - 如果按键按下 replay
+	
+	//每次运行获取时间-(时间到达时间戳的时候 判断按键是否被按下)
+	//按键按下 判断是否在时间戳附近-（决定播放的音效）
 
 
 }
