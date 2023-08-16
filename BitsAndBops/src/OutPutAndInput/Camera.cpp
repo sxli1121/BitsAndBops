@@ -57,5 +57,5 @@ void Camera::CalculateMatrix()
 	sm.Scale(1.0f/m_OrthoWeight,1.0f/m_OrthoHeight);
 	m_ProjectionMatrix = sm;
 
-	m_ViewProjMatrix = m_ProjectionMatrix * m_ViewMatrix;
+	m_ViewProjMatrix =   m_ViewMatrix * m_ProjectionMatrix;
 }

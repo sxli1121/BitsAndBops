@@ -26,7 +26,10 @@ void CTestScene3::Init()
 void CTestScene3::Run()
 {
 	CGameOutput* go = CGameOutput::GetGameOutput();
+	Camera m_camera;
 	m_camera.SetAngle(45);
+	go->SetCamera(&m_camera);
+	
 	//m_camera.CameraMove();
 	Matrix33 tm = Matrix33::MakeTranslate(0, 0);
 	go->DrawPic("c",&tm);

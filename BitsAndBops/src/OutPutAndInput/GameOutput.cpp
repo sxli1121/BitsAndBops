@@ -220,9 +220,8 @@ void CGameOutput::DrawPic(const char* key, Matrix33* m, int level)
     assert(bit != m_PicMap.end());
 
     Matrix33 cameraMatrix;
-    m_Camera.SetPosition(10,10);
-
-    cameraMatrix = m_camera.GetProjectionMatrix();
+    //m_Camera.SetPosition(10,10);
+    cameraMatrix = m_Camera.GetProjectionMatrix();
     
     LAYER_BMP  tbmp;
     tbmp.Pic = &bit->second;
@@ -238,17 +237,17 @@ void CGameOutput::DrawPic(const char* key, Matrix33* m, int level)
  /*   xm.eDx = -m_ClientW;
     xm.eDy = -m_ClientH;*/
  
-    xm.eDx = 0;
-    xm.eDy = 0;
+    //xm.eDx = 0;
+    //xm.eDy = 0;
 
-    tbmp.Matrix.eM11 = m->eM11 * xm.eM11 + m->eM12 * xm.eM21 + 0 * xm.eDx;
-    tbmp.Matrix.eM12 = m->eM11 * xm.eM12 + m->eM12 * xm.eM22 + 0 * xm.eDy;
-    //eM13 = 0;
-    tbmp.Matrix.eM21 = m->eM21 * xm.eM11 + m->eM22 * xm.eM21 + 0 * xm.eDx;
-    tbmp.Matrix.eM22 = m->eM21 * xm.eM12 + m->eM22 * xm.eM22 + 0 * xm.eDy;
-    //eM23 = 0;
-    tbmp.Matrix.eDx = m->eDx * xm.eM11 + m->eDy * xm.eM21 + 1 * xm.eDx;
-    tbmp.Matrix.eDy = m->eDx * xm.eM12 + m->eDy * xm.eM22 + 1 * xm.eDy;
+    //tbmp.Matrix.eM11 = m->eM11 * xm.eM11 + m->eM12 * xm.eM21 + 0 * xm.eDx;
+    //tbmp.Matrix.eM12 = m->eM11 * xm.eM12 + m->eM12 * xm.eM22 + 0 * xm.eDy;
+    ////eM13 = 0;
+    //tbmp.Matrix.eM21 = m->eM21 * xm.eM11 + m->eM22 * xm.eM21 + 0 * xm.eDx;
+    //tbmp.Matrix.eM22 = m->eM21 * xm.eM12 + m->eM22 * xm.eM22 + 0 * xm.eDy;
+    ////eM23 = 0;
+    //tbmp.Matrix.eDx = m->eDx * xm.eM11 + m->eDy * xm.eM21 + 1 * xm.eDx;
+    //tbmp.Matrix.eDy = m->eDx * xm.eM12 + m->eDy * xm.eM22 + 1 * xm.eDy;
 
     tbmp.Matrix = *m * cameraMatrix;
 
@@ -261,8 +260,10 @@ void CGameOutput::DrawPic(const char* key, Matrix33* m, int level)
     //适应窗口大小
     m3.Scale(m_ClientW, m_ClientH);
     //m4.Translate(offx, offy);
-    m_ViewMatrix = m1 * m2 * m3 * m4;
+    m_ViewMatrix = m3 * m2;
+
     tbmp.Matrix = tbmp.Matrix * m_ViewMatrix;
+
 
     switch (level)
     {
@@ -322,6 +323,11 @@ void CGameOutput::DrawFront(const char* key, float x, float y, int level, float 
     case DISTANT_VIEW1:m_FrontBmp1.push_back(tbmp); break;
     case DISTANT_VIEW2:m_FrontBmp2.push_back(tbmp); break;
     }
+}
+
+void CGameOutput::SetCamera(Camera* cam)
+{
+    m_Camera = *cam;
 }
 
 void CGameOutput::DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3,unsigned int color)

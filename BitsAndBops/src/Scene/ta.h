@@ -18,7 +18,7 @@ class CTestScene3:public CScene
 	Vector3D atDir;
 	Vector3D up;*/
 
-	Camera m_camera;
+	//Camera m_camera;
 	
 public:
 	void Init();

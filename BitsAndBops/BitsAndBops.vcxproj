@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Scene\CHammerScene.cpp" />
     <ClCompile Include="src\OutPutAndInput\Camera.cpp" />
     <ClCompile Include="src\GameObject\Action.cpp" />
@@ -50,6 +51,8 @@
     <ClCompile Include="src\ToolManage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Audio\AudioManager.h" />
+    <ClInclude Include="src\Audio\fmod.h" />
     <ClInclude Include="src\Scene\CHammerScene.h" />
     <ClInclude Include="src\OutPutAndInput\Camera.h" />
     <ClInclude Include="src\GameObject\Action.h" />

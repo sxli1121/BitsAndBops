@@ -5,8 +5,22 @@
 
 void CHammerAnimation::Init()
 {
-
+	m_HammerAmation.Init();
+	m_HammerAmation.AddAnmiationPic("idle0", -35, -134, 5);
+	m_HammerAmation.AddAnmiationPic("idle1", -35, -134, 5);
+	m_HammerAmation.AddAnmiationPic("idle2", -34, -135, 5);
+	m_HammerAmation.AddAnmiationPic("idle3", -34, -135, 5);
+	m_HammerAmation.AddAnmiationPic("idle4", -34, -136, 5);
+	m_HammerAmation.AddAnmiationPic("idle5", -35, -136, 5);
+	m_HammerAmation.AddAnmiationPic("idle6", -35, -136, 5);
+	m_HammerAmation.AddAnmiationPic("idle7", -35, -136, 5);
+	m_HammerAmation.AddAnmiationPic("idle8", -35, -136, 5);
+	m_HammerAmation.AddAnmiationPic("idle9", -35, -135, 5);
+	m_HammerAmation.AddAnmiationPic("idle10", -35, -135, 5);
+	m_HammerAmation.AddAnmiationPic("idle11", -35, -134, 5);
+	m_HammerAmation.Animation_RePlay();
 }
+
 
 void CHammerAnimation::Run()
 {

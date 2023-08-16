@@ -3,6 +3,7 @@
 #include "Action.h"
 #include "Hero_idle.h"
 #include "Hero_Move.h"
+#include "Audio/AudioManager.h"
 #include <string>
 #include <map>
 class CAction;
@@ -11,7 +12,9 @@ class CHammerAnimation
 {
 	PIC_InAnimation* m_pic;
 	//对应动画
-	Animation m_Amation;
+	Animation m_HammerAmation;
+	Animation m_HandAmation;
+	Animation m_EffectAmation;
 	//行为状态-play pause stop
 	int m_state;
 	//是否循环播放图片

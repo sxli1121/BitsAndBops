@@ -116,6 +116,7 @@ public:
 		float sx=1.0f, float sy =1.0f);
 	void DrawFront(const char* key, float x, float y, int level, float sx = 1.0f, float sy = 1.0f);
 
+	void SetCamera(Camera* cam);
 	//void SetCameraMatrix();
 	void SetClientXY(float cx, float cy);
 	void SetTag(const CObject* tag);
