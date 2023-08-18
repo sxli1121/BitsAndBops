@@ -42,13 +42,7 @@
     <ClCompile Include="src\Math\Vector3D.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\FightScene.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Scene\StartScene.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\ta.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\TestSence.cpp">
@@ -108,7 +102,34 @@
     <ClCompile Include="src\GameObject\HammerEffect.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\HammerStartScene.cpp">
+    <ClCompile Include="src\Scene\HammerScene\HammerScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\TimerStampManage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StateMachine\StateMachine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\HammerScene\States\HammerOpening.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\HammerScene\States\HammerTeaching.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\HammerScene\States\HammerConfirming.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\HammerScene\States\HammerGaming.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\HammerScene\States\HammerSettlementing.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameParticipator\MobileStation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Nail.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,13 +161,7 @@
     <ClInclude Include="src\Math\Vector3D.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Scene\FightScene.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\Scene\StartScene.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Scene\ta.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\TestSence.h">
@@ -203,13 +218,46 @@
     <ClInclude Include="src\Audio\AudioManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Audio\fmod.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameObject\HammerEffect.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Scene\HammerStartScene.h">
+    <ClInclude Include="src\Scene\HammerScene\HammerScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\SingletonTemplate.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tools\TimerStampManage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StateMachine\State.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StateMachine\StateMachine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\HammerScene\States\HammerOpening.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\HammerScene\States\HammerTeaching.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\HammerScene\States\HammerConfirming.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\HammerScene\States\HammerGaming.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\HammerScene\States\HammerSettlementing.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameParticipator\Participator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameParticipator\MobileStation.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Nail.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

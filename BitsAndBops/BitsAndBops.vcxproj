@@ -19,6 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Nail.cpp" />
+    <ClCompile Include="src\GameParticipator\MobileStation.cpp" />
+    <ClCompile Include="src\Scene\HammerScene\States\HammerSettlementing.cpp" />
+    <ClCompile Include="src\Scene\HammerScene\States\HammerGaming.cpp" />
+    <ClCompile Include="src\Scene\HammerScene\States\HammerConfirming.cpp" />
+    <ClCompile Include="src\Scene\HammerScene\States\HammerTeaching.cpp" />
+    <ClCompile Include="src\Scene\HammerScene\States\HammerOpening.cpp" />
     <ClCompile Include="src\GameObject\HammerEffect.cpp" />
     <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Scene\CHammerScene.cpp" />
@@ -40,10 +47,8 @@
     <ClCompile Include="src\Math\vector.cpp" />
     <ClCompile Include="src\Math\Vector3D.cpp" />
     <ClCompile Include="src\OutPutAndInput\RenderingPipline.cpp" />
-    <ClCompile Include="src\Scene\FightScene.cpp" />
-    <ClCompile Include="src\Scene\HammerStartScene.cpp" />
+    <ClCompile Include="src\Scene\HammerScene\HammerScene.cpp" />
     <ClCompile Include="src\Scene\StartScene.cpp" />
-    <ClCompile Include="src\Scene\ta.cpp" />
     <ClCompile Include="src\Scene\TestSence.cpp" />
     <ClCompile Include="src\Scene\TestSence2.cpp" />
     <ClCompile Include="src\Core\Scene_Manager.cpp" />
@@ -51,11 +56,20 @@
     <ClCompile Include="src\Tools\Timer.cpp" />
     <ClCompile Include="src\Tool.cpp" />
     <ClCompile Include="src\ToolManage.cpp" />
+    <ClCompile Include="src\Tools\TimerStampManage.cpp" />
+    <ClCompile Include="src\StateMachine\StateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Nail.h" />
+    <ClInclude Include="src\GameParticipator\MobileStation.h" />
+    <ClInclude Include="src\GameParticipator\Participator.h" />
+    <ClInclude Include="src\Scene\HammerScene\States\HammerSettlementing.h" />
+    <ClInclude Include="src\Scene\HammerScene\States\HammerGaming.h" />
+    <ClInclude Include="src\Scene\HammerScene\States\HammerConfirming.h" />
+    <ClInclude Include="src\Scene\HammerScene\States\HammerTeaching.h" />
+    <ClInclude Include="src\Scene\HammerScene\States\HammerOpening.h" />
     <ClInclude Include="src\GameObject\HammerEffect.h" />
     <ClInclude Include="src\Audio\AudioManager.h" />
-    <ClInclude Include="src\Audio\fmod.h" />
     <ClInclude Include="src\Scene\CHammerScene.h" />
     <ClInclude Include="src\OutPutAndInput\Camera.h" />
     <ClInclude Include="src\GameObject\Action.h" />
@@ -75,17 +89,19 @@
     <ClInclude Include="src\Math\Vector3D.h" />
     <ClInclude Include="src\OutPutAndInput\RenderingPipline.h" />
     <ClInclude Include="src\Core\Scene.h" />
-    <ClInclude Include="src\Scene\FightScene.h" />
-    <ClInclude Include="src\Scene\HammerStartScene.h" />
+    <ClInclude Include="src\Scene\HammerScene\HammerScene.h" />
     <ClInclude Include="src\Scene\StartScene.h" />
-    <ClInclude Include="src\Scene\ta.h" />
     <ClInclude Include="src\Scene\TestSence.h" />
     <ClInclude Include="src\Scene\TestSence2.h" />
     <ClInclude Include="src\Core\Scene_Manager.h" />
     <ClInclude Include="src\OutPutAndInput\TextureManager.h" />
+    <ClInclude Include="src\Core\SingletonTemplate.h" />
+    <ClInclude Include="src\StateMachine\State.h" />
     <ClInclude Include="src\Tools\Timer.h" />
     <ClInclude Include="src\Tool.h" />
     <ClInclude Include="src\ToolManage.h" />
+    <ClInclude Include="src\Tools\TimerStampManage.h" />
+    <ClInclude Include="src\StateMachine\StateMachine.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -99,14 +115,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -140,24 +156,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)Src;$(SolutionDir)Dependencies\Freeimage\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\fmod\include;$(SolutionDir)Dependencies\Freeimage\include;$(ProjectDir)Src</IncludePath>
     <IntDir>$(SolutionDir)bin\intermediates\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>F:\SXGithub\BitsAndBops\BitsAndBops\src;$(SolutionDir)Dependencies\Freeimage\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\fmod\include;$(SolutionDir)Dependencies\Freeimage\include;$(ProjectDir)Src</IncludePath>
     <IntDir>$(SolutionDir)bin\intermediates\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IntDir>$(SolutionDir)bin\intermediates\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>F:\SXGithub\BitsAndBops\BitsAndBops\src;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\fmod\include;$(SolutionDir)Dependencies\Freeimage\include;$(ProjectDir)Src</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IntDir>$(SolutionDir)bin\intermediates\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>F:\SXGithub\BitsAndBops\BitsAndBops\src;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\fmod\include;$(SolutionDir)Dependencies\Freeimage\include;$(ProjectDir)Src</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -168,13 +184,15 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Freeimage\libs\x86;$(SolutionDir)Dependencies\fmod\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
-      <Message>Copy Freeimage DLL</Message>
+      <Command>copy $(SolutionDir)Dependencies\Freeimage\libs\x86\FreeImage.dll $(OutputPath)
+copy $(SolutionDir)Dependencies\fmod\libs\x86\fmod.dll $(OutputPath)</Command>
+      <Message>Copy DLL</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -188,14 +206,17 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Freeimage\libs\x86;$(SolutionDir)Dependencies\fmod\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)Dependencies\Freeimage\libs\FreeImage.dll $(OutputPath)FreeImage.dll</Command>
-      <Message>Copy Freeimage DLL</Message>
+      <Command>copy $(SolutionDir)Dependencies\Freeimage\libs\x86\FreeImage.dll $(OutputPath)
+copy $(SolutionDir)Dependencies\fmod\libs\x86\fmod.dll $(OutputPath)</Command>
+      <Message>Copy DLL</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -209,12 +230,11 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Freeimage\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Freeimage\libs\x64;$(SolutionDir)Dependencies\fmod\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy $(SolutionDir)Dependencies\Freeimage\libs\x64\FreeImage.dll $(OutputPath)</Command>
       <Message>Copy Freeimage DLL</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -233,11 +253,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Freeimage\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Freeimage\libs\x64;$(SolutionDir)Dependencies\fmod\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)Dependencies\Freeimage\libs\FreeImage.dll $(OutputPath)FreeImage.dll</Command>
+      <Command>copy $(SolutionDir)Dependencies\Freeimage\libs\x64\FreeImage.dll $(OutputPath)</Command>
       <Message>Copy Freeimage DLL</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>

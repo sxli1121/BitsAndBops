@@ -26,7 +26,7 @@ class CTestScene2 :public CScene
 	int speed;
 public:
 	void Init();
-	void Run();
+	void Update(float dt);
 	void End();
 };
 

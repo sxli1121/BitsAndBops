@@ -19,9 +19,8 @@ class TimerClock
 public:
 	//TimerClock();
 	//~TimerClock();
-	// //更新时间
-	//std::chrono::time_point<std::chrono::nanoseconds> UpData();
-	
+	//更新时间
+	std::chrono::steady_clock::time_point GetNowTime();
 	//开始计时
 	 void Begin();
 	//获取毫秒

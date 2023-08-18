@@ -15,6 +15,6 @@ class CStartScene : public CScene
 	Vector pgDir;      //炮管的向量
 public:
 	void Init();
-	void Run();
+	void Update(float dt);
 	void End();
 };

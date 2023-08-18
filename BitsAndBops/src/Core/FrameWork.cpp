@@ -3,9 +3,10 @@
 #include "OutputAndInput/GameInput.h"
 #include "Core/Scene_Manager.h"
 #include "Core/Scene.h"
+#include "Audio/AudioManager.h"
 
 #include <time.h>
-
+#include <chrono>
 //焦点
 static BOOL g_Act;
 CFrameWork* CFrameWork::frame_work = nullptr;
@@ -87,8 +88,8 @@ void CFrameWork::Init(HINSTANCE hInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	m_ClientW = 1000;
-	m_ClientH = 800;
+	m_ClientW = 800;
+	m_ClientH = 400;
 	g_Act = TRUE;
 	//1) 填充窗口结构体
 	WNDCLASS wc;
@@ -134,6 +135,9 @@ void CFrameWork::Init(HINSTANCE hInstance,
 	CGameOutput::GetGameOutput()->Init();
 	CGameInput::GetGameInput()->SetHWND(m_hWnd);
 
+	CAudioManager::Get().Init();
+
+
 	m_CurScene = nullptr;
 	m_NextScene = nullptr;
 	m_SceneManage = new CSceneManage;
@@ -143,6 +147,8 @@ void CFrameWork::Run()
 {
 	srand((int)time(0));
 	rand();
+
+	auto lastUpdateTime = std::chrono::high_resolution_clock::now();
 
 	if (m_CurScene != nullptr)
 		m_CurScene->Init();
@@ -158,13 +164,18 @@ void CFrameWork::Run()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		else if (g_Act)
+		//else if (g_Act)
 		{
+			auto now = std::chrono::high_resolution_clock::now();
+			auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(now - lastUpdateTime).count();
+			lastUpdateTime = now;
+			float dt = duration / 1000000000.0f;
+
 			//输入输出初始化-当前场景运行
 			gi->Update();
 			go->Begin();
 			if (m_CurScene != nullptr)
-				m_CurScene->Run();
+				m_CurScene->Update(dt);
 			go->End();
 			//场景的切换
 			if (m_NextScene)
@@ -175,12 +186,14 @@ void CFrameWork::Run()
 				m_CurScene->Init();
 			}
 		}
-		else
+		/*else
 		{
 			WaitMessage();
 		}
-		Sleep(1);
+		Sleep(1);*/
 	}
+
+	CAudioManager::Get().Shutdown();
 }
 
 void CFrameWork::End()

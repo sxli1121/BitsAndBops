@@ -46,7 +46,7 @@ void CGameOutput::Init()
 bool CGameOutput::AddImg(const char* id, const char* fn)
 {
     //路径与key为空判断
-    assert(id != nullptr || fn != nullptr || id[0] != '-' );
+    assert(id != nullptr || fn != nullptr);
     std::string str = id;
     //key重复判断
     assert(m_ImgMap.find(str) == m_ImgMap.end());
@@ -54,7 +54,7 @@ bool CGameOutput::AddImg(const char* id, const char* fn)
     //选入DC 创建兼容DC并返回
     MyTextureManager::Instance().Init(m_BackDC);
     HDC dc = MyTextureManager::Instance().LoadImg(fn);
-
+    assert(dc);
     //DC入映射
     m_ImgMap.insert(std::pair<const char*, HDC>(id, dc));
     return true;
@@ -87,11 +87,13 @@ bool CGameOutput::AddPic(const char* bmpkey, const char* imgkey, int sx, int sy,
     std::map<std::string, HDC>::iterator it;
     str = imgkey;
     it = m_ImgMap.find(str);
+
     assert(it != m_ImgMap.end());
 
     str = bmpkey;
     PIC bmp;
     bmp.dc = it->second;
+    assert(bmp.dc != NULL);
     bmp.sx = sx;
     bmp.sy = sy;
     bmp.pw = pw;
@@ -104,6 +106,7 @@ bool CGameOutput::AddPic(const char* bmpkey, const char* imgkey, int sx, int sy,
 bool CGameOutput::AddBmp(const char* key, PIC bmp)
 {
     assert(key != nullptr);
+
     //检测 key 是否重复
     std::string str = key; 
     assert(m_PicMap.find(str) == m_PicMap.end());
@@ -212,6 +215,7 @@ void CGameOutput::DrawTxt(int x, int y, const char* string,unsigned int color)
 
 void CGameOutput::DrawPic(const char* key, Matrix33* m, int level)
 {
+
     assert(key != nullptr);
    //存在
     std::map<std::string, PIC>::iterator bit;
@@ -219,12 +223,15 @@ void CGameOutput::DrawPic(const char* key, Matrix33* m, int level)
     bit = m_PicMap.find(str);
     assert(bit != m_PicMap.end());
 
-    Matrix33 cameraMatrix;
-    //m_Camera.SetPosition(10,10);
-    cameraMatrix = m_Camera.GetProjectionMatrix();
-    
     LAYER_BMP  tbmp;
     tbmp.Pic = &bit->second;
+
+    Matrix33 cameraMatrix;
+    //m_Camera.SetPosition(10,10);
+    cameraMatrix = m_Camera.GetViewMatrix();
+    tbmp.Matrix = *m * cameraMatrix;
+    cameraMatrix = m_Camera.GetProjectionMatrix();
+    tbmp.Matrix = *m * cameraMatrix;
 
     assert(tbmp.Pic != 0);
 
@@ -249,18 +256,18 @@ void CGameOutput::DrawPic(const char* key, Matrix33* m, int level)
     //tbmp.Matrix.eDx = m->eDx * xm.eM11 + m->eDy * xm.eM21 + 1 * xm.eDx;
     //tbmp.Matrix.eDy = m->eDx * xm.eM12 + m->eDy * xm.eM22 + 1 * xm.eDy;
 
-    tbmp.Matrix = *m * cameraMatrix;
+    //tbmp.Matrix = *m * cameraMatrix;
 
     //投影之后是2*2的图片 因为y是数学坐标系-需要镜像
     Matrix33 m1, m2, m3, m4;
     //镜像
-   // m1.Scale(1, -1);
+    //m1.Scale(1, 1);
     //锚点变到左上角
-    m2.Translate(m_ClientX, m_ClientY);
+    //m2.Translate(0.5,0.5);
     //适应窗口大小
     m3.Scale(m_ClientW, m_ClientH);
     //m4.Translate(offx, offy);
-    m_ViewMatrix = m3 * m2;
+    m_ViewMatrix = m3;
 
     tbmp.Matrix = tbmp.Matrix * m_ViewMatrix;
 
@@ -435,6 +442,7 @@ void CGameOutput::End()
         bmp = m_LevelBmp2[i].Pic;
         m = &m_LevelBmp2[i].Matrix;
         SetWorldTransform(m_BackDC, &m_LevelBmp2[i].Matrix);
+        assert(bmp->dc != NULL);
         DrawAlpha(m_BackDC, bmp->dc,0,0,
             bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
        /* TransparentBlt(m_BackDC, -bmp->pw / 2, -bmp->ph / 2,

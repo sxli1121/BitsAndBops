@@ -1,5 +1,10 @@
 #include "Timer.h"
 
+std::chrono::steady_clock::time_point TimerClock::GetNowTime()
+{
+	return std::chrono::high_resolution_clock::now();
+}
+
 void TimerClock::Begin()
 {
 	//获取刚开始的时间
@@ -7,11 +12,6 @@ void TimerClock::Begin()
 	StartTime = std::chrono::high_resolution_clock::now();
 }
 
-//std::chrono::time_point<high_resolution_clock> TimerClock::UpData()
-//{
-//	//更新时间数据
-//	return std::chrono::high_resolution_clock::now();
-//}
 double TimerClock::GetTimerMilliSec()
 {
 	//获取时间间隔

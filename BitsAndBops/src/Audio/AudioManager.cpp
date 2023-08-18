@@ -1,7 +1,32 @@
 #include "AudioManager.h"
 #include <iostream>
+#include <cassert>
 
-#pragma comment(lib, "fmodvc.lib")
+CAudioManager* CAudioManager::s_Instance = new CAudioManager();
+
+void CAudioManager::Init()
+{
+	//FMOD初始化
+	FSOUND_Init(44100, m_MaxChannel, 0);
+}
+
+void CAudioManager::Shutdown()
+{
+	//通过迭代器 循环释放音频
+	std::map<std::string, _LOOPAUDIO>::iterator i;
+	for (i = m_LoopAudio.begin(); i != m_LoopAudio.end(); ++i)
+	{
+		FSOUND_Stream_Close(i->second._s);
+	}
+	std::map<std::string, FSOUND_SAMPLE*>::iterator j;
+	for (j = m_OnceAudio.begin(); j != m_OnceAudio.end(); ++j)
+	{
+		FSOUND_Sample_Free(j->second);
+	}
+
+	//FMOD关闭
+	FSOUND_Close();
+}
 
 CAudioManager::CAudioManager(int LoopVolume, int OnceVolume, int MaxChannel)
 :
@@ -9,26 +34,7 @@ m_MaxChannel(MaxChannel),
 m_OnceVolume(OnceVolume),
 m_LoopVolume(LoopVolume)
 {
-	//FMOD初始化
-	FSOUND_Init(44100, MaxChannel, 0);
-}
 
-CAudioManager::~CAudioManager()
-{
-	//通过迭代器 循环释放音频
-	std::map<std::string, _LOOPAUDIO>::iterator i;
-	for(i = m_LoopAudio.begin(); i != m_LoopAudio.end(); ++i)
-	{
-		FSOUND_Stream_Close(i->second._s);
-	}
-	std::map<std::string, FSOUND_SAMPLE*>::iterator j;
-	for(j = m_OnceAudio.begin(); j != m_OnceAudio.end(); ++j)
-	{
-		FSOUND_Sample_Free(j->second);
-	}
-
-	//FMOD关闭
-	FSOUND_Close();
 }
 
 //加载音乐
@@ -44,13 +50,14 @@ bool CAudioManager::PushLoopAudio(const char* key,		//音乐ID
 	//如果没有找到 则加载音乐
 	_LOOPAUDIO la;
 	la._s = FSOUND_Stream_Open(AudioPath, FSOUND_LOOP_NORMAL, 0, 0);
-
+	assert(la._s != NULL);
 	//放入映射中
 	if(la._s)
 	{
 		m_LoopAudio[s] = la;
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -64,10 +71,11 @@ bool CAudioManager::PushOnceAudio(const char* key,		//音乐ID
 		return 0;
 
 	//加载音频
+	
 	FSOUND_SAMPLE* fs = FSOUND_Sample_Load(FSOUND_FREE, AudioPath, FSOUND_LOOP_OFF, 0, 0);
+	assert(fs != NULL);
 	if(fs)
 	{
-		
 		m_OnceAudio[s] = fs;
 		return 1;
 	}
@@ -150,13 +158,14 @@ bool CAudioManager::PlayOnceAudio(const char* key)
 	//如果无法找到key 播放失败
 	std::string s = key;
 	std::map<std::string, FSOUND_SAMPLE*>::iterator i = m_OnceAudio.find(s);
+	assert(i != m_OnceAudio.end());
 	if(i == m_OnceAudio.end())
-		return 0;
+		return false;
 
 	//播放音频并设置音量
 
 	FSOUND_SetVolume(FSOUND_PlaySound(FSOUND_FREE, i->second), m_OnceVolume);
-	return 1;
+	return true;
 }
 
 int CAudioManager::GetLoopVolume()

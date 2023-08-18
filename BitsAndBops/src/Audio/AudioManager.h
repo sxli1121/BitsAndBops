@@ -4,13 +4,14 @@
 #include <string>
 #include <map>
 #include "fmod.h"
+//#include "Core/SingletonTemplate.h"
 
 /*
 LoopAudio  循环播放的音乐  一般指背景音乐
 OnceAudio  只播放一次的音乐 一般指音效
 */
 
-class CAudioManager
+class CAudioManager 
 {
 	//循环音频结构体
 	struct _LOOPAUDIO
@@ -39,12 +40,14 @@ class CAudioManager
 	std::map<std::string, FSOUND_SAMPLE*> m_OnceAudio;
 
 public:
-	CAudioManager(int LoopVolume = 127,	//背景音乐音量
-				int OnceVolume = 127,	//音效音量
-				int MaxChannel = 32);	//声道上限
-	
-	virtual ~CAudioManager();
 
+	static CAudioManager& Get() { return *s_Instance; }
+
+	void Init();
+	void Shutdown();
+
+
+	
 	//加载音乐
 	bool PushLoopAudio(const char* key,		//音乐ID
 					const char* AudioPath);	//音乐路径
@@ -70,5 +73,12 @@ public:
 	void SetLoopVolume(int Volume);
 	int GetOnceVolume();
 	void SetOnceVolume(int Volume);
+protected:
+	CAudioManager(int LoopVolume = 127,	//背景音乐音量
+		int OnceVolume = 127,	//音效音量
+		int MaxChannel = 32);	//声道上限
+
+private:
+	static CAudioManager* s_Instance;
 };
 #endif

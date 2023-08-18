@@ -5,35 +5,35 @@
 #include <iostream>
 void CTestScene2::Init()
 {
-	CGameOutput* go = CGameOutput::GetGameOutput();
-	//3组动画-英雄类中
-	m_Am = new Animation[3];
-	m_Amlen = 3;
-	m_AmIndex = 0;
-	//设置字体大小 
+	//CGameOutput* go = CGameOutput::GetGameOutput();
+	////3组动画-英雄类中
+	//m_Am = new Animation[3];
+	//m_Amlen = 3;
+	//m_AmIndex = 0;
+	////设置字体大小 
 
-	//当前动画（初始开始）-不演示
-	m_curAm = 0;
-	m_IsMove = false;
-	m_pic1 = 1;
-	m_pic2 = 0;
+	////当前动画（初始开始）-不演示
+	//m_curAm = 0;
+	//m_IsMove = false;
+	//m_pic1 = 1;
+	//m_pic2 = 0;
 
 
-	x = 500;
-	y = 700;
-	speed = 1;
+	//x = 500;
+	//y = 700;
+	//speed = 1;
 
-	char key[128];
-	char fn[128];
-	//idle
-	for (int i = 0; i < 12; i++)
-	{
-		//%02d  表示- 替换之后固定是2位   不够前面添0
-		//将8+i 替换到 pic\\00%d.bmp中 赋值到fn中-最长128
-		sprintf_s(fn, 128, "pic\\站立\\00%d.bmp", 8 + i);
-		sprintf_s(key, 128, "idle%d", i);
-		go->AddImg(key, fn);
-	}
+	//char key[128];
+	//char fn[128];
+	////idle
+	//for (int i = 0; i < 12; i++)
+	//{
+	//	//%02d  表示- 替换之后固定是2位   不够前面添0
+	//	//将8+i 替换到 pic\\00%d.bmp中 赋值到fn中-最长128
+	//	sprintf_s(fn, 128, "pic\\站立\\00%d.bmp", 8 + i);
+	//	sprintf_s(key, 128, "idle%d", i);
+	//	go->AddImg(key, fn);
+	//}
 
 	/*go->AddBmp("idle0", "idle0", 0, 0, 241, 286, 0);
 	go->AddBmp("idle1", "idle1", 0, 0, 241, 286, 0);
@@ -127,20 +127,20 @@ void CTestScene2::Init()
 
 }
 
-void CTestScene2::Run()
+void CTestScene2::Update(float dt)
 {
-	//绘制地面
-	CGameOutput* go = CGameOutput::GetGameOutput();
-	CGameInput* gi = CGameInput::GetGameInput();
-	PIC_InAnimation* pic1 = m_Am[m_AmIndex].GetPic(m_pic1);
-	
-	std::string str = pic1->bmp_key;
+	////绘制地面
+	//CGameOutput* go = CGameOutput::GetGameOutput();
+	//CGameInput* gi = CGameInput::GetGameInput();
+	//PIC_InAnimation* pic1 = m_Am[m_AmIndex].GetPic(m_pic1);
+	//
+	//std::string str = pic1->bmp_key;
 
-	//if (gi->GetState(_GI_K_A) == _KS_DH)
-	str = '-' + str;
+	////if (gi->GetState(_GI_K_A) == _KS_DH)
+	//str = '-' + str;
 
-	Matrix33 m, sm;
-	m.Translate(200, 200);
+	//Matrix33 m, sm;
+	//m.Translate(200, 200);
 	 
 	/*go->DrawBmp(str.c_str(), &m);
 	go->DrawRect(x, y, 3, 3, 3, RGB(255, 0, 0));

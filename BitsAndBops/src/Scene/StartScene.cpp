@@ -9,7 +9,7 @@ void CStartScene::Init()
 
 }
 
-void CStartScene::Run()
+void CStartScene::Update(float dt)
 {
 	
 }
