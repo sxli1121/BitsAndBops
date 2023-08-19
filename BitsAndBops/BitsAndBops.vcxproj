@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Nail.cpp" />
+    <ClCompile Include="src\GameParticipator\Nail.cpp" />
     <ClCompile Include="src\GameParticipator\MobileStation.cpp" />
     <ClCompile Include="src\Scene\HammerScene\States\HammerSettlementing.cpp" />
     <ClCompile Include="src\Scene\HammerScene\States\HammerGaming.cpp" />
@@ -60,7 +60,7 @@
     <ClCompile Include="src\StateMachine\StateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Nail.h" />
+    <ClInclude Include="src\GameParticipator\Nail.h" />
     <ClInclude Include="src\GameParticipator\MobileStation.h" />
     <ClInclude Include="src\GameParticipator\Participator.h" />
     <ClInclude Include="src\Scene\HammerScene\States\HammerSettlementing.h" />

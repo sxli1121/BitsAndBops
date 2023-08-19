@@ -129,7 +129,7 @@
     <ClCompile Include="src\GameParticipator\MobileStation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Nail.cpp">
+    <ClCompile Include="src\GameParticipator\Nail.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -257,7 +257,7 @@
     <ClInclude Include="src\GameParticipator\MobileStation.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Nail.h">
+    <ClInclude Include="src\GameParticipator\Nail.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

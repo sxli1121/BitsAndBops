@@ -6,36 +6,32 @@
 #include "Math/Matrix.h"
 #include "GameParticipator/MobileStation.h"
 
+#include "GameObject/Hammer.h"
+
 void HammerTeaching::OnEnter()
 {
 	CAudioManager::Get().PlayOnceAudio("Bits And Bops TUTORIAL 110");
 	m_timer.Begin();
+
+	m_hammer = new CHammeer;
 }
 
 void HammerTeaching::OnUpdate(float dt)
 {
+	//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½Ì¨(ï¿½Æ¶ï¿½Ì¨ï¿½ï¿½ï¿½Éµï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½-×´Ì¬ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)-
+	//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä²¥ï¿½Å¶ï¿½ï¿½ï¿½-ï¿½ÖµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê± ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½È«×´Ì¬
 
+	//ï¿½ï¿½ï¿½Ý°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¶ï¿½ï¿½ï¿½-ï¿½ï¿½ï¿½Ó£ï¿½Ê±ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ 
 
-	//Matrix33 m1,sm1,m2,sm2,m3,sm3;
-	//m1.Translate(100, 250);
-	//sm1.Scale(0.5, 0.3);
-	//m1 = sm1 * m1;
-	//m2.Translate(90, 250);
-	//sm2.Scale(1, 0.3);
-	//m2 = sm2 * m2;
-	//m3.Translate(320, 250);
-	//sm3.Scale(1, 0.3);
-	//m3 = sm3 * m3;
-	//gameoutput->DrawPic("wood_centre", &m1);
-	//gameoutput->DrawPic("wood_left", &m2);
-	//gameoutput->DrawPic("wood_right", &m3);
+	//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ ()
+
 	double time = m_timer.GetTimerMilliSec();
 	static bool i = true;
-	if (time > 0.0f && i == true)
+	if (/*time > 0.0f &&*/ i == true)
 	{
 		moblie = new MobileStation;
 		moblie->SetXY(-100, 250);
-		moblie->SetSpeed(20);
+		moblie->SetSpeed(200);
 		moblie->SetStationLen(STATION_LONG);
 		i = false;
 		moblie->UpDate(dt);
@@ -45,17 +41,21 @@ void HammerTeaching::OnUpdate(float dt)
 		moblie->UpDate(dt);
 	}
 
-	//
 	CGameOutput* gameoutput = CGameOutput::GetGameOutput();
 	Matrix33 m, sm;
 	m.Translate(0, 0);
 	sm.Scale(0.4, 0.4);
 	m = sm * m;
-	//±³¾°
+	//ï¿½ï¿½ï¿½ï¿½
 	gameoutput->DrawPic("fg", &m);
 
+	CGameInput* input = CGameInput::GetGameInput();
 
-	//Éú³ÉÏä×ÓÓë¶¤×Ó °´ÕÕÊ±¼ä
+	if (input->GetKeyDown(_GI_K_E))
+	{
+		m_hammer->HandAmation_Play();
+	}
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¶¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 
 
 }

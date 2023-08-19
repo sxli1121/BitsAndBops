@@ -9,17 +9,8 @@ void MobileStation::Init()
 
 void MobileStation::UpDate(float dt)
 {
-	//更新移动台的位置
-	//m_x = m_x * m_Speed;
-	//dt 运行一帧的时间
-	
-	//一秒 100 个像素点
-	//dt 秒 是 100/dt 个像素点
-	//m_speed = 100/dt * dt 
-	//dt * m_Speed /dt * dt = 
-
-	m_x = m_x + m_Speed * dt;
-
+	m_x += m_Speed * dt;
+	//m_x++;
 	CGameOutput* output = CGameOutput::GetGameOutput();
 
 	SetMatrix();
@@ -44,9 +35,9 @@ void MobileStation::SetSpeed(float speed)
 
 void MobileStation::SetStationLen(int lenid)
 {
-	//中间x的缩放 y恒定0.3
+	//锟叫硷拷x锟斤拷锟斤拷锟斤拷 y锟姐定0.3
 	float zoomx = 0;
-	//左右移动的 x y  -只有右面的移动会变
+	//锟斤拷锟斤拷锟狡讹拷锟斤拷 x y  -只锟斤拷锟斤拷锟斤拷锟斤拷贫锟斤拷锟斤拷
 	float off_right_x = 0;
 
 	if (lenid == STATION_SHORT)
@@ -74,10 +65,10 @@ void MobileStation::SetStationLen(int lenid)
 void MobileStation::SetMatrix()
 {
 	left_tm.Translate(m_x, m_y);
-	left_sm.Scale(1, 0.3f);
-	middle_tm.Translate(m_x + 15, m_y);
+	left_sm.Scale(0.3f, 0.3f);
+	middle_tm.Translate(m_x + 14.8f, m_y);
 	middle_sm.Scale(m_zoomx, 0.3f);
 	right_tm.Translate(m_x + m_offx, m_y);
-	right_sm.Scale(1, 0.3f);
+	right_sm.Scale(0.3f, 0.3f);
 
 }

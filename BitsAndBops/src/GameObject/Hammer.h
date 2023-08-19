@@ -14,7 +14,7 @@ class CHammeer
 	Animation m_HandAmation;
 public:
 	void Init();
-	void Run();
+	void Update();
 	void End();
 
 	void HandAmation_Play();

@@ -2,27 +2,31 @@
 #include "StateMachine/state.h"
 #include "Tools/Timer.h"
 
+class CHammeer;
+
 class MobileStation;
 class CHammerScene;
 
 class HammerTeaching : public State
 {
 public:
-	//¹¹ÔìµÄÊ±ºò-×Ô´øËùÊôµÄ³¡¾°
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½-ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½
 	HammerTeaching(CHammerScene* scene)
 		:m_Scene(scene) {}
-	//¼Ì³ÐÏî
+	//ï¿½Ì³ï¿½ï¿½ï¿½
 	void OnEnter() override;
 	void OnUpdate(float dt) override;
 	void OnExit() override;
 private:
 	//HammerTeaching(CHammerScene* scene);
-	//ËùÊô³¡¾°
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	CHammerScene* m_Scene;
 	//
 	TimerClock m_timer;
 	MobileStation* moblie;
 
+
+	CHammeer* m_hammer;
 	friend class CHammerScene;
 
 

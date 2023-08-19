@@ -5,6 +5,7 @@
 void TimerStampManage::Clear()
 {
 	m_TimeStamp.clear();
+	m_Size = 0;
 }
 
 TimerStampManage::TimerStampManage()

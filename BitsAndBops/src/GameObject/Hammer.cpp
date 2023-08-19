@@ -6,7 +6,9 @@
 void CHammeer::Init()
 {
 	//ДИзг
+
 	m_HammerAmation.Init();
+	//m_HammerAmation.SetMatrix();
 	m_HammerAmation.AddAnmiationPic("hammer", 0, 0, 5);
 	m_HammerAmation.Animation_RePlay();
 
@@ -19,7 +21,7 @@ void CHammeer::Init()
 	m_HandAmation.Animation_RePlay();
 }
 
-void CHammeer::Run()
+void CHammeer::Update()
 {
 }
 

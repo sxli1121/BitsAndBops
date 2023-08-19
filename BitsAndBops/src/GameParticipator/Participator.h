@@ -10,10 +10,10 @@ public:
 	void SetXY(int x,int y) { m_x = x; m_y = y;}
 	void SetAct(bool act) { m_Act = act; }
 protected:
-	//²ÎÓëÕßµÄ×ø±ê
-	int m_x;
-	int m_y;
-	//ÊÇ·ñ´æÔÚ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½
+	float m_x;
+	float m_y;
+	//ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
 	bool m_Act;
 };
 

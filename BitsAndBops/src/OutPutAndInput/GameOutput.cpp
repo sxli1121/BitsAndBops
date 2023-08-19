@@ -1,9 +1,9 @@
-#include "GameOutput.h"
+#include "OutPutAndInput/GameOutput.h"
 #include "Core/FrameWork.h"
 #include "Math/Matrix.h"
 //#include "CObject.h"
-#include "TextureManager.h"
-#include "Camera.h"
+#include "OutPutAndInput/TextureManager.h"
+#include "OutPutAndInput/Camera.h"
 
 #include <cassert>
 
@@ -202,15 +202,15 @@ void CGameOutput::DrawTxt(int x, int y, const char* string,unsigned int color)
     str.c = color;
     str.x = x;
     str.y = y;
-    m_Txt.push_back(str); 
+    //m_Txt.push_back(str); 
 
    // //设置文字颜色-给HDC设置文字颜色
-   // unsigned int  fc = SetTextColor(m_BackDC, color);
-   // TextOutA(m_BackDC, x, y, string, len);
+    unsigned int  fc = SetTextColor(m_BackDC, color);
+   //TextOutA(m_BackDC, x, y, string, len);
    // //绘制文字   HDC   输出的文字   文字长度  文字范围   文字形式
    //// DrawTextA(m_BackDC, i2->buf, i2->len, &r, DT_WORDBREAK);
    // //在哪个画布 绘制什么字体的颜色
-   // SetTextColor(m_BackDC, fc);
+    SetTextColor(m_BackDC, fc);
 }
 
 void CGameOutput::DrawPic(const char* key, Matrix33* m, int level)
@@ -271,15 +271,13 @@ void CGameOutput::DrawPic(const char* key, Matrix33* m, int level)
 
     tbmp.Matrix = tbmp.Matrix * m_ViewMatrix;
 
-
     switch (level)
     {
     case LEVEL1:m_LevelBmp1.push_back(tbmp); break;
     case LEVEL2:m_LevelBmp2.push_back(tbmp); break;
     case LEVEL3:m_LevelBmp3.push_back(tbmp); break;
     }
-
-    SetWorldTransform(m_BackDC, &xm);
+    //SetWorldTransform(m_BackDC, &xm);
 }
 
 void CGameOutput::DrawDistantView(const char* key, float x, float y, int level, float sx, float sy)
@@ -381,41 +379,41 @@ void CGameOutput::End()
     XFORM* m;
     //绘制远景
     int len = m_DistantViewBmp1.size();
-    for (int i = 0; i < len; i++)
-    {
-        bmp = m_DistantViewBmp1[i].Pic;
-        m = &m_DistantViewBmp1[i].Matrix;
-        //(m->eDx - m_cx)* m->eM11   绘制位置 - 窗口的位置 * 系数  代表画在窗口中的时候 窗口位置也需要对应调整
-        DrawAlpha(m_BackDC, bmp->dc, m->eDx - m_ClientX * m->eM11, m->eDy - m_ClientY * m->eM22,
-            bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
-        XFORM xm;
-        xm.eM11 = 1;
-        xm.eM22 = 1;
-        xm.eM12 = 0;
-        xm.eM21 = 0;
-        xm.eDx = 0;
-        xm.eDy = 0;
-        SetWorldTransform(m_BackDC, &xm);
-    }
+    //for (int i = 0; i < len; i++)
+    //{
+    //    bmp = m_DistantViewBmp1[i].Pic;
+    //    m = &m_DistantViewBmp1[i].Matrix;
+    //    //(m->eDx - m_cx)* m->eM11   绘制位置 - 窗口的位置 * 系数  代表画在窗口中的时候 窗口位置也需要对应调整
+    //    DrawAlpha(m_BackDC, bmp->dc, m->eDx - m_ClientX * m->eM11, m->eDy - m_ClientY * m->eM22,
+    //        bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
+    //    XFORM xm;
+    //    xm.eM11 = 1;
+    //    xm.eM22 = 1;
+    //    xm.eM12 = 0;
+    //    xm.eM21 = 0;
+    //    xm.eDx = 0;
+    //    xm.eDy = 0;
+    //    SetWorldTransform(m_BackDC, &xm);
+    //}
 
-    len = m_DistantViewBmp2.size();
-    for (int i = 0; i < len; i++)
-    {
-        bmp = m_DistantViewBmp2[i].Pic;
-        m = &m_DistantViewBmp2[i].Matrix;
-        DrawAlpha(m_BackDC, bmp->dc, m->eDx - m_ClientX * m->eM11, m->eDy - m_ClientY * m->eM22,
-            bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
-        //TransparentBlt(m_BackDC, m->eDx - m_cx * m->eM11, m->eDy - m_cy * m->eM22,
-        //    bmp->pw, bmp->ph, bmp->dc, bmp->sx, bmp->sy, bmp->pw, bmp->ph/*, bmp->c*/);
-        XFORM xm;
-        xm.eM11 = 1;
-        xm.eM22 = 1;
-        xm.eM12 = 0;
-        xm.eM21 = 0;
-        xm.eDx = 0;
-        xm.eDy = 0;
-        SetWorldTransform(m_BackDC, &xm);
-    }
+    //len = m_DistantViewBmp2.size();
+    //for (int i = 0; i < len; i++)
+    //{
+    //    bmp = m_DistantViewBmp2[i].Pic;
+    //    m = &m_DistantViewBmp2[i].Matrix;
+    //    DrawAlpha(m_BackDC, bmp->dc, m->eDx - m_ClientX * m->eM11, m->eDy - m_ClientY * m->eM22,
+    //        bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
+    //    //TransparentBlt(m_BackDC, m->eDx - m_cx * m->eM11, m->eDy - m_cy * m->eM22,
+    //    //    bmp->pw, bmp->ph, bmp->dc, bmp->sx, bmp->sy, bmp->pw, bmp->ph/*, bmp->c*/);
+    //    XFORM xm;
+    //    xm.eM11 = 1;
+    //    xm.eM22 = 1;
+    //    xm.eM12 = 0;
+    //    xm.eM21 = 0;
+    //    xm.eDx = 0;
+    //    xm.eDy = 0;
+    //    SetWorldTransform(m_BackDC, &xm);
+    //}
 
     //绘制逻辑层
     len = m_LevelBmp1.size();
@@ -475,25 +473,43 @@ void CGameOutput::End()
         SetWorldTransform(m_BackDC, &xm);
     }
 
-    //绘制前景
-    len = m_FrontBmp1.size();
-    for (int i = 0; i < len; i++)
-    {
-        bmp = m_FrontBmp1[i].Pic;
-        m = &m_FrontBmp1[i].Matrix;
-        DrawAlpha(m_BackDC, bmp->dc, 0, 0,
-            bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
-    }
+    ////绘制前景
+    //len = m_FrontBmp1.size();
+    //for (int i = 0; i < len; i++)
+    //{
+    //    bmp = m_FrontBmp1[i].Pic;
+    //    m = &m_FrontBmp1[i].Matrix;
+    //    DrawAlpha(m_BackDC, bmp->dc, 0, 0,
+    //        bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
+    //}
 
-    len = m_FrontBmp2.size();
-    for (int i = 0; i < len; i++)
-    {
-        bmp = m_FrontBmp2[i].Pic;
-        m = &m_FrontBmp2[i].Matrix;
-        DrawAlpha(m_BackDC, bmp->dc, 0, 0,
-            bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
-    }
+    //len = m_FrontBmp2.size();
+    //for (int i = 0; i < len; i++)
+    //{
+    //    bmp = m_FrontBmp2[i].Pic;
+    //    m = &m_FrontBmp2[i].Matrix;
+    //    DrawAlpha(m_BackDC, bmp->dc, 0, 0,
+    //        bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
+    //}
 
+
+	//len = m_Txt.size();
+	//for (int i = 0; i < len; i++)
+	//{
+	//	bmp = m_Txt[i].str;
+	//	m = &m_LevelBmp3[i].Matrix;
+	//	SetWorldTransform(m_BackDC, &m_LevelBmp3[i].Matrix);
+	//	DrawAlpha(m_BackDC, bmp->dc, 0, 0,
+	//		bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
+	//	XFORM xm;
+	//	xm.eM11 = 1;
+	//	xm.eM22 = 1;
+	//	xm.eM12 = 0;
+	//	xm.eM21 = 0;
+	//	xm.eDx = 0;
+	//	xm.eDy = 0;
+	//	SetWorldTransform(m_BackDC, &xm);
+	//}
     BitBlt(m_MainDC, 0, 0, m_ClientW, m_ClientH, m_BackDC, 0, 0, SRCCOPY);
 }
 
@@ -522,7 +538,7 @@ void CGameOutput::DrawAlpha(HDC _dest, HDC _picdc, int dx, int dy, int dw, int d
     bf.BlendFlags = 0;
     bf.AlphaFormat = AC_SRC_ALPHA;
     bf.SourceConstantAlpha = alpha;
-    AlphaBlend(m_BackDC, dx, dy, dw, dh, _picdc, sx, sy, sw, sh, bf);
+    AlphaBlend(_dest, dx, dy, dw, dh, _picdc, sx, sy, sw, sh, bf);
 }
 
 void CGameOutput::DrawBmp(HDC _dest, HDC _picdc, int dx, int dy, int dw, int dh, int sx, int sy, int sw, int sh, DWORD transcolor)
