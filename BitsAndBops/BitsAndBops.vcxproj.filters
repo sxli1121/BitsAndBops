@@ -18,7 +18,7 @@
     <ClCompile Include="src\Animation\Animation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Hammer.cpp">
+    <ClCompile Include="src\Animation\HammerAnimation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\Hero_idle.cpp">
@@ -99,7 +99,7 @@
     <ClCompile Include="src\Audio\AudioManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\HammerEffect.cpp">
+    <ClCompile Include="src\Animation\HammerEffect.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\HammerScene\HammerScene.cpp">
@@ -137,7 +137,7 @@
     <ClInclude Include="src\Animation\Animation.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Hammer.h">
+    <ClInclude Include="src\Animation\HammerAnimation.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\Hero_idle.h">
@@ -218,7 +218,7 @@
     <ClInclude Include="src\Audio\AudioManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\HammerEffect.h">
+    <ClInclude Include="src\Animation\HammerEffect.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\HammerScene\HammerScene.h">

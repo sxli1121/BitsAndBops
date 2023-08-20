@@ -17,10 +17,23 @@ public:
 
 	Matrix33 operator * (const Matrix33& m);
 
-	inline static Matrix33 MakeTranslate(float x, float y)
+	inline static Matrix33 T(float x, float y)
 	{
 		Matrix33 m;
 		m.Translate(x, y);
+		return m;
+	}
+
+	inline static Matrix33 RA(float a)
+	{
+		Matrix33 m;
+		m.Rotate_A(a);
+		return m;
+	}
+	inline static Matrix33 S(float x, float y)
+	{
+		Matrix33 m;
+		m.Scale(x,y);
 		return m;
 	}
 };

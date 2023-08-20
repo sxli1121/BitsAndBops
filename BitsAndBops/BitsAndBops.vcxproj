@@ -26,7 +26,7 @@
     <ClCompile Include="src\Scene\HammerScene\States\HammerConfirming.cpp" />
     <ClCompile Include="src\Scene\HammerScene\States\HammerTeaching.cpp" />
     <ClCompile Include="src\Scene\HammerScene\States\HammerOpening.cpp" />
-    <ClCompile Include="src\GameObject\HammerEffect.cpp" />
+    <ClCompile Include="src\Animation\HammerEffect.cpp" />
     <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Scene\CHammerScene.cpp" />
     <ClCompile Include="src\OutPutAndInput\Camera.cpp" />
@@ -36,7 +36,7 @@
     <ClCompile Include="src\GameObject\CObject.cpp" />
     <ClCompile Include="src\Core\FrameWork.cpp" />
     <ClCompile Include="src\OutPutAndInput\GameInput.cpp" />
-    <ClCompile Include="src\GameObject\Hammer.cpp" />
+    <ClCompile Include="src\Animation\HammerAnimation.cpp" />
     <ClCompile Include="src\GameObject\Hero_idle.cpp" />
     <ClCompile Include="src\GameObject\Hero_Move.cpp" />
     <ClCompile Include="src\OutPutAndInput\GameOutput.cpp" />
@@ -68,7 +68,7 @@
     <ClInclude Include="src\Scene\HammerScene\States\HammerConfirming.h" />
     <ClInclude Include="src\Scene\HammerScene\States\HammerTeaching.h" />
     <ClInclude Include="src\Scene\HammerScene\States\HammerOpening.h" />
-    <ClInclude Include="src\GameObject\HammerEffect.h" />
+    <ClInclude Include="src\Animation\HammerEffect.h" />
     <ClInclude Include="src\Audio\AudioManager.h" />
     <ClInclude Include="src\Scene\CHammerScene.h" />
     <ClInclude Include="src\OutPutAndInput\Camera.h" />
@@ -78,7 +78,7 @@
     <ClInclude Include="src\GameObject\CObject.h" />
     <ClInclude Include="src\Core\FrameWork.h" />
     <ClInclude Include="src\OutPutAndInput\GameInput.h" />
-    <ClInclude Include="src\GameObject\Hammer.h" />
+    <ClInclude Include="src\Animation\HammerAnimation.h" />
     <ClInclude Include="src\GameObject\Hero_idle.h" />
     <ClInclude Include="src\GameObject\Hero_Move.h" />
     <ClInclude Include="src\OutPutAndInput\GameOutput.h" />

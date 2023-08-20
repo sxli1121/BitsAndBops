@@ -442,7 +442,7 @@ void CGameOutput::End()
         SetWorldTransform(m_BackDC, &m_LevelBmp2[i].Matrix);
         assert(bmp->dc != NULL);
         DrawAlpha(m_BackDC, bmp->dc,0,0,
-            bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 255);
+            bmp->pw, bmp->ph, bmp->sx, bmp->sy, bmp->pw, bmp->ph, 250);
        /* TransparentBlt(m_BackDC, -bmp->pw / 2, -bmp->ph / 2,
             bmp->pw, bmp->ph, bmp->dc, bmp->sx, bmp->sy, bmp->pw, bmp->ph, bmp->c);*/
         XFORM xm;

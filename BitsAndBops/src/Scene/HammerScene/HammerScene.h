@@ -10,6 +10,7 @@
 class TimerClock;
 class CAudioManager;
 class m_Audio;
+class CHammer;
 
 enum HammerStates
 {
@@ -44,6 +45,11 @@ private:
 	TimerStampManage* m_GameTimeManage{ nullptr };
 
 	StateMachine* m_StateMachine{ nullptr };
+	//动画
+	CHammer* m_hammer{ nullptr };
+	
+
+	//音效
 	
 	//所有状态
 	HammerOpening* m_OpeningState{ nullptr };

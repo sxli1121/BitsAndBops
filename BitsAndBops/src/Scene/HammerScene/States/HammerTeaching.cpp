@@ -5,25 +5,23 @@
 #include "Audio/AudioManager.h"
 #include "Math/Matrix.h"
 #include "GameParticipator/MobileStation.h"
+#include "Animation/Animation.h"
+#include "Animation/HammerAnimation.h"
 
-#include "GameObject/Hammer.h"
+
 
 void HammerTeaching::OnEnter()
 {
 	CAudioManager::Get().PlayOnceAudio("Bits And Bops TUTORIAL 110");
 	m_timer.Begin();
 
-	m_hammer = new CHammeer;
+	
+	m_Animation = new Animation;
+
 }
 
 void HammerTeaching::OnUpdate(float dt)
 {
-	//����ʱ�������ƶ�̨(�ƶ�̨���ɵ�ʱ��������˶���-״̬��Ϊ������)-
-	//����ʱ�䲥�Ŷ���-�ֵĶ�������ʱ ����״̬����Ϊ��ȫ״̬
-
-	//���ݰ��������Ŷ���-���ӣ�ʱ�� ������Ч 
-
-	//����ʱ�� ()
 
 	double time = m_timer.GetTimerMilliSec();
 	static bool i = true;
@@ -52,11 +50,11 @@ void HammerTeaching::OnUpdate(float dt)
 	CGameInput* input = CGameInput::GetGameInput();
 
 	if (input->GetKeyDown(_GI_K_E))
-	{
-		m_hammer->HandAmation_Play();
-	}
-	//���������붤�� ����ʱ��
+	{	
+		m_Scene->m_hammer->HammerAmation_Play();
 
+	}
+	m_Scene->m_hammer->Update(dt);
 
 }
 

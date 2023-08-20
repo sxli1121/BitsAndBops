@@ -1,17 +1,17 @@
 #pragma once
-#include "CObject.h"
-#include "Action.h"
+#include "GameObject/CObject.h"
 #include "Audio/AudioManager.h"
 #include <string>
 #include <map>
-class CAction;
+
+class Animation;
 
 class HammerEffect
 {
-	Animation m_PerfectAmation;
-	Animation m_HitAmation;
-	Animation m_Almost1Amation;
-	Animation m_Almost2Amation;
+	Animation* m_PerfectAmation{ nullptr };
+	Animation* m_HitAmation{ nullptr };
+	Animation* m_Almost1Amation{ nullptr };
+	Animation* m_Almost2Amation{ nullptr };
 public:
 	void Init();
 	void Run();

@@ -8,6 +8,7 @@
 #include "States/hammerConfirming.h"
 #include "States/hammerGaming.h"
 #include "States/hammerSettlementing.h"
+#include "Animation/HammerAnimation.h"
 
 //#include "Tools/TimerStamp.h"
 
@@ -159,6 +160,10 @@ void CHammerScene::Init()
 	m_StateMachine->AddState(STATE_HAMMER_SETTLEMENT, m_SettlementState);
 	//ÉèÖÃ³õÊ¼×´Ì¬
 	m_StateMachine->Switch(STATE_HAMMER_TEACH);
+
+
+	m_hammer = new CHammer;
+	m_hammer->Init();
 }
 
 void CHammerScene::Update(float dt)

@@ -1,8 +1,10 @@
 #pragma once
 #include "StateMachine/state.h"
+
 #include "Tools/Timer.h"
 
-class CHammeer;
+class Animation;
+
 
 class MobileStation;
 class CHammerScene;
@@ -10,23 +12,23 @@ class CHammerScene;
 class HammerTeaching : public State
 {
 public:
-	//�����ʱ��-�Դ������ĳ���
 	HammerTeaching(CHammerScene* scene)
 		:m_Scene(scene) {}
-	//�̳���
+	//
 	void OnEnter() override;
 	void OnUpdate(float dt) override;
 	void OnExit() override;
 private:
 	//HammerTeaching(CHammerScene* scene);
 	//��������
-	CHammerScene* m_Scene;
+	CHammerScene* m_Scene{ nullptr };
 	//
 	TimerClock m_timer;
-	MobileStation* moblie;
+	MobileStation* moblie{ nullptr };
+	Animation* m_Animation{ nullptr };
 
 
-	CHammeer* m_hammer;
+
 	friend class CHammerScene;
 
 

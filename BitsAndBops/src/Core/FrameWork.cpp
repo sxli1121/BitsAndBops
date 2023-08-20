@@ -88,8 +88,8 @@ void CFrameWork::Init(HINSTANCE hInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	m_ClientW = 800;
-	m_ClientH = 400;
+	m_ClientW = 960;
+	m_ClientH = 540;
 	g_Act = TRUE;
 	//1) 填充窗口结构体
 	WNDCLASS wc;
