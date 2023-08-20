@@ -54,19 +54,7 @@
     <ClCompile Include="src\GameObject\Action.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Bullet.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObject\CObject.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tool.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ToolManage.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tools\Timer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Enter\main.cpp">
@@ -84,7 +72,7 @@
     <ClCompile Include="src\OutPutAndInput\GameOutput.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\OutPutAndInput\TextureManager.cpp">
+    <ClCompile Include="src\OutPutAndInput\MyTextureManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\OutPutAndInput\RenderingPipline.cpp">
@@ -103,9 +91,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\HammerScene\HammerScene.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tools\TimerStampManage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\StateMachine\StateMachine.cpp">
@@ -130,6 +115,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\GameParticipator\Nail.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Renderer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Texture.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\TextureManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,19 +167,7 @@
     <ClInclude Include="src\GameObject\Action.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Bullet.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameObject\CObject.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ToolManage.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tools\Timer.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Scene.h">
@@ -203,7 +185,7 @@
     <ClInclude Include="src\OutPutAndInput\GameOutput.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\OutPutAndInput\TextureManager.h">
+    <ClInclude Include="src\OutPutAndInput\MyTextureManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\OutPutAndInput\RenderingPipline.h">
@@ -225,9 +207,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\SingletonTemplate.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tools\TimerStampManage.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\StateMachine\State.h">
@@ -258,6 +237,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\GameParticipator\Nail.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Renderer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Texture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\TextureManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

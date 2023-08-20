@@ -2,7 +2,7 @@
 #include "Core/FrameWork.h"
 #include "Math/Matrix.h"
 //#include "CObject.h"
-#include "OutPutAndInput/TextureManager.h"
+#include "OutPutAndInput/MyTextureManager.h"
 #include "OutPutAndInput/Camera.h"
 
 #include <cassert>
@@ -510,7 +510,7 @@ void CGameOutput::End()
 	//	xm.eDy = 0;
 	//	SetWorldTransform(m_BackDC, &xm);
 	//}
-    BitBlt(m_MainDC, 0, 0, m_ClientW, m_ClientH, m_BackDC, 0, 0, SRCCOPY);
+    //BitBlt(m_MainDC, 0, 0, m_ClientW, m_ClientH, m_BackDC, 0, 0, SRCCOPY);
 }
 
 void CGameOutput::SetClientXY(float cx, float cy)

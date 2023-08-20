@@ -1,5 +1,6 @@
-#include "TextureManager.h"
+#include "MyTextureManager.h"
 #include "FreeImage.h"
+
 
 MyTextureManager::MyTextureManager()
 {
@@ -165,3 +166,4 @@ void MyTextureManager::ClearAllImage()
 		mImgs.clear();
 	}
 }
+

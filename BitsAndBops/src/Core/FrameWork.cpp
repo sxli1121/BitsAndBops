@@ -4,6 +4,7 @@
 #include "Core/Scene_Manager.h"
 #include "Core/Scene.h"
 #include "Audio/AudioManager.h"
+#include "Renderer/Renderer.h"
 
 #include <time.h>
 #include <chrono>
@@ -133,6 +134,8 @@ void CFrameWork::Init(HINSTANCE hInstance,
 	UpdateWindow(m_hWnd);
 
 	CGameOutput::GetGameOutput()->Init();
+	Renderer::Init();
+
 	CGameInput::GetGameInput()->SetHWND(m_hWnd);
 
 	CAudioManager::Get().Init();
@@ -172,11 +175,16 @@ void CFrameWork::Run()
 			float dt = duration / 1000000000.0f;
 
 			//输入输出初始化-当前场景运行
+		
 			gi->Update();
 			go->Begin();
+			Renderer::Clear(0,0,0);
 			if (m_CurScene != nullptr)
 				m_CurScene->Update(dt);
 			go->End();
+
+			Renderer::SwapBuffers();
+
 			//场景的切换
 			if (m_NextScene)
 			{
@@ -194,6 +202,7 @@ void CFrameWork::Run()
 	}
 
 	CAudioManager::Get().Shutdown();
+	Renderer::Shutdown();
 }
 
 void CFrameWork::End()

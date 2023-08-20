@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\GameParticipator\Nail.cpp" />
     <ClCompile Include="src\GameParticipator\MobileStation.cpp" />
     <ClCompile Include="src\Scene\HammerScene\States\HammerSettlementing.cpp" />
@@ -32,7 +33,6 @@
     <ClCompile Include="src\OutPutAndInput\Camera.cpp" />
     <ClCompile Include="src\GameObject\Action.cpp" />
     <ClCompile Include="src\Animation\Animation.cpp" />
-    <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\GameObject\CObject.cpp" />
     <ClCompile Include="src\Core\FrameWork.cpp" />
     <ClCompile Include="src\OutPutAndInput\GameInput.cpp" />
@@ -52,14 +52,13 @@
     <ClCompile Include="src\Scene\TestSence.cpp" />
     <ClCompile Include="src\Scene\TestSence2.cpp" />
     <ClCompile Include="src\Core\Scene_Manager.cpp" />
-    <ClCompile Include="src\OutPutAndInput\TextureManager.cpp" />
-    <ClCompile Include="src\Tools\Timer.cpp" />
-    <ClCompile Include="src\Tool.cpp" />
-    <ClCompile Include="src\ToolManage.cpp" />
-    <ClCompile Include="src\Tools\TimerStampManage.cpp" />
+    <ClCompile Include="src\OutPutAndInput\MyTextureManager.cpp" />
     <ClCompile Include="src\StateMachine\StateMachine.cpp" />
+    <ClCompile Include="src\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Renderer\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\GameParticipator\Nail.h" />
     <ClInclude Include="src\GameParticipator\MobileStation.h" />
     <ClInclude Include="src\GameParticipator\Participator.h" />
@@ -74,7 +73,6 @@
     <ClInclude Include="src\OutPutAndInput\Camera.h" />
     <ClInclude Include="src\GameObject\Action.h" />
     <ClInclude Include="src\Animation\Animation.h" />
-    <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\GameObject\CObject.h" />
     <ClInclude Include="src\Core\FrameWork.h" />
     <ClInclude Include="src\OutPutAndInput\GameInput.h" />
@@ -94,14 +92,12 @@
     <ClInclude Include="src\Scene\TestSence.h" />
     <ClInclude Include="src\Scene\TestSence2.h" />
     <ClInclude Include="src\Core\Scene_Manager.h" />
-    <ClInclude Include="src\OutPutAndInput\TextureManager.h" />
+    <ClInclude Include="src\OutPutAndInput\MyTextureManager.h" />
     <ClInclude Include="src\Core\SingletonTemplate.h" />
     <ClInclude Include="src\StateMachine\State.h" />
-    <ClInclude Include="src\Tools\Timer.h" />
-    <ClInclude Include="src\Tool.h" />
-    <ClInclude Include="src\ToolManage.h" />
-    <ClInclude Include="src\Tools\TimerStampManage.h" />
     <ClInclude Include="src\StateMachine\StateMachine.h" />
+    <ClInclude Include="src\Renderer\Texture.h" />
+    <ClInclude Include="src\Renderer\TextureManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -187,7 +183,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Freeimage\libs\x86;$(SolutionDir)Dependencies\fmod\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)Dependencies\Freeimage\libs\x86\FreeImage.dll $(OutputPath)
@@ -211,7 +207,7 @@ copy $(SolutionDir)Dependencies\fmod\libs\x86\fmod.dll $(OutputPath)</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Freeimage\libs\x86;$(SolutionDir)Dependencies\fmod\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)Dependencies\Freeimage\libs\x86\FreeImage.dll $(OutputPath)
@@ -231,7 +227,7 @@ copy $(SolutionDir)Dependencies\fmod\libs\x86\fmod.dll $(OutputPath)</Command>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Freeimage\libs\x64;$(SolutionDir)Dependencies\fmod\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)Dependencies\Freeimage\libs\x64\FreeImage.dll $(OutputPath)</Command>
@@ -254,7 +250,7 @@ copy $(SolutionDir)Dependencies\fmod\libs\x86\fmod.dll $(OutputPath)</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Freeimage\libs\x64;$(SolutionDir)Dependencies\fmod\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;fmodvc.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)Dependencies\Freeimage\libs\x64\FreeImage.dll $(OutputPath)</Command>

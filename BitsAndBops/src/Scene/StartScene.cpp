@@ -4,6 +4,9 @@
 #include "Core/FrameWork.h"
 #include "Math/vector.h"
 #include "Math/Matrix.h"
+
+#include "Renderer/Renderer.h"
+
 void CStartScene::Init()
 {
 	CGameOutput* output = CGameOutput::GetGameOutput();
@@ -37,22 +40,33 @@ void CStartScene::Init()
 	output->AddImg("cover_snakecharmer", "Assets/Textures/StartScreen/Opening/cover_snakecharmer.png");
 	output->AddPic("cover_snakecharmer", "cover_snakecharmer", 0, 0, 379, 472);
 
+	// ±³¾°Í¼Æ¬
+	TextureManager::Load("Background", L"Assets/Textures/StartScreen/Opening/cover_bg.png");
+	TextureManager::Load("Logo", L"Assets/Textures/StartScreen/Opening/cover_bg_logo_only_transparent.png");
+	
+
+
 	off = 0.4f;
 	dtnum = 0;
 }
 
 void CStartScene::Update(float dt)
 {
-	CGameOutput* output = CGameOutput::GetGameOutput();
-	//Matrix33  rm, sm;
-	Matrix33 m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(0, 0);
-	output->DrawPic("cover_bg",&m);
-	m = Matrix33::S(off, off) * Matrix33::T(287,10);
-	output->DrawPic("cover_bg_logo_only_transparent", &m);
-	m = Matrix33::S(off, off) * Matrix33::T(700, 10);
-	output->DrawPic("cover_birbs", &m);
-	m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(750, 100);
-	output->DrawPic("cover_boybear", &m);
+
+	Renderer::DrawTexture("Background", 0, 0, 1024, 576);
+	Renderer::DrawTexture("Logo", 287, 10, 386, 244.5f);
+
+
+	//CGameOutput* output = CGameOutput::GetGameOutput();
+	////Matrix33  rm, sm;
+	//Matrix33 m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(0, 0);
+	//output->DrawPic("cover_bg",&m);
+	//m = Matrix33::S(off, off) * Matrix33::T(287,10);
+	//output->DrawPic("cover_bg_logo_only_transparent", &m);
+	//m = Matrix33::S(off, off) * Matrix33::T(700, 10);
+	//output->DrawPic("cover_birbs", &m);
+	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(750, 100);
+	//output->DrawPic("cover_boybear", &m);
 	
 
 	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(750, 100);
@@ -66,12 +80,12 @@ void CStartScene::Update(float dt)
 	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(750, 100);
 	//output->DrawPic("cover_catto", &m);
 
-	m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(0, 20);
-	output->DrawPic("cover_dancer", &m);
+	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(0, 20);
+	//output->DrawPic("cover_dancer", &m);
 
 
-	m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(700, 150);
-	output->DrawPic("cover_catto", &m);
+	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(700, 150);
+	//output->DrawPic("cover_catto", &m);
 }
 
 void CStartScene::End()
