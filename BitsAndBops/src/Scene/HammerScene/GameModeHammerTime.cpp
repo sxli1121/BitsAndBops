@@ -195,49 +195,40 @@ void GameModeHammerTime::GenerateNails()
 	double currentTime = Time::GetRealtimeSinceStartup() - m_StartTime;
 
 	// 取得钉子的要在哪个拍子出生
+	//每个节拍的时间
+	float beatUnitTime = (60.0f / m_CurrentLevel->BPM);
 	HammerBlock block = m_CurrentLevel->Blocks[m_NextBlockIndex];
 	float nailBornBeats = block.Nails[m_NextNailIndex];
-	float nailBornTime = (60.0f / m_CurrentLevel->BPM) * nailBornBeats;
+	float nailBornTime = beatUnitTime * nailBornBeats;
 
-
-
-
-	for (static int blockindex = 0; blockindex < m_CurrentLevel->Blocks.size();)
+	// 生成平台
+	// 如果下一个生成的是 Block 中的第一个钉子，且时间到达了需要生成平台的时间
+	// 且要生成的 block 是下一个要生成的 block (检查之前是否已经生成过了。
+	if (m_NextNailIndex == 0 && m_AllMobile.size() == m_NextBlockIndex)
 	{
 		float mobileFromPosX = 0;
-		float mobileToPosX = 260;
-
-		float mobileArriveTime = (mobileToPosX - mobileFromPosX) / m_mobileSpeed;
-		float mobileDistance = 0.3f * (mobileArriveTime * m_mobileSpeed) + mobileToPosX - mobileFromPosX;
-		float mobileBronOffTime = mobileDistance / m_mobileSpeed;
-
-		//每一个block 的第一个钉子 的出生时间
-		float FristNailBron = (60.0f / m_CurrentLevel->BPM) * m_CurrentLevel->Blocks[blockindex].Nails[0];
-		float mobileBronTime = FristNailBron - mobileBronOffTime;
-
-		if (currentTime >= mobileBronTime)
+		float mobileToPosX = 150;
+		float mobileArriveTime = nailBornTime - (mobileToPosX - mobileFromPosX) / m_mobileSpeed;
+		float elapsedTime = currentTime - mobileArriveTime;
+		if (currentTime >= mobileArriveTime)
 		{
-			//每个节拍的时间
-			float beatUnitTime = (60.0f / m_CurrentLevel->BPM);
 			//总共需要生成多少个节拍能走的路程大小 当前block 中的最后一个数据-第一个数据 +1
-			float distanceBreat = block.Nails[block.Nails.size() - 1] - block.Nails[0] + 0.5f;
+			float distanceBreat = block.Nails[block.Nails.size() - 1] - block.Nails[0];
 			//移动台的大小
-			float mobileLength = distanceBreat * (beatUnitTime * m_mobileSpeed);
+			float mobileWidth = distanceBreat * beatUnitTime * m_mobileSpeed;
 
 			//移动台生成的时间
 			MobileStation mobile;
-			mobile.x = -mobileLength -40;
-			mobile.MobileLength = mobileLength;
+			//mobile.x = -(2 * beatUnitTime * m_mobileSpeed);
+			mobile.x = elapsedTime * m_mobileSpeed;
+			mobile.MobileWidth = mobileWidth;
 			m_AllMobile.push_back(mobile);
-
-			blockindex+=1;
-			break;
 		}
-		break;
 	}
-	
 
-	
+
+
+
 	if (currentTime >= nailBornTime)
 	{
 		NailObject nail;
@@ -272,24 +263,22 @@ void GameModeHammerTime::UpdateNails(float dt)
 
 	for (MobileStation& mobile : m_AllMobile)
 	{
-		int i = m_mobileSpeed * dt;
-		mobile.x += i;
+		mobile.x += m_mobileSpeed * dt;
 	}
-	for (auto it = m_AllMobile.begin(); it != m_AllMobile.end();)
-	{
-		if (it -> x >= 1000)
-			it = m_AllMobile.erase(it);
-		else 
-			it++;
-	}
+	//for (auto it = m_AllMobile.begin(); it != m_AllMobile.end();)
+	//{
+	//	if (it->x >= 1000)
+	//		it = m_AllMobile.erase(it);
+	//	else 
+	//		it++;
+	//}
 
 	// 更新钉子位置
 	{
 		//m_mobileSpeed = (nailToPosX - nailFromPosX) / ((60.0f / m_CurrentLevel->BPM) * 4.0f);
 		for (NailObject& nail : m_AllNails)
 		{
-			int i = m_mobileSpeed * dt;
-			nail.x += i;
+			nail.x += m_mobileSpeed * dt;
 
 			if (nail.State == NailState::Normal)
 			{
@@ -324,14 +313,14 @@ void GameModeHammerTime::UpdateNails(float dt)
 
 void GameModeHammerTime::DrawNails()
 {
+	float xOffset = 50.0f;
+	float yOffset = 395;
 	for (MobileStation& mobile : m_AllMobile)
 	{
-		float singleWeight = mobile.MobileLength * 0.1f;
-		float centerWeight = mobile.MobileLength * 0.8f;
-		Renderer::DrawTexture("wood_left", mobile.x, 300, singleWeight, 117, 0, 0, 0);
-		Renderer::DrawTexture("wood_centre", mobile.x + singleWeight - 5, 300, centerWeight, 117, 0, 0, 0);
-		Renderer::DrawTexture("wood_right", mobile.x + singleWeight+ centerWeight -10, 300, singleWeight, 117, 0, 0, 0);
 
+		Renderer::DrawTexture("wood_left", mobile.x- mobile.MobileWidth-50+xOffset, yOffset, 63, 234, 0, 1, 0);
+		Renderer::DrawTexture("wood_centre", mobile.x+ xOffset - 56, yOffset, mobile.MobileWidth, 234, 0, 1, 0);
+		Renderer::DrawTexture("wood_right", mobile.x+ xOffset, yOffset, 63, 234, 0, 1, 0);
 	}
 
 

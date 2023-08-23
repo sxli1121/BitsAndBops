@@ -29,7 +29,7 @@ void CHammerScene::Init()
 	//等待对话框时背景音
 	CAudioManager::Get().PushLoopAudio("construction_ambience", "Assets/Audios/FristRound/construction_ambience.wav");
 	//对话框确认
-	CAudioManager::Get().PushOnceAudio("CatTurn","Assets/Audios/FristRound/CatTurn.wav");
+	CAudioManager::Get().PushOnceAudio("CatTurn","Assets/Audios/FristRound/SFX_FS_CatTurn.wav");
 	////教程
 	//CAudioManager::Get().PushOnceAudio("Bits And Bops TUTORIAL 110", "Assets/Audios/FristRound/Bits And Bops TUTORIAL 110.wav");
 	////钉子效果音效-击中
@@ -135,7 +135,7 @@ void CHammerScene::Init()
 	m_StateMachine->AddState(STATE_HAMMER_GAME, m_GameState);
 	m_StateMachine->AddState(STATE_HAMMER_SETTLEMENT, m_SettlementState);
 	//设置初始状态
-	m_StateMachine->Switch(STATE_HAMMER_CONFIRM);
+	m_StateMachine->Switch(STATE_HAMMER_GAME);
 
 
 	//m_hammer = new CHammer;

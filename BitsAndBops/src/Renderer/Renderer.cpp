@@ -91,6 +91,9 @@ void Renderer::DrawTexture(const std::string& id, float x, float y, float width,
 
 void Renderer::DrawTex(std::string str, float x, float y, float w, float h, float r,float g ,float b)
 {
+    s_Data.Transform->Reset();
+    s_Data.Graphics->SetTransform(s_Data.Transform);
+
     std::wstring wstr = Utils::utf8_to_wstring(str);
      
     FontFamily   fontFamily(L"Arial");
@@ -99,9 +102,6 @@ void Renderer::DrawTex(std::string str, float x, float y, float w, float h, floa
     SolidBrush   solidBrush(Color(255, r*255.0f, g*255.0f, b*255.0f));
 
     s_Data.Graphics->DrawString(wstr.c_str(), -1, &font, rectF, NULL, &solidBrush);
-
-    Pen pen(Color(255, 0, 0, 0));
-    //s_Data.Graphics->DrawRectangle(&pen, rectF);
 }
 
 void Renderer::SwapBuffers()

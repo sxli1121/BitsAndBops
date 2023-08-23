@@ -18,16 +18,16 @@ void HammerConfirming::OnUpdate(float dt)
 
 	Renderer::Clear(220.0f / 255.0f, 222.0f / 255.0f, 198 / 255.0f);
 
-	//Renderer::DrawTexture("wood_centre", 0, 385, 235, 117, 0, 0, 0);
-	//Renderer::DrawTexture("wood_right", 225, 385, 31.5f, 117, 0, 0, 0);
+	Renderer::DrawTexture("wood_centre", 0, 385, 235, 117, 0, 0, 0);
+	Renderer::DrawTexture("wood_right", 225, 385, 31.5f, 117, 0, 0, 0);
 
-	//Renderer::DrawTexture("wood_left", 620, 385, 31.5f, 117, 0, 0, 0);
-	//Renderer::DrawTexture("wood_centre", 645.5f, 385, 350, 117, 0, 0, 0);
+	Renderer::DrawTexture("wood_left", 620, 385, 31.5f, 117, 0, 0, 0);
+	Renderer::DrawTexture("wood_centre", 645.5f, 385, 350, 117, 0, 0, 0);
 
-	//Renderer::DrawTexture("nail_normal_7", 685, 378, 43, 12.5f, 0, 0, 0);
-	//Renderer::DrawTexture("hammer", 650, -115, 748.5f, 500.5f, 0, 0, 0);
+	Renderer::DrawTexture("nail_normal_7", 685, 378, 43, 12.5f, 0, 0, 0);
+	Renderer::DrawTexture("hammer", 650, -115, 748.5f, 500.5f, 0, 0, 0);
 
-	//Renderer::DrawTexture("tutorial_textbox", 50, 50, 871, 136, 0, 0, 0);
+	Renderer::DrawTexture("tutorial_textbox", 50, 50, 871, 136, 0, 0, 0);
 
 
 	if (m_StateMark == ToState::STATE_TEACH)

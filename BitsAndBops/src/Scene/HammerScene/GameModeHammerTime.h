@@ -33,9 +33,9 @@ struct NailObject
 
 struct MobileStation
 {
-	int x;
+	float x;
 	//float BronBeats;
-	int MobileLength;
+	float MobileWidth;
 };
 
 class GameModeHammerTime
