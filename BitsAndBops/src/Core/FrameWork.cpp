@@ -1,10 +1,11 @@
 #include "FrameWork.h"
-#include "OutputAndInput/GameOutput.h"
 #include "OutputAndInput/GameInput.h"
 #include "Core/Scene_Manager.h"
 #include "Core/Scene.h"
+#include "Core/Time.h"
 #include "Audio/AudioManager.h"
 #include "Renderer/Renderer.h"
+
 
 #include <time.h>
 #include <chrono>
@@ -133,7 +134,7 @@ void CFrameWork::Init(HINSTANCE hInstance,
 	//5）更新窗口（窗口句柄）
 	UpdateWindow(m_hWnd);
 
-	CGameOutput::GetGameOutput()->Init();
+	Time::Init();
 	Renderer::Init();
 
 	CGameInput::GetGameInput()->SetHWND(m_hWnd);
@@ -155,7 +156,7 @@ void CFrameWork::Run()
 
 	if (m_CurScene != nullptr)
 		m_CurScene->Init();
-	CGameOutput* go = CGameOutput::GetGameOutput();
+
 	CGameInput* gi = CGameInput::GetGameInput();
 	//6）消息循环
 	MSG msg = {};
@@ -177,11 +178,9 @@ void CFrameWork::Run()
 			//输入输出初始化-当前场景运行
 		
 			gi->Update();
-			go->Begin();
-			Renderer::Clear(0,0,0);
+			Renderer::Clear(0,0,0);      
 			if (m_CurScene != nullptr)
 				m_CurScene->Update(dt);
-			go->End();
 
 			Renderer::SwapBuffers();
 

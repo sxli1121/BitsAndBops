@@ -21,37 +21,13 @@
     <ClCompile Include="src\Animation\HammerAnimation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Hero_idle.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObject\Hero_Move.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Math\Matrix.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\matrix4X4.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\Rect.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Math\vector.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\Vector3D.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Scene\StartScene.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\TestSence.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\TestSence2.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObject\Action.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\CObject.cpp">
@@ -69,19 +45,7 @@
     <ClCompile Include="src\OutPutAndInput\GameInput.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\OutPutAndInput\GameOutput.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OutPutAndInput\MyTextureManager.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OutPutAndInput\RenderingPipline.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\OutPutAndInput\Camera.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\CHammerScene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\AudioManager.cpp">
@@ -126,6 +90,24 @@
     <ClCompile Include="src\Renderer\TextureManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tools\Timer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\TimerStampManage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Time.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation\FrameAnimation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\HammerScene\GameModeHammerTime.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\MenuScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation\Animation.h">
@@ -134,37 +116,13 @@
     <ClInclude Include="src\Animation\HammerAnimation.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Hero_idle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameObject\Hero_Move.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\Math\Matrix.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Math\matrix4X4.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Math\Rect.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\vector.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\Vector3D.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\Scene\StartScene.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Scene\TestSence.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Scene\TestSence2.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameObject\Action.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\CObject.h">
@@ -182,19 +140,7 @@
     <ClInclude Include="src\OutPutAndInput\GameInput.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\OutPutAndInput\GameOutput.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\OutPutAndInput\MyTextureManager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\OutPutAndInput\RenderingPipline.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\OutPutAndInput\Camera.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Scene\CHammerScene.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Audio\AudioManager.h">
@@ -204,9 +150,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\HammerScene\HammerScene.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\SingletonTemplate.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\StateMachine\State.h">
@@ -246,6 +189,27 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\TextureManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tools\Timer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tools\TimerStampManage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Time.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Animation\FrameAnimation.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\HammerScene\GameModeHammerTime.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\MenuScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tools\Utils.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

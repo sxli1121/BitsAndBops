@@ -1,7 +1,7 @@
 #include <Windows.h>
 #include "Core/FrameWork.h"
 #include "Scene/StartScene.h"
-#include "Scene/TestSence2.h"
+
 #include "Scene/HammerScene/HammerScene.h"
 #include "Scene/StartScene.h"
 #include "Math/vector.h"
@@ -17,12 +17,13 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPreInstance, PSTR lpCmdLine, 
 	jk->Init(hInstance, hPreInstance, lpCmdLine, iCmdShow);
 	//生成框架中的场景
 	jk->AddScene("Start", new CStartScene);
-	//jk->AddScene("战斗场景", new CFightScene);
+	jk->AddScene("Hammer", new CHammerScene);
 
 	//开始场景
-	jk->SetStartScene("Start");
+	//jk->SetStartScene("Start");
+	jk->SetStartScene("Hammer");
 	//运行
 	CFrameWork::GetFrameWork()->Run();
 
 	return 1;
-} 
+}

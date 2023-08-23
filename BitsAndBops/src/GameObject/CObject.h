@@ -1,12 +1,12 @@
 #pragma once
-#include "Math/Rect.h"
+
 
 class CObject
 {
 protected:
 	float m_x;
 	float m_y;
-	CRect m_rect;
+
 public:
 	virtual ~CObject();
 	float GetX()const;

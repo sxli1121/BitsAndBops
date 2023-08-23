@@ -3,6 +3,13 @@
 
 class CHammerScene;
 
+enum class GradesResule
+{
+	GRADES_AMAZING,
+	GRADES_COOL,
+	GRADES_TRYAGAIN,
+};
+
 class HammerSettlementing : public State
 {
 public:
@@ -14,6 +21,9 @@ public:
 	void OnExit() override;
 private:
 	CHammerScene* m_Scene;
+	GradesResule m_Grades;
+	double m_StartTime{ 0.0 };
+
 	friend class CHammerScene;
 
 };

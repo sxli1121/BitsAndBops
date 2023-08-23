@@ -1,94 +1,100 @@
 #include "StartScene.h"
-#include "OutputAndInput/GameOutput.h"
+
 #include "OutputAndInput/GameInput.h"
+#include "Audio/AudioManager.h"
 #include "Core/FrameWork.h"
 #include "Math/vector.h"
 #include "Math/Matrix.h"
-
+#include "Scene/HammerScene/HammerScene.h"
+#include "Core/Time.h"
 #include "Renderer/Renderer.h"
+#include "Core/FrameWork.h "
 
 void CStartScene::Init()
 {
-	CGameOutput* output = CGameOutput::GetGameOutput();
-	//±³¾°
-	output->AddImg("cover_bg", "Assets/Textures/StartScreen/Opening/cover_bg.png");
-	output->AddPic("cover_bg", "cover_bg", 0, 0, 2048, 1152);
-	//Í¼±ê
-	output->AddImg("cover_bg_logo_only_transparent", "Assets/Textures/StartScreen/Opening/cover_bg_logo_only_transparent.png");
-	output->AddPic("cover_bg_logo_only_transparent", "cover_bg_logo_only_transparent", 0, 0, 772, 489);
-	//¶¯ÂþÈËÎï
-	output->AddImg("cover_birbs", "Assets/Textures/StartScreen/Opening/cover_birbs.png");
-	output->AddPic("cover_birbs", "cover_birbs", 0, 0, 217, 146);
-	output->AddImg("cover_boybear", "Assets/Textures/StartScreen/Opening/cover_boybear.png");
-	output->AddPic("cover_boybear", "cover_boybear", 0, 0, 450, 573);
-	output->AddImg("cover_catto", "Assets/Textures/StartScreen/Opening/cover_catto.png");
-	output->AddPic("cover_catto", "cover_catto", 0, 0, 541, 781);
-	output->AddImg("cover_dancer", "Assets/Textures/StartScreen/Opening/cover_dancer.png");
-	output->AddPic("cover_dancer", "cover_dancer", 0, 0, 699, 1043);
-	output->AddImg("cover_girlbear", "Assets/Textures/StartScreen/Opening/cover_girlbear.png");
-	output->AddPic("cover_girlbear", "cover_girlbear", 0, 0, 587, 707);
-	output->AddImg("cover_mascots", "Assets/Textures/StartScreen/Opening/cover_mascots.png");
-	output->AddPic("cover_mascots", "cover_mascots", 0, 0, 626, 519);
-	output->AddImg("cover_moleleft", "Assets/Textures/StartScreen/Opening/cover_moleleft.png");
-	output->AddPic("cover_moleleft", "cover_moleleft", 0, 0, 529, 261);
-	output->AddImg("cover_moleright", "Assets/Textures/StartScreen/Opening/cover_moleright.png");
-	output->AddPic("cover_moleright", "cover_moleright", 0, 0, 328, 334);
-	output->AddImg("cover_monke", "Assets/Textures/StartScreen/Opening/cover_monke.png");
-	output->AddPic("cover_monke", "cover_monke", 0, 0, 263, 271);
-	output->AddImg("cover_robot", "Assets/Textures/StartScreen/Opening/cover_robot.png");
-	output->AddPic("cover_robot", "cover_robot", 0, 0, 413, 682);
-	output->AddImg("cover_snakecharmer", "Assets/Textures/StartScreen/Opening/cover_snakecharmer.png");
-	output->AddPic("cover_snakecharmer", "cover_snakecharmer", 0, 0, 379, 472);
-
-	// ±³¾°Í¼Æ¬
+	// ±³¾°
 	TextureManager::Load("Background", L"Assets/Textures/StartScreen/Opening/cover_bg.png");
+	//logo
 	TextureManager::Load("Logo", L"Assets/Textures/StartScreen/Opening/cover_bg_logo_only_transparent.png");
-	
+	//¶¯ÂþÈËÎï
+	TextureManager::Load("cover_birbs", L"Assets/Textures/StartScreen/Opening/cover_birbs.png");
+	TextureManager::Load("cover_boybear", L"Assets/Textures/StartScreen/Opening/cover_boybear.png");
+	TextureManager::Load("cover_catto", L"Assets/Textures/StartScreen/Opening/cover_catto.png");
+	TextureManager::Load("cover_dancer", L"Assets/Textures/StartScreen/Opening/cover_dancer.png");
+	TextureManager::Load("cover_girlbear", L"Assets/Textures/StartScreen/Opening/cover_girlbear.png");
+	TextureManager::Load("cover_mascots", L"Assets/Textures/StartScreen/Opening/cover_mascots.png");
+	TextureManager::Load("cover_moleleft", L"Assets/Textures/StartScreen/Opening/cover_moleleft.png");
+	TextureManager::Load("cover_moleright", L"Assets/Textures/StartScreen/Opening/cover_moleright.png");
+	TextureManager::Load("cover_monke", L"Assets/Textures/StartScreen/Opening/cover_monke.png");
+	TextureManager::Load("cover_robot", L"Assets/Textures/StartScreen/Opening/cover_robot.png");
+	TextureManager::Load("cover_snakecharmer", L"Assets/Textures/StartScreen/Opening/cover_snakecharmer.png");
 
+	//ÒôÐ§
+	CAudioManager::Get().PushLoopAudio("BitsandBopsTitle(LOOP SEGMENT)","Assets/Audios/Screen/Bits and Bops Title (LOOP SEGMENT).wav");
+	CAudioManager::Get().PlayLoopAudio("BitsandBopsTitle(LOOP SEGMENT)");
 
-	off = 0.4f;
-	dtnum = 0;
+	m_elapsedTime = 0;
+
+	m_small = 3.0f;
+	m_middle = 6.0f;
+	m_big = 10.0f;
 }
 
 void CStartScene::Update(float dt)
 {
+	m_elapsedTime += dt;
+	if (m_elapsedTime > 0.5f)
+	{
+		m_elapsedTime = 0;
+	}
+	if (m_elapsedTime <= 0.2f)
+	{
+		Renderer::DrawTexture("Background", 0, 0, 1024, 576);
 
-	Renderer::DrawTexture("Background", 0, 0, 1024, 576);
-	Renderer::DrawTexture("Logo", 287, 10, 386, 244.5f);
+		Renderer::DrawTexture("Logo", 287, 10, 386, 244.5f);
+		Renderer::DrawTexture("cover_mascots", 350, 290, 250.4, 207.6);
+		//left
+		Renderer::DrawTexture("cover_snakecharmer", 0, 100, 189.5f, 236);
+		Renderer::DrawTexture("cover_monke", 20, 20, 131, 135.5);
+		Renderer::DrawTexture("cover_moleleft", 20, 20, 264.5f, 130.5f);
+		Renderer::DrawTexture("cover_dancer", 10, 20, 349.5f, 521.5f);
+		Renderer::DrawTexture("cover_robot", 0, 170, 206.5f, 341);
+		//right
+		Renderer::DrawTexture("cover_birbs", 680, 20, 108.5f, 73);
+		Renderer::DrawTexture("cover_moleright", 780, 20, 131.2, 133.6f);
+		Renderer::DrawTexture("cover_girlbear", 590, 200, 293.5f, 353.5f);
+		Renderer::DrawTexture("cover_boybear", 750, 100, 225, 286.5f);
+		Renderer::DrawTexture("cover_catto", 700, 170, 270.5f, 390.5f);
+	}
+	if (m_elapsedTime > 0.2f && m_elapsedTime <= 2.0f)
+	{
+		Renderer::DrawTexture("Background", 0, 0, 1024, 576);
 
-
-	//CGameOutput* output = CGameOutput::GetGameOutput();
-	////Matrix33  rm, sm;
-	//Matrix33 m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(0, 0);
-	//output->DrawPic("cover_bg",&m);
-	//m = Matrix33::S(off, off) * Matrix33::T(287,10);
-	//output->DrawPic("cover_bg_logo_only_transparent", &m);
-	//m = Matrix33::S(off, off) * Matrix33::T(700, 10);
-	//output->DrawPic("cover_birbs", &m);
-	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(750, 100);
-	//output->DrawPic("cover_boybear", &m);
-	
-
-	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(750, 100);
-	//output->DrawPic("cover_girlbear", &m);
-	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(750, 100);
-	//output->DrawPic("cover_catto", &m);
-	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(750, 100);
-	//output->DrawPic("cover_catto", &m);
-	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(750, 100);
-	//output->DrawPic("cover_catto", &m);
-	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(750, 100);
-	//output->DrawPic("cover_catto", &m);
-
-	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(0, 20);
-	//output->DrawPic("cover_dancer", &m);
-
-
-	//m = Matrix33::S(0.5f, 0.5f) * Matrix33::T(700, 150);
-	//output->DrawPic("cover_catto", &m);
+		Renderer::DrawTexture("Logo", 287, 10, 386, 244.5f + m_small);
+		Renderer::DrawTexture("cover_mascots", 350, 290, 250.4, 207.6 + m_big);
+		//left- x-  y+
+		Renderer::DrawTexture("cover_snakecharmer", 0, 100, 189.5f - m_middle, 236 + m_middle);
+		Renderer::DrawTexture("cover_monke", 20, 20, 131 - m_small, 135.5 + m_small);            //ºï×Ó
+		Renderer::DrawTexture("cover_moleleft", 20, 20, 264.5f - m_middle, 130.5f + m_small);     //ÀÏÊó
+		Renderer::DrawTexture("cover_dancer", 10, 20, 349.5f - m_big, 521.5f + m_big);
+		Renderer::DrawTexture("cover_robot", 0, 170, 206.5f - m_big, 341 + m_big);
+		//right  x+ y+
+		Renderer::DrawTexture("cover_birbs", 680, 20, 108.5f + m_small, 73 + m_small);
+		Renderer::DrawTexture("cover_moleright", 780, 20, 131.2 + m_small, 133.6f + m_small);    //ÀÏÊó
+		Renderer::DrawTexture("cover_girlbear", 590, 200, 293.5f + m_big, 353.5f + m_big);   //×ÏÉ«ÐÜ
+		Renderer::DrawTexture("cover_boybear", 750, 100, 225 + m_middle, 286.5f + m_middle);       //À¶É«ÐÜ
+		Renderer::DrawTexture("cover_catto", 700, 170, 270.5f + m_big, 390.5f + m_big);
+	}
+	//¹Ø¿¨ÇÐ»»
+	CGameInput* input = CGameInput::GetGameInput();
+	if (input->GetKeyDown(_GI_K_SPACE))
+	{
+		End();
+	}
 }
 
 void CStartScene::End()
 {
-	
+	CScene* scene = new CHammerScene;
+	//CFrameWork::GetFrameWork()->Run();
 }

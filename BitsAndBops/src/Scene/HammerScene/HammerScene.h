@@ -4,6 +4,8 @@
 #include "Tools/Timer.h"
 #include "Tools/TimerStampManage.h"
 #include "StateMachine/StateMachine.h"
+#include "Animation/FrameAnimation.h"
+#include "Scene/HammerScene/GameModeHammerTime.h"
 #include <vector>
 
 
@@ -11,6 +13,7 @@ class TimerClock;
 class CAudioManager;
 class m_Audio;
 class CHammer;
+struct HammerLevel;
 
 enum HammerStates
 {
@@ -28,6 +31,7 @@ class HammerGaming;
 class HammerSettlementing;
 
 
+
 class CHammerScene :public CScene
 {
 public:
@@ -39,8 +43,6 @@ public:
 
 private:
 	int m_State;
-	//TimerClock m_Timer;
-	//时间管理-教学关卡与game关卡
 	TimerStampManage* m_TeachTimeManage{ nullptr };
 	TimerStampManage* m_GameTimeManage{ nullptr };
 
@@ -48,7 +50,6 @@ private:
 	//动画
 	CHammer* m_hammer{ nullptr };
 	
-
 	//音效
 	
 	//所有状态
@@ -63,6 +64,10 @@ private:
 	friend class HammerConfirming;
 	friend class HammerGaming;
 	friend class HammerSettlementing;
+
+	//////////////////////////////////
+
+	GameModeHammerTime* m_gameModeHammerTime{ nullptr };
 
 
 };

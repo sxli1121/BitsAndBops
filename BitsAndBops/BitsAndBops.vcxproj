@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\HammerScene\GameModeHammerTime.cpp" />
+    <ClCompile Include="src\Animation\FrameAnimation.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\GameParticipator\Nail.cpp" />
     <ClCompile Include="src\GameParticipator\MobileStation.cpp" />
@@ -29,35 +31,29 @@
     <ClCompile Include="src\Scene\HammerScene\States\HammerOpening.cpp" />
     <ClCompile Include="src\Animation\HammerEffect.cpp" />
     <ClCompile Include="src\Audio\AudioManager.cpp" />
-    <ClCompile Include="src\Scene\CHammerScene.cpp" />
     <ClCompile Include="src\OutPutAndInput\Camera.cpp" />
-    <ClCompile Include="src\GameObject\Action.cpp" />
     <ClCompile Include="src\Animation\Animation.cpp" />
     <ClCompile Include="src\GameObject\CObject.cpp" />
     <ClCompile Include="src\Core\FrameWork.cpp" />
     <ClCompile Include="src\OutPutAndInput\GameInput.cpp" />
     <ClCompile Include="src\Animation\HammerAnimation.cpp" />
-    <ClCompile Include="src\GameObject\Hero_idle.cpp" />
-    <ClCompile Include="src\GameObject\Hero_Move.cpp" />
-    <ClCompile Include="src\OutPutAndInput\GameOutput.cpp" />
     <ClCompile Include="src\Enter\main.cpp" />
     <ClCompile Include="src\Math\Matrix.cpp" />
-    <ClCompile Include="src\Math\matrix4X4.cpp" />
-    <ClCompile Include="src\Math\Rect.cpp" />
     <ClCompile Include="src\Math\vector.cpp" />
-    <ClCompile Include="src\Math\Vector3D.cpp" />
-    <ClCompile Include="src\OutPutAndInput\RenderingPipline.cpp" />
     <ClCompile Include="src\Scene\HammerScene\HammerScene.cpp" />
+    <ClCompile Include="src\Scene\MenuScene.cpp" />
     <ClCompile Include="src\Scene\StartScene.cpp" />
-    <ClCompile Include="src\Scene\TestSence.cpp" />
-    <ClCompile Include="src\Scene\TestSence2.cpp" />
     <ClCompile Include="src\Core\Scene_Manager.cpp" />
-    <ClCompile Include="src\OutPutAndInput\MyTextureManager.cpp" />
     <ClCompile Include="src\StateMachine\StateMachine.cpp" />
     <ClCompile Include="src\Renderer\Texture.cpp" />
     <ClCompile Include="src\Renderer\TextureManager.cpp" />
+    <ClCompile Include="src\Tools\Timer.cpp" />
+    <ClCompile Include="src\Tools\TimerStampManage.cpp" />
+    <ClCompile Include="src\Core\Time.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\HammerScene\GameModeHammerTime.h" />
+    <ClInclude Include="src\Animation\FrameAnimation.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\GameParticipator\Nail.h" />
     <ClInclude Include="src\GameParticipator\MobileStation.h" />
@@ -69,35 +65,27 @@
     <ClInclude Include="src\Scene\HammerScene\States\HammerOpening.h" />
     <ClInclude Include="src\Animation\HammerEffect.h" />
     <ClInclude Include="src\Audio\AudioManager.h" />
-    <ClInclude Include="src\Scene\CHammerScene.h" />
     <ClInclude Include="src\OutPutAndInput\Camera.h" />
-    <ClInclude Include="src\GameObject\Action.h" />
     <ClInclude Include="src\Animation\Animation.h" />
     <ClInclude Include="src\GameObject\CObject.h" />
     <ClInclude Include="src\Core\FrameWork.h" />
     <ClInclude Include="src\OutPutAndInput\GameInput.h" />
     <ClInclude Include="src\Animation\HammerAnimation.h" />
-    <ClInclude Include="src\GameObject\Hero_idle.h" />
-    <ClInclude Include="src\GameObject\Hero_Move.h" />
-    <ClInclude Include="src\OutPutAndInput\GameOutput.h" />
     <ClInclude Include="src\Math\Matrix.h" />
-    <ClInclude Include="src\Math\matrix4X4.h" />
-    <ClInclude Include="src\Math\Rect.h" />
     <ClInclude Include="src\Math\vector.h" />
-    <ClInclude Include="src\Math\Vector3D.h" />
-    <ClInclude Include="src\OutPutAndInput\RenderingPipline.h" />
     <ClInclude Include="src\Core\Scene.h" />
     <ClInclude Include="src\Scene\HammerScene\HammerScene.h" />
+    <ClInclude Include="src\Scene\MenuScene.h" />
     <ClInclude Include="src\Scene\StartScene.h" />
-    <ClInclude Include="src\Scene\TestSence.h" />
-    <ClInclude Include="src\Scene\TestSence2.h" />
     <ClInclude Include="src\Core\Scene_Manager.h" />
-    <ClInclude Include="src\OutPutAndInput\MyTextureManager.h" />
-    <ClInclude Include="src\Core\SingletonTemplate.h" />
     <ClInclude Include="src\StateMachine\State.h" />
     <ClInclude Include="src\StateMachine\StateMachine.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
     <ClInclude Include="src\Renderer\TextureManager.h" />
+    <ClInclude Include="src\Tools\Timer.h" />
+    <ClInclude Include="src\Tools\TimerStampManage.h" />
+    <ClInclude Include="src\Core\Time.h" />
+    <ClInclude Include="src\Tools\Utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

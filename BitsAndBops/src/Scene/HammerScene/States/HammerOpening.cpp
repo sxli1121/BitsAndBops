@@ -1,9 +1,10 @@
 #include "HammerOpening.h"
-#include "OutputAndInput/GameOutput.h"
+
 #include "OutputAndInput/GameInput.h"
 #include "Audio/AudioManager.h"
 #include "Math/Matrix.h"
 #include "Scene/HammerScene/HammerScene.h"
+#include "Renderer/Renderer.h"
 
 void HammerOpening::OnEnter()
 {
@@ -14,12 +15,11 @@ void HammerOpening::OnEnter()
 
 void HammerOpening::OnUpdate(float dt)
 {
-	CGameOutput* p = CGameOutput::GetGameOutput();
 	Matrix33 m, sm;
 	sm.Scale(0.5, 0.4);
 	m.Translate(-50, 0);
 	m = sm * m;
-	p->DrawPic("hammer_title",&m);
+	Renderer::DrawTexture("hammer_title",0,0,960,450);
 	CGameInput* gi = CGameInput::GetGameInput();
 
 	double time = m_timer.GetTimerMilliSec();
@@ -28,6 +28,7 @@ void HammerOpening::OnUpdate(float dt)
 	{
 		m_Scene->GetStateMachine()->Switch(STATE_HAMMER_TEACH);
 	}
+
 }
 
 void HammerOpening::OnExit()

@@ -1,7 +1,4 @@
 #pragma once
-#include "Math/Vector3D.h"
-#include "Math/matrix4X4.h"
-#include "OutputAndInput/RenderingPipline.h"
 #include "Math/matrix.h"
 
 class Camera

@@ -9,6 +9,7 @@ struct TextureManagerData
 	std::unordered_map<std::string, Texture*> TextureMap;
 };
 
+//ÌØÊâµ¥Àı
 TextureManagerData s_Data;
 
 void TextureManager::Init()
@@ -53,7 +54,8 @@ void TextureManager::Unload(const std::string& id)
 
 void TextureManager::UnloadAll()
 {
-	for (auto it : s_Data.TextureMap)
+	
+	for (auto it : s_Data.TextureMap)   
 	{
 		delete it.second;
 	}

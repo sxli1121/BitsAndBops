@@ -1,6 +1,7 @@
 #pragma once
 #include "StateMachine/State.h"
 
+class Animation;
 class CHammerScene;
 
 class HammerGaming : public State
@@ -14,6 +15,8 @@ public:
 	void OnExit() override;
 private:
 	CHammerScene* m_Scene;
+	int m_scorer {0};
+
 	friend class CHammerScene;
 
 };

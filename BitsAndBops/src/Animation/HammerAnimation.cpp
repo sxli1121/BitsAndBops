@@ -1,6 +1,6 @@
 #include "Animation/HammerAnimation.h"
 #include "Animation/Animation.h"
-#include "OutPutAndInput/GameOutput.h"
+
 #include "Math/Matrix.h"
 
 void CHammer::Init()
@@ -54,7 +54,7 @@ void CHammer::Update(float dt)
 		}
 
 		m_CurrentRotation = m_RotationFrom + (m_AnimationTime/m_AnimationDuration) * (m_RotationTo - m_RotationFrom);
-		CGameOutput* output = CGameOutput::GetGameOutput();
+		//CGameOutput* output = CGameOutput::GetGameOutput();
 
 		float right = 1497;
 		auto rm = Matrix33::T(-right, 0)
@@ -62,7 +62,7 @@ void CHammer::Update(float dt)
 			* Matrix33::T(right,0);
 
 		auto transform = rm * Matrix33::S(0.1f, 0.1f) * Matrix33::T(100, 100);
-		output->DrawPic("hammer", &transform);
+		//output->DrawPic("hammer", &transform);
 	}
 
 
