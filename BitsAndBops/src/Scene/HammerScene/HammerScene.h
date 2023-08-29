@@ -1,6 +1,5 @@
 #pragma once
 #include "Core/Scene.h"
-//#include "Audio/AudioManager.h"
 #include "Tools/Timer.h"
 #include "Tools/TimerStampManage.h"
 #include "StateMachine/StateMachine.h"
@@ -43,8 +42,8 @@ public:
 
 private:
 	int m_State;
-	TimerStampManage* m_TeachTimeManage{ nullptr };
-	TimerStampManage* m_GameTimeManage{ nullptr };
+	//TimerStampManage* m_TeachTimeManage{ nullptr };
+	//TimerStampManage* m_GameTimeManage{ nullptr };
 
 	StateMachine* m_StateMachine{ nullptr };
 	//¶¯»­
@@ -68,6 +67,7 @@ private:
 	//////////////////////////////////
 
 	GameModeHammerTime* m_gameModeHammerTime{ nullptr };
+
 
 
 };

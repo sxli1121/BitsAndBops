@@ -1,21 +1,14 @@
 #include "HammerScene.h"
-
 #include "Audio/AudioManager.h"
-#include "Math/Matrix.h"
 #include "Tools/Timer.h"
-#include "States/HammerOpening.h"
+#include "Scene/HammerScene/States/HammerOpening.h"
 #include "States/hammerTeaching.h"
 #include "States/hammerConfirming.h"
 #include "States/hammerGaming.h"
 #include "States/hammerSettlementing.h"
-#include "Animation/HammerAnimation.h"
 #include "OutPutAndInput/Gameinput.h"
 #include "Scene/HammerScene/GameModeHammerTime.h"
-
-#include "Renderer/Renderer.h"
 #include "Renderer/TextureManager.h"
-#include "Animation/FrameAnimation.h"
-#include "Core/Time.h"
 
 //#include "Tools/TimerStamp.h"
 
@@ -23,9 +16,8 @@ void CHammerScene::Init()
 {	
 	////进场
 	TextureManager::Load("hammer_title_screen", L"Assets/Textures/FristRound/Pic/hammer_time_title_screen.png");
-	////gameoutput->AddPic("hammer_title", "hammer_title_screen", 0, 0, 1920, 1080);
 	////进场
-	//CAudioManager::Get().PushOnceAudio("JingleDraft", "Assets/Audios/FristRound/JingleDraft.wav");
+	CAudioManager::Get().PushOnceAudio("JingleDraft", "Assets/Audios/FristRound/JingleDraft.wav");
 	//等待对话框时背景音
 	CAudioManager::Get().PushLoopAudio("construction_ambience", "Assets/Audios/FristRound/construction_ambience.wav");
 	//对话框确认
@@ -91,35 +83,23 @@ void CHammerScene::Init()
 	//结算环节的图片与音效
 	//1
 	TextureManager::Load("results_art_hammertime_amazing",L"Assets/Textures/FristRound/Pic/results_art_hammertime_amazing.png");
-	//gameoutput->AddPic("amazing", "results_art_hammertime_amazing", 0, 0, 653, 453);
 	TextureManager::Load("results_art_hammertime_cool",L"Assets/Textures/FristRound/Pic/results_art_hammertime_cool.png");
-	//gameoutput->AddPic("cool", "results_art_hammertime_cool", 0, 0, 653, 453);
 	TextureManager::Load("results_art_hammertime_tryagain", L"Assets/Textures/FristRound/Pic/results_art_hammertime_tryagain.png");
-	//gameoutput->AddPic("tryagain", "results_art_hammertime_tryagain", 0, 0, 653, 453);
-	
 	//2
-	TextureManager::Load("amazing_sticker", L"Assets/Textures/FristRound/Pic/amazing_sticker.png");
-	//gameoutput->AddPic("amazing_sticker", "amazing_sticker", 0, 0, 586, 317);
+	TextureManager::Load("amazing_sticker", L"Assets/Textures/FristRound/Pic/perfect_sticker.png");
 	TextureManager::Load("cool_sticker", L"Assets/Textures/FristRound/Pic/cool_sticker.png");
-	//gameoutput->AddPic("cool_sticker", "cool_sticker", 0, 0, 483, 304);
 	TextureManager::Load("tryagain_sticker",L"Assets/Textures/FristRound/Pic/tryagain_sticker.png");
-	//gameoutput->AddPic("tryagain_sticker", "tryagain_sticker", 0, 0, 428, 344);
 
 
+	//结算音效
+	CAudioManager::Get().PushOnceAudio("AMAZING", "Assets/Audios/FristRound/AMAZING.wav");
+	CAudioManager::Get().PushOnceAudio("COOL", "Assets/Audios/FristRound/COOL.wav");
+	CAudioManager::Get().PushOnceAudio("TRY AGAIN", "Assets/Audios/FristRound/TRY AGAIN.wav");
 
 
-	////对话框确认
-	//CAudioManager::Get().PushOnceAudio("CatTurn", "Assets/Audios/FristRound/SFX_FS_CatTurn.wav");
 	//正式
 	CAudioManager::Get().PushOnceAudio("HammerTime", "Assets/Audios/FristRound/HammerTime.wav");
-	//////钉子效果音效-击中
-	////CAudioManager::Get().PushOnceAudio("SFX_HT_NailHammerHit", "Assets/Audios/FristRound/SFX_HT_NailHammerHit.wav");
-	//////错过倾斜
-	////CAudioManager::Get().PushOnceAudio("SFX_HT_NailMissTilt", "Assets/Audios/FristRound/SFX_HT_NailMissTilt.wav");
-	//////稍微偏差
-	////CAudioManager::Get().PushOnceAudio("SFX_HT_NailPlace", "Assets/Audios/FristRound/SFX_HT_NailPlace.wav");
-
-
+	
 	//状态管理
 	m_StateMachine = new StateMachine();
 	//状态
@@ -138,8 +118,6 @@ void CHammerScene::Init()
 	m_StateMachine->Switch(STATE_HAMMER_GAME);
 
 
-	//m_hammer = new CHammer;
-	//m_hammer->Init();
 
 	CAudioManager::Get().PushOnceAudio("Bits And Bops TUTORIAL 120", "Assets/Audios/FristRound/Bits And Bops TUTORIAL 120.wav");
 	//TextureManager::Load("nail_normal_1", L"Assets/Textures/FristRound/Pic/nail_normal_1.png");
@@ -147,12 +125,7 @@ void CHammerScene::Init()
 
 
 	//CAudioManager::Get().PlayOnceAudio("Bits And Bops TUTORIAL 120");
-
 	m_gameModeHammerTime = new GameModeHammerTime;
-
-	
-
-
 }
 
 void CHammerScene::Update(float dt)
@@ -160,24 +133,6 @@ void CHammerScene::Update(float dt)
 
 	m_StateMachine->Update(dt);
 
-
-
-	//int i = m_StateMachine->GetCurrentStateId();
-	//if (i == STATE_HAMMER_OPEN)
-	//	m_OpeningState->OnUpdate(dt);
-	//else if (i == STATE_HAMMER_TEACH)
-	//	m_TeachingState->OnUpdate(dt);
-
-
-
-		//STATE_HAMMER_OPEN,
-		//STATE_HAMMER_TEACH,
-		//STATE_HAMMER_CONFIRM,
-		//STATE_HAMMER_GAME,
-		//STATE_HAMMER_SETTLEMENT,
-	
-	//m_gameModeHammerTime->Update(dt);
-	//m_gameModeHammerTime->Render();
 
 
 

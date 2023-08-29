@@ -7,6 +7,8 @@
 #include "GameParticipator/MobileStation.h"
 #include "Animation/Animation.h"
 #include "Animation/HammerAnimation.h"
+#include "Renderer/Renderer.h"
+#include "Scene/HammerScene/States/HammerConfirming.h"
 
 
 
@@ -14,6 +16,7 @@ void HammerTeaching::OnEnter()
 {
 	CAudioManager::Get().PlayOnceAudio("Bits And Bops TUTORIAL 120");
 
+	m_Remainung = 3;
 
 	HammerLevel* CurrentLevel = new HammerLevel;
 	CurrentLevel->Duration = 24.0f;
@@ -42,6 +45,8 @@ void HammerTeaching::OnEnter()
 	m_Scene->m_gameModeHammerTime->Init();
 	m_Scene->m_gameModeHammerTime->Play(CurrentLevel);
 
+	m_timer.Begin();
+
 }
 
 void HammerTeaching::OnUpdate(float dt)
@@ -49,9 +54,22 @@ void HammerTeaching::OnUpdate(float dt)
 	m_Scene->m_gameModeHammerTime->Update(dt);
 	m_Scene->m_gameModeHammerTime->Render();
 
+	double time = m_timer.GetTimerMilliSec();
+
+	if (time >=  25000)
+	{
+		Renderer::Clear(0, 0, 0);
+	}
+
+	if (time >= 26000)
+	{
+		m_Scene->GetStateMachine()->Switch(STATE_HAMMER_CONFIRM);
+		m_Scene->m_ConfirmState->SetStateMark(ToState::STATE_GAME);
+	}
 
 }
 
 void HammerTeaching::OnExit()
 {
+ 
 }

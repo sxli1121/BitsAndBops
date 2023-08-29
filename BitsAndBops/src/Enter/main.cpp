@@ -3,6 +3,7 @@
 #include "Scene/StartScene.h"
 
 #include "Scene/HammerScene/HammerScene.h"
+#include "Scene/MeetTweet/MeetTweetScene.h"
 #include "Scene/StartScene.h"
 #include "Math/vector.h"
 #include "Math/Matrix.h"
@@ -18,10 +19,12 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPreInstance, PSTR lpCmdLine, 
 	//生成框架中的场景
 	jk->AddScene("Start", new CStartScene);
 	jk->AddScene("Hammer", new CHammerScene);
+	jk->AddScene("MeetTweet", new MeetTweetScene);
 
 	//开始场景
 	//jk->SetStartScene("Start");
 	jk->SetStartScene("Hammer");
+	//jk->SetStartScene("MeetTweet");
 	//运行
 	CFrameWork::GetFrameWork()->Run();
 

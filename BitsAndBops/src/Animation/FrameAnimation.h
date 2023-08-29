@@ -38,6 +38,15 @@ public:
 
 	bool IsPlaying() { return m_IsPlaying; }
 
+	void Reset()
+	{
+		m_Length = 0;
+		m_IsPlaying = false;
+		m_CurrentTime = 0;
+		m_CurrentFrameIndex = 0;
+		m_Frames.clear();
+	}
+
 private:
 	float m_Length{0};
 

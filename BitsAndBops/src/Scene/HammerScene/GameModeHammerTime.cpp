@@ -6,67 +6,77 @@
 
 void GameModeHammerTime::Init()
 {
+	m_CurrentLevel = nullptr;
 
+	m_AllNails.clear();
+	m_AllMobile.clear();
+
+	m_StartTime = 0;
+	m_NextBlockIndex = 0;
+	m_NextNailIndex = 0;
+	m_LevelFinished = false;
+	m_mobileSpeed = 0;
+	m_Scorer = 0;
 	//手
-	//m_HandAnimation.SetLength(0.2f);
+	m_HandAnimation.Reset();
 	m_HandAnimation.SetMode(AnimationMode::Once);
 	float rotation = 15.0f;
 	m_HandAnimation.AddFrame({
 		0,
 		"hand1",
-		150,
-		295,
-		267,
+		50,
+		130,
+		534,
+		652.5f,
+		rotation,
+		0.868f,
+		0.927f
+		});
+
+	m_HandAnimation.AddFrame({
+		0.05f,
+		"hand2",
+		100,
+		230,
+		652.5f,
 		326.25,
 		rotation,
-		0.868,
-		0.927
+		0.868f,
+		0.927f
 		});
 
 	m_HandAnimation.AddFrame({
 		0.1f,
-		"hand2",
+		"hand3",
 		150,
-		295,
-		267,
-		326.25,
+		330,
+		534,
+		652.5f,
 		rotation,
-		0.868,
-		0.927
+		0.868f,
+		0.927f
 		});
 
 	m_HandAnimation.AddFrame({
-		0.2f,
+		0.15f,
 		"hand3",
-		160,
-		320,
-		267,
-		326.25,
+		150,
+		340,
+		534,
+		652.5f,
 		rotation,
-		0.868,
-		0.927
+		0.868f,
+		0.927f
 		});
 
-	m_HandAnimation.AddFrame({
-		0.3f,
-		"hand3",
-		160,
-		320,
-		267,
-		326.25,
-		rotation,
-		0.868,
-		0.927
-		});
-
-
+	m_HammerAnimation.Reset();
 	m_HammerAnimation.AddFrame({
 		0.0f,
 		"hammer",
-		1000,
-		0,
-		374,
-		250,
+	1398.5f,
+	-115,
+		748.5f,
+		500.5f,
 		90,
 		1,
 		0
@@ -74,10 +84,10 @@ void GameModeHammerTime::Init()
 	m_HammerAnimation.AddFrame({
 	0.08f,
 	"hammer",
-	1000,
-	0,
-		374,
-		250,
+	1398.5f,
+	-115,
+		748.5f,
+		500.5f,
 	0,
 	1,
 	0
@@ -85,13 +95,13 @@ void GameModeHammerTime::Init()
 	m_HammerAnimation.AddFrame({
 		0.2f,
 		"hammer",
-		1000,
-		0,
-		374,
-		250,
+	1398.5f,
+	-115,
+		748.5f,
+		500.5f,
 		0,
 		1,
-		0
+		0 
 		});
 }
 
@@ -100,8 +110,8 @@ void GameModeHammerTime::Play(HammerLevel* lever)
 	m_CurrentLevel = lever;
 	m_StartTime = Time::GetRealtimeSinceStartup();
 
-	float nailFromPosX = 150;
-	float nailToPosX = 700;
+	float nailFromPosX = 120;
+	float nailToPosX = 630;
 	m_mobileSpeed = (nailToPosX - nailFromPosX) / ((60.0f / m_CurrentLevel->BPM) * 4.0f);
 	//m_mobileSpeed = 100;
 }
@@ -125,7 +135,7 @@ void GameModeHammerTime::Update(float dt)
 			{
 				float beatUnitTime = (60.0f / m_CurrentLevel->BPM);
 				float perfectTime = beatUnitTime * (nail.BornBetas + m_CurrentLevel->BeatsPerMeasure);
-				float hitTime = Time::GetRealtimeSinceStartup() - m_StartTime;
+				double hitTime = Time::GetRealtimeSinceStartup() - m_StartTime;
 				float diff = hitTime - perfectTime;
 				float diffBeat = diff * beatUnitTime;
 				if (abs(diffBeat) <= HitJudgmentTimePerfect)
@@ -182,6 +192,7 @@ bool GameModeHammerTime::IsDone()
 	return false;
 }
 
+
 float GameModeHammerTime::GetGrades()
 {
 	return CalculateGrades();
@@ -209,7 +220,7 @@ void GameModeHammerTime::GenerateNails()
 		float mobileFromPosX = 0;
 		float mobileToPosX = 150;
 		float mobileArriveTime = nailBornTime - (mobileToPosX - mobileFromPosX) / m_mobileSpeed;
-		float elapsedTime = currentTime - mobileArriveTime;
+		double elapsedTime = currentTime - mobileArriveTime;
 		if (currentTime >= mobileArriveTime)
 		{
 			//总共需要生成多少个节拍能走的路程大小 当前block 中的最后一个数据-第一个数据 +1
@@ -232,7 +243,7 @@ void GameModeHammerTime::GenerateNails()
 	if (currentTime >= nailBornTime)
 	{
 		NailObject nail;
-		nail.x = 150;
+		nail.x = 150;    
 		nail.BornBetas = nailBornBeats;
 		nail.State = NailState::Normal;
 
@@ -313,14 +324,13 @@ void GameModeHammerTime::UpdateNails(float dt)
 
 void GameModeHammerTime::DrawNails()
 {
-	float xOffset = 50.0f;
-	float yOffset = 395;
+	float xOffset = 25.0f;
+	float yOffset = 395;    
 	for (MobileStation& mobile : m_AllMobile)
 	{
-
-		Renderer::DrawTexture("wood_left", mobile.x- mobile.MobileWidth-50+xOffset, yOffset, 63, 234, 0, 1, 0);
-		Renderer::DrawTexture("wood_centre", mobile.x+ xOffset - 56, yOffset, mobile.MobileWidth, 234, 0, 1, 0);
-		Renderer::DrawTexture("wood_right", mobile.x+ xOffset, yOffset, 63, 234, 0, 1, 0);
+		Renderer::DrawTexture("wood_left", mobile.x- mobile.MobileWidth-24 + xOffset, yOffset, 31.5f, 117, 0, 1, 0);
+		Renderer::DrawTexture("wood_centre", mobile.x + xOffset - 27, yOffset, mobile.MobileWidth, 117, 0, 1, 0);
+		Renderer::DrawTexture("wood_right", mobile.x + xOffset, yOffset, 31.5f, 117, 0, 1, 0);
 	}
 
 
@@ -340,11 +350,11 @@ void GameModeHammerTime::DrawNails()
 		}
 		else if (nail.State == NailState::AlmostEarly)
 		{
-			Renderer::DrawTexture("nail_normal_3", nail.x, 400, 78.0f, 41.0f, 0, 0.5f, 1.0f);
+			Renderer::DrawTexture("nail_normal_3", nail.x, 408, 78.0f, 41.0f, 0, 0.88f, 1.0f);
 		}
 		else if (nail.State == NailState::AlmostLate)
 		{
-			Renderer::DrawTexture("nail_normal_6", nail.x, 400, 78.5f, 42.0f, 0, 0.5f, 1.0f);
+			Renderer::DrawTexture("nail_normal_6", nail.x, 408, 78.5f, 42.0f, 0, 0.13f, 1.0f);
 		}
 	}
 }
@@ -352,7 +362,7 @@ void GameModeHammerTime::DrawNails()
 float  GameModeHammerTime::CalculateGrades()
 {
 	//m_scoror / 总成绩的比例
-	float nailNum = m_AllNails.size();
+	float nailNum = m_AllNails.size(); 
 	float grades = m_Scorer / nailNum * 2;
 	return grades;
 }

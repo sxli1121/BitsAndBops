@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\MeetTweet\GameModeMeetTweet.cpp" />
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetConfirming.cpp" />
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetGaming.cpp" />
+    <ClCompile Include="src\Scene\MeetTweet\MeetTweetScene.cpp" />
     <ClCompile Include="src\Scene\HammerScene\GameModeHammerTime.cpp" />
     <ClCompile Include="src\Animation\FrameAnimation.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
@@ -50,8 +54,16 @@
     <ClCompile Include="src\Tools\Timer.cpp" />
     <ClCompile Include="src\Tools\TimerStampManage.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetOpening.cpp" />
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetSettlementing.cpp" />
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetTeachingOne.cpp" />
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetTeachingTwo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\MeetTweet\GameModeMeetTweet.h" />
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetConfirming.h" />
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetGaming.h" />
+    <ClInclude Include="src\Scene\MeetTweet\MeetTweetScene.h" />
     <ClInclude Include="src\Scene\HammerScene\GameModeHammerTime.h" />
     <ClInclude Include="src\Animation\FrameAnimation.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
@@ -86,6 +98,10 @@
     <ClInclude Include="src\Tools\TimerStampManage.h" />
     <ClInclude Include="src\Core\Time.h" />
     <ClInclude Include="src\Tools\Utils.h" />
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetOpening.h" />
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetSettlementing.h" />
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetTeachingOne.h" />
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetTeachingTwo.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

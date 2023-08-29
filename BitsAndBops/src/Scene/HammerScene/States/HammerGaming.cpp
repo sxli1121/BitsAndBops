@@ -5,13 +5,14 @@
 #include "Audio/AudioManager.h"
 #include "Math/Matrix.h"
 #include "GameParticipator/MobileStation.h"
-#include "Animation/Animation.h"
-#include "Animation/HammerAnimation.h"
-
+#include "Renderer/Renderer.h"
+#include "Scene/HammerScene/HammerScene.h"
+#include "Tools/Timer.h"
 
 void HammerGaming::OnEnter()
 {
 	CAudioManager::Get().PlayOnceAudio("HammerTime");
+	m_timer.Begin();
 	//ÅäÖÃ¹Ø¿¨
 	HammerLevel* CurrentLevel = new HammerLevel;
 	CurrentLevel->Duration = 108.0f;
@@ -105,8 +106,15 @@ void HammerGaming::OnUpdate(float dt)
 	m_Scene->m_gameModeHammerTime->Update(dt);
 	m_Scene->m_gameModeHammerTime->Render();
 	
-
-
+	double time = m_timer.GetTimerMilliSec();
+	if (time >= 108000)
+	{
+		Renderer::Clear(0, 0, 0);
+	}
+	if (time >= 109000)
+	{
+		m_Scene->GetStateMachine()->Switch(STATE_HAMMER_SETTLEMENT);
+	}
 }
 
 void HammerGaming::OnExit()

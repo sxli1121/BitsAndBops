@@ -1,7 +1,7 @@
 #pragma once
 #include "StateMachine/State.h"
+#include "Tools/Timer.h"
 
-class Animation;
 class CHammerScene;
 
 class HammerGaming : public State
@@ -16,6 +16,7 @@ public:
 private:
 	CHammerScene* m_Scene;
 	int m_scorer {0};
+	TimerClock m_timer;
 
 	friend class CHammerScene;
 

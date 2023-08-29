@@ -34,7 +34,6 @@ struct NailObject
 struct MobileStation
 {
 	float x;
-	//float BronBeats;
 	float MobileWidth;
 };
 
@@ -47,6 +46,7 @@ public:
 	void Update(float dt);
 	void Render();
 	bool IsDone();
+	
 
 	float GetGrades();
 private:

@@ -108,6 +108,30 @@
     <ClCompile Include="src\Scene\MenuScene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene\MeetTweet\MeetTweetScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetOpening.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetConfirming.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetGaming.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetTeachingOne.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetTeachingTwo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\MeetTweet\States\TweetSettlementing.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\MeetTweet\GameModeMeetTweet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation\Animation.h">
@@ -210,6 +234,30 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Tools\Utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\MeetTweet\MeetTweetScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetOpening.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetConfirming.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetGaming.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetTeachingOne.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetTeachingTwo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\MeetTweet\States\TweetSettlementing.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\MeetTweet\GameModeMeetTweet.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

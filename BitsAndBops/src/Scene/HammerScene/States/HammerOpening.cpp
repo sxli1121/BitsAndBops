@@ -1,10 +1,9 @@
 #include "HammerOpening.h"
-
-#include "OutputAndInput/GameInput.h"
 #include "Audio/AudioManager.h"
-#include "Math/Matrix.h"
 #include "Scene/HammerScene/HammerScene.h"
 #include "Renderer/Renderer.h"
+#include "Scene/HammerScene/States/HammerConfirming.h"
+
 
 void HammerOpening::OnEnter()
 {
@@ -15,17 +14,16 @@ void HammerOpening::OnEnter()
 
 void HammerOpening::OnUpdate(float dt)
 {
-	Matrix33 m, sm;
-	sm.Scale(0.5, 0.4);
-	m.Translate(-50, 0);
-	m = sm * m;
-	Renderer::DrawTexture("hammer_title",0,0,960,450);
-	CGameInput* gi = CGameInput::GetGameInput();
+	Renderer::DrawTexture("hammer_title_screen",0,0,960,540);
 
 	double time = m_timer.GetTimerMilliSec();
-
-	if(time >= 6000)
+	if (time >= 6000)
 	{
+		Renderer::Clear(0, 0, 0);
+	}
+	if(time >= 6500)
+	{
+		m_Scene->m_ConfirmState->SetStateMark(ToState::STATE_TEACH);
 		m_Scene->GetStateMachine()->Switch(STATE_HAMMER_TEACH);
 	}
 

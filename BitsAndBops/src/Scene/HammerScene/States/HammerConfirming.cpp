@@ -2,6 +2,7 @@
 #include "Audio/AudioManager.h"
 #include "Renderer/Renderer.h"
 #include "OutPutAndInput/GameInput.h"
+#include "Scene/HammerScene/HammerScene.h"
 
 
 
@@ -46,7 +47,7 @@ void HammerConfirming::OnUpdate(float dt)
 void HammerConfirming::OnExit()
 {
 
-
+	CAudioManager::Get().StopLoopAudio("construction_ambience");
 }
 
 void HammerConfirming::ToTeachTextUpdate()
@@ -70,6 +71,7 @@ void HammerConfirming::ToTeachTextUpdate()
 			PlayAudio();
 			m_Mark += 1;
 			//状态切换
+			m_Scene->m_StateMachine->Switch(STATE_HAMMER_TEACH);
 		}
 	}
 }
@@ -80,7 +82,7 @@ void HammerConfirming::ToGameTextUpdate()
 
 	if (m_Mark == 0)
 	{
-		Renderer::DrawTex("Fantastic!", 50, 50, 800, 100, 0.0f, 0.0f, 0.0f);
+		Renderer::DrawTex("Fantastic!", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();
@@ -89,7 +91,7 @@ void HammerConfirming::ToGameTextUpdate()
 	}
 	else if (m_Mark == 1)
 	{
-		Renderer::DrawTex("There instructions get pretty complicated,so make sure you keep,an ear out for the change in rhythm.", 50, 50, 800, 100, 0.0f, 0.0f, 0.0f);
+		Renderer::DrawTex("There instructions get pretty complicated,so make sure you keep,an ear out for the change in rhythm.", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();
@@ -98,12 +100,13 @@ void HammerConfirming::ToGameTextUpdate()
 	}
 	else if (m_Mark == 2)
 	{
-		Renderer::DrawTex("Let's build this!", 50, 50, 800, 100, 0.0f, 0.0f, 0.0f);
+		Renderer::DrawTex("Let's build this!", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();
 			m_Mark += 1;
 			//状态切换
+			m_Scene->m_StateMachine->Switch(STATE_HAMMER_GAME);
 		}
 	}
 }

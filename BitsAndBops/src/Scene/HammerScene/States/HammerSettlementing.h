@@ -1,5 +1,6 @@
 #pragma once
 #include "StateMachine/State.h"
+#include "Tools/Timer.h"
 
 class CHammerScene;
 
@@ -20,9 +21,16 @@ public:
 	void OnUpdate(float dt) override;
 	void OnExit() override;
 private:
+	void Renderer(double currenttime);
+	void PlayAudio(double currenttime);
+private:
 	CHammerScene* m_Scene;
 	GradesResule m_Grades;
-	double m_StartTime{ 0.0 };
+	TimerClock m_timer;
+
+	bool m_IsAudioPlay{ false };
+	bool m_IsTextAudioPlay{ false };
+
 
 	friend class CHammerScene;
 
