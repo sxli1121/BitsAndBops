@@ -5,129 +5,169 @@
 #include "Tools/Utils.h"
 #include "OutPutAndInput/Camera.h"
 
-#include <Windows.h>
-#include <objidl.h>
-#include <gdiplus.h>
-#include <cassert>
+#include <d2d1.h>
+#include <d2d1helper.h>
+#include <dwrite.h>
+#include <wincodec.h>
 
 #include "Math/Math.h"
+#include <cassert>
 
-using namespace Gdiplus;
+#pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "dwrite.lib")
+#pragma comment(lib, "windowscodecs.lib")
+
+template<class T> void SafeRelease(T** ppT)
+{
+    if (*ppT)
+    {
+        (*ppT)->Release();
+        *ppT = NULL;
+    }
+}
+
+using namespace D2D1;
 
 struct RendererData
 {
-	HDC MainDC;
-	HDC BackDC;
-	int ClientWidth;
-	int ClientHeight;
+    ID2D1Factory* Factory;
+    ID2D1HwndRenderTarget* RenderTarget;
+    IDWriteFactory* WriteFactory;
+    int ClientWidth;
+    int ClientHeight;
     HWND WindowHandle;
-    ULONG_PTR GdiplusToken;
 
     Matrix3f ViewportMatrix;
     Matrix3f ViewProjectionMatrix;
-
-    Gdiplus::Matrix* Transform;
-    Gdiplus::Graphics* Graphics;
 };
 //特殊单例方式
- RendererData s_Data;
+RendererData s_Data;
 
 void Renderer::Init()
 {
- 
-    Gdiplus::GdiplusStartupInput gdiplusStartupInput;
-    // Initialize GDI+.
-    GdiplusStartup(&s_Data.GdiplusToken, &gdiplusStartupInput, NULL);
-
     CFrameWork* framework = CFrameWork::GetFrameWork();
     s_Data.WindowHandle = framework->GetHWND();
-    s_Data.MainDC = GetDC(framework->GetHWND());
     s_Data.ClientWidth = framework->GetClientW();
     s_Data.ClientHeight = framework->GetClientH();
-    //BackDC与MainDC的数据一样
-    s_Data.BackDC = CreateCompatibleDC(s_Data.MainDC);
-    //位图-将两个DC中的位图选入相同大小-删除原本的位图
-    HBITMAP bmp = CreateCompatibleBitmap(s_Data.MainDC, s_Data.ClientWidth, s_Data.ClientHeight);
-    DeleteObject(SelectObject(s_Data.BackDC, bmp));
-    DeleteObject(bmp);
-    //开启高级模式
-    SetGraphicsMode(s_Data.BackDC, GM_ADVANCED);
 
-    s_Data.Graphics = Gdiplus::Graphics::FromHDC(s_Data.BackDC);
-    s_Data.Transform = new Gdiplus::Matrix;
+    D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &s_Data.Factory);
+    DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(&s_Data.WriteFactory));
+
+    RECT rc;
+    GetClientRect(s_Data.WindowHandle, &rc);
+
+    D2D1_SIZE_U size = SizeU(rc.right - rc.left, rc.bottom - rc.top);
+
+    s_Data.Factory->CreateHwndRenderTarget(
+        RenderTargetProperties(),
+        HwndRenderTargetProperties(s_Data.WindowHandle, size),
+        &s_Data.RenderTarget
+    );
 
     SetViewport(0, 0, s_Data.ClientWidth, s_Data.ClientHeight);
 
     TextureManager::Init();
-
 }
 
 void Renderer::Shutdown()
 {
     TextureManager::Shutdown();
 
-    delete s_Data.Graphics;
-
-    ReleaseDC(s_Data.WindowHandle,s_Data.BackDC);
-    ReleaseDC(s_Data.WindowHandle, s_Data.MainDC);
-
-    GdiplusShutdown(s_Data.GdiplusToken);
+    SafeRelease(&s_Data.RenderTarget);
+    SafeRelease(&s_Data.Factory);
 }
 
 void Renderer::Clear(float r, float g, float b)
 {
-    s_Data.Graphics->Clear(Color((int)(r * 255.0f), (int)(g * 255.0f), (int)(b * 255.0f)));
+    s_Data.RenderTarget->Clear(ColorF(r, g, b));
 }
 
-void Renderer::DrawTexture(const Texture* texture, float x, float y,float width, float height, float rotation, float pivotX, float pivotY)
+void Renderer::DrawTexture(const Texture* texture, float x, float y, float width, float height, float rotation, float pivotX, float pivotY)
 {
-    Image* image = texture->GetGdiImage();
+    ID2D1Bitmap* bitmap = texture->GetBitmap();
 
-    const Matrix3f localTransform = Matrix3f::Translate({x,y})
-					* Matrix3f::Rotate(Math::Deg2Rad(rotation))
-					* Matrix3f::Scale({width,height})
-					* Matrix3f::Translate({ -pivotX, -pivotY });
+    const Matrix3f localTransform = Matrix3f::Translate({ x,y })
+        * Matrix3f::Rotate(Math::Deg2Rad(rotation))
+        * Matrix3f::Scale({ width,height })
+        * Matrix3f::Translate({ -pivotX, -pivotY });
 
+    Matrix3f m = s_Data.ViewportMatrix  * s_Data.ViewProjectionMatrix * localTransform;
 
+    D2D1_MATRIX_3X2_F transform = {
+        m(0, 0), m(1, 0),
+        m(0, 1), m(1, 1),
+        m(0, 2), m(1, 2)
+    };
 
-    Matrix3f m = s_Data.ViewportMatrix * s_Data.ViewProjectionMatrix * localTransform;
+    s_Data.RenderTarget->SetTransform(transform);
+    D2D1_RECT_F rect;
+    rect.left = 0.0f;
+    rect.right = 1.0f;
+    rect.top = 0.0f;
+    rect.bottom = 1.0f;
 
-
-
-    s_Data.Transform->Reset();
-    s_Data.Transform->SetElements(m(0, 0), m(1, 0), m(0, 1), m(1, 1), m(0, 2), m(1, 2));
-
-    s_Data.Graphics->SetTransform(s_Data.Transform);
-    s_Data.Graphics->DrawImage(image,0.0f,0.0f,1.0f,1.0f);
+    s_Data.RenderTarget->DrawBitmap(bitmap,&rect);
 }
 
-void Renderer::DrawTexture(const std::string& id, float x, float y,float width, float height, float rotation, float pivotX, float pivotY)
+void Renderer::DrawTexture(const std::string& id, float x, float y, float width, float height, float rotation, float pivotX, float pivotY)
 {
     Texture* texture = TextureManager::GetTexture(id);
     assert(texture != nullptr);
-    Renderer::DrawTexture(texture, x, y ,width, height, rotation, pivotX, pivotY);
+    Renderer::DrawTexture(texture, x, y, width, height, rotation, pivotX, pivotY);
 }
 
-void Renderer::DrawTex(std::string str, float x, float y, float w, float h, float r,float g ,float b)
+void Renderer::DrawString(std::string str, float x, float y, float w, float h, float r, float g, float b)
 {
-    s_Data.Transform->Reset();
-    s_Data.Graphics->SetTransform(s_Data.Transform);
+    s_Data.RenderTarget->SetTransform(Matrix3x2F::Identity());
+
+    IDWriteTextFormat* textFormat;
+    s_Data.WriteFactory->CreateTextFormat(
+        L"Arial",
+        NULL,
+        DWRITE_FONT_WEIGHT_NORMAL,
+        DWRITE_FONT_STYLE_NORMAL,
+        DWRITE_FONT_STRETCH_NORMAL,
+        12.0f,
+        L"en-us",
+        &textFormat
+    );
+
+    textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+    textFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+
+    ID2D1SolidColorBrush* brush;
+    s_Data.RenderTarget->CreateSolidColorBrush(ColorF(r, g, b), &brush);
 
     std::wstring wstr = Utils::utf8_to_wstring(str);
-     
-    FontFamily   fontFamily(L"Arial");
-    Font         font(&fontFamily, 12, FontStyleBold, UnitPoint);
-    RectF        rectF(x, y, w, h);
-    SolidBrush   solidBrush(Color(255, r*255.0f, g*255.0f, b*255.0f));
 
-    s_Data.Graphics->DrawString(wstr.c_str(), -1, &font, rectF, NULL, &solidBrush);
+
+    const Matrix3f localTransform = Matrix3f::Translate({ x,y }) *Matrix3f::Scale({ w,h });
+    Matrix3f m = s_Data.ViewportMatrix * s_Data.ViewProjectionMatrix * localTransform;
+    Vector2 lt = m * Vector2(0,0);
+    Vector2 rb = m * Vector2(1, 1);
+    D2D1_RECT_F rect;
+    rect.left = lt.x;
+    rect.right = rb.x;
+    rect.top = lt.y;
+    rect.bottom = rb.y;
+
+    s_Data.RenderTarget->DrawText(
+        wstr.c_str(),
+        wstr.length(),
+        textFormat,
+        rect,
+        brush
+    );
+
+    SafeRelease(&brush);
+    SafeRelease(&textFormat);
 }
 
 void Renderer::SetViewport(int x, int y, int width, int height)
 {
     s_Data.ViewportMatrix = {
         (float)width,0,(float)x,
-        0, (float)height,(float)y,
+        0,(float)height,(float)y,
         0,0,1
     };
 }
@@ -135,13 +175,15 @@ void Renderer::SetViewport(int x, int y, int width, int height)
 void Renderer::SetViewProjection(const Matrix3f& m)
 {
     s_Data.ViewProjectionMatrix = m;
+}
 
+ID2D1HwndRenderTarget* Renderer::GetRenderTarget()
+{
+    return s_Data.RenderTarget;
 }
 
 void Renderer::SwapBuffers()
 {
-    BitBlt(s_Data.MainDC, 0, 0, s_Data.ClientWidth, s_Data.ClientHeight, s_Data.BackDC, 0, 0, SRCCOPY);
+    s_Data.RenderTarget->EndDraw();
+    s_Data.RenderTarget->BeginDraw();
 }
-
-
-

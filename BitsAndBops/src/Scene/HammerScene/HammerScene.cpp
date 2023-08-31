@@ -95,7 +95,8 @@ void CHammerScene::Init()
 	TextureManager::Load("amazing_sticker", L"Assets/Textures/FristRound/Pic/perfect_sticker.png");
 	TextureManager::Load("cool_sticker", L"Assets/Textures/FristRound/Pic/cool_sticker.png");
 	TextureManager::Load("tryagain_sticker",L"Assets/Textures/FristRound/Pic/tryagain_sticker.png");
-
+	
+	TextureManager::Load("bop", L"Assets/Textures/MeetTweet/wren_angry_1.png");
 
 	//½áËãÒôÐ§
 	CAudioManager::Get().PushOnceAudio("AMAZING", "Assets/Audios/FristRound/AMAZING.wav");
@@ -141,12 +142,55 @@ void CHammerScene::Init()
 
 void CHammerScene::Update(float dt)
 {
+	// RenderTest
+	//auto input = CGameInput::GetGameInput();
+	//if (input->IsKeyPressed(_GI_K_W))
+	//{
+	//	m_CameraPosition += Vector2(0, -1.0f) * 100 * dt;
+	//}
+	//if (input->IsKeyPressed(_GI_K_S))
+	//{
+	//	m_CameraPosition += Vector2(0, 1.0f) * 100 * dt;
+	//}
+	//if (input->IsKeyPressed(_GI_K_A))
+	//{
+	//	m_CameraPosition += Vector2(-1, 0) * 100 * dt;
+	//}
+	//if (input->IsKeyPressed(_GI_K_D))
+	//{
+	//	m_CameraPosition += Vector2(1, 0) * 100 * dt;
+	//}
+	//if (input->IsKeyPressed(_GI_K_Q))
+	//{
+	//	m_CameraRotation -= 100 * dt;
+	//}
+	//if (input->IsKeyPressed(_GI_K_E))
+	//{
+	//	m_CameraRotation += 100 * dt;
+	//}
+	//if (input->IsKeyPressed(_GI_K_Z))
+	//{
+	//	m_CameraScale -= 1 * dt;
+	//}
+	//if (input->IsKeyPressed(_GI_K_X))
+	//{
+	//	m_CameraScale += 1 * dt;
+	//}
+
+
 	m_Camera.SetScale(m_CameraScale);
 	m_Camera.SetRotation(m_CameraRotation);
 	m_Camera.SetOrtho(m_CameraPosition.x, m_CameraPosition.y, 960, 540);
 	Renderer::SetViewProjection(m_Camera.GetViewProjMatrix());
 
+	//Renderer::DrawTexture("bop", 0, 0,100.0f,100.0f,0,0,0);
+	//Renderer::DrawString("Hello,World", 0, 0, 100, 100);
+
 	m_StateMachine->Update(dt);
+
+
+
+
 
 }
 

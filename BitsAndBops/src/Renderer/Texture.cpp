@@ -1,33 +1,80 @@
 #include "Texture.h"
+#include "Renderer.h"
 
-#include <Windows.h>
-#include <gdiplus.h>
-#include <cassert>
+#include <d2d1.h>
+#include <wincodec.h>
+
+#pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "windowscodecs.lib")
+
+template<class T> void SafeRelease(T** ppT)
+{
+    if (*ppT)
+    {
+        (*ppT)->Release();
+        *ppT = NULL;
+    }
+}
+
 
 int Texture::GetWidth() const
 {
-	return m_GdiImage->GetWidth();
+    return (int)m_Bitmap->GetSize().width;
 }
 
 int Texture::GetHeight() const
 {
-	return m_GdiImage->GetHeight();
+    return (int)m_Bitmap->GetSize().height;
 }
 
 Texture* Texture::Load(const wchar_t* fileName)
 {
-	Gdiplus::Image* image = Gdiplus::Image::FromFile(fileName);
-	
-	assert(image->GetLastStatus() == Gdiplus::Status::Ok);
+    IWICImagingFactory* wicFactory;
+    CoCreateInstance(
+        CLSID_WICImagingFactory,
+        NULL,
+        CLSCTX_INPROC_SERVER,
+        IID_PPV_ARGS(&wicFactory)
+    );
 
-	if (image->GetLastStatus() != Gdiplus::Status::Ok)
-	{
-		delete image;
-		return nullptr;
-	}
+    IWICBitmapDecoder* decoder;
+    wicFactory->CreateDecoderFromFilename(
+        fileName,
+        NULL,
+        GENERIC_READ,
+        WICDecodeMetadataCacheOnLoad,
+        &decoder
+    );
 
-	Texture* texture = new Texture;
-	texture->m_GdiImage = image;
+    IWICBitmapFrameDecode* frame;
+    decoder->GetFrame(0, &frame);
 
-	return texture;
+    IWICFormatConverter* converter;
+    wicFactory->CreateFormatConverter(&converter);
+
+    converter->Initialize(
+        frame,
+        GUID_WICPixelFormat32bppPBGRA,
+        WICBitmapDitherTypeNone,
+        NULL,
+        0.0f,
+        WICBitmapPaletteTypeCustom
+    );
+
+    ID2D1Bitmap* bitmap;
+    Renderer::GetRenderTarget()->CreateBitmapFromWicBitmap(
+        converter,
+        NULL,
+        &bitmap
+    );
+
+    SafeRelease(&converter);
+    SafeRelease(&frame);
+    SafeRelease(&decoder);
+    SafeRelease(&wicFactory);
+
+    Texture* texture = new Texture;
+    texture->m_Bitmap = bitmap;
+
+    return texture;
 }

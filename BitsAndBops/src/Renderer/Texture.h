@@ -1,4 +1,5 @@
 #pragma once
+#include <d2d1.h>
 
 namespace Gdiplus
 {
@@ -10,9 +11,9 @@ class Texture
 public:
 	int GetWidth() const;
 	int GetHeight() const;
-	inline Gdiplus::Image* GetGdiImage() const { return m_GdiImage; }     
+	inline ID2D1Bitmap* GetBitmap() const { return m_Bitmap; }
 	static Texture* Load(const wchar_t* fileName);
 private:
-	Gdiplus::Image* m_GdiImage{ nullptr };
+	ID2D1Bitmap* m_Bitmap{ nullptr };
 };
 

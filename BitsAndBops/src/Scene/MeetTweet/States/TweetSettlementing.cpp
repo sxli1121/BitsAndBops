@@ -26,7 +26,7 @@ void TweetSettlementing::OnEnter()
 
 void TweetSettlementing::OnUpdate(float dt)
 {
-	//½á¹ûÍ¼ ÎÄ×Ö ÒôÐ§ÓëÐ§¹ûÍ¼
+	//ï¿½ï¿½ï¿½Í¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð§ï¿½ï¿½Ð§ï¿½ï¿½Í¼
 	double currentTime = m_timer.GetTimerMilliSec();
 
 	Renderer(currentTime);
@@ -73,7 +73,7 @@ void TweetSettlementing::Renderer(double currentTime)
 		Renderer::DrawTexture("results_art_meetandtweet_amazing", 300, 30, 326.5f, 226.5f);
 		if (currentTime >= 1000)
 		{
-			Renderer::DrawTex(u8"You made a friend for life!", 350, 270, 400, 100);
+			Renderer::DrawString(u8"You made a friend for life!", 350, 270, 400, 100);
 		}
 		if (currentTime >= 2000)
 		{
@@ -86,7 +86,7 @@ void TweetSettlementing::Renderer(double currentTime)
 		Renderer::DrawTexture("results_art_meetandtweet_cool", 300, 30, 326.5f, 226.5f);
 		if (currentTime >= 1000)
 		{
-			Renderer::DrawTex("That's enough chit-chat for one day.", 330, 270, 400, 100);
+			Renderer::DrawString("That's enough chit-chat for one day.", 330, 270, 400, 100);
 		}
 		if (currentTime >= 2000)
 		{
@@ -99,7 +99,7 @@ void TweetSettlementing::Renderer(double currentTime)
 		Renderer::DrawTexture("results_art_meetandtweet_tryagain", 300, 30, 326.5f, 226.5f);
 		if (currentTime >= 1000)
 		{
-			Renderer::DrawTex("Try letting someone else speak occasionally.", 325, 270, 400, 100);
+			Renderer::DrawString("Try letting someone else speak occasionally.", 325, 270, 400, 100);
 		}
 		if (currentTime >= 2000)
 		{

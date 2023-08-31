@@ -56,7 +56,7 @@ void HammerConfirming::ToTeachTextUpdate()
 
 	if (m_Mark == 0)
 	{
-		Renderer::DrawTex("Let's build something!", 50, 50, 800, 100, 0.0f, 0.0f, 0.0f);
+		Renderer::DrawString("Let's build something!", 50, 50, 800, 100, 0.0f, 0.0f, 0.0f);
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();
@@ -65,7 +65,7 @@ void HammerConfirming::ToTeachTextUpdate()
 	}
 	else if (m_Mark == 1)
 	{
-		Renderer::DrawTex("I'll put the nail downs,and you hammer time in.", 50, 50, 800, 100, 0.0f, 0.0f, 0.0f);
+		Renderer::DrawString("I'll put the nail downs,and you hammer time in.", 50, 50, 800, 100, 0.0f, 0.0f, 0.0f);
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();
@@ -82,7 +82,7 @@ void HammerConfirming::ToGameTextUpdate()
 
 	if (m_Mark == 0)
 	{
-		Renderer::DrawTex("Fantastic!", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
+		Renderer::DrawString("Fantastic!", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();
@@ -91,7 +91,7 @@ void HammerConfirming::ToGameTextUpdate()
 	}
 	else if (m_Mark == 1)
 	{
-		Renderer::DrawTex("There instructions get pretty complicated,so make sure you keep,an ear out for the change in rhythm.", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
+		Renderer::DrawString("There instructions get pretty complicated,so make sure you keep,an ear out for the change in rhythm.", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();
@@ -100,7 +100,7 @@ void HammerConfirming::ToGameTextUpdate()
 	}
 	else if (m_Mark == 2)
 	{
-		Renderer::DrawTex("Let's build this!", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
+		Renderer::DrawString("Let's build this!", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();

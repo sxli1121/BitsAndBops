@@ -80,7 +80,7 @@ void HammerSettlementing::Renderer(double currentTime)
 		Renderer::DrawTexture("results_art_hammertime_amazing", 300, 30, 326.5f, 226.5f);
 		if (currentTime >= 1000)
 		{
-			Renderer::DrawTex(u8"It looks just like the picture!", 350, 270, 400, 100);
+			Renderer::DrawString(u8"It looks just like the picture!", 350, 270, 400, 100);
 		}
 		if (currentTime >= 2000)
 		{
@@ -93,7 +93,7 @@ void HammerSettlementing::Renderer(double currentTime)
 		Renderer::DrawTexture("results_art_hammertime_cool", 300, 30, 326.5f, 226.5f);
 		if (currentTime >= 1000)
 		{
-			Renderer::DrawTex("This looks like it will hold together!", 330, 270, 400, 100);
+			Renderer::DrawString("This looks like it will hold together!", 330, 270, 400, 100);
 		}
 		if (currentTime >= 2000)
 		{
@@ -106,7 +106,7 @@ void HammerSettlementing::Renderer(double currentTime)
 		Renderer::DrawTexture("results_art_hammertime_tryagain", 300, 30, 326.5f, 226.5f);
 		if (currentTime >= 1000)
 		{
-			Renderer::DrawTex("I hope this covered under warranty.", 325, 270, 400, 100);
+			Renderer::DrawString("I hope this covered under warranty.", 325, 270, 400, 100);
 		}
 		if (currentTime >= 2000)
 		{
