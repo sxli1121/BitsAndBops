@@ -7,8 +7,15 @@ struct HammerBlock
 	std::vector<float> Nails;
 };
 
+enum class LevelName
+{
+	HAMMER_TEACH,
+	HAMMER_GAME,
+};
+
 struct HammerLevel
 {
+	LevelName levelName;
 	float Duration;
 	std::vector<HammerBlock> Blocks;
 	int BPM;
@@ -37,6 +44,8 @@ struct MobileStation
 	float MobileWidth;
 };
 
+
+
 class GameModeHammerTime
 {
 
@@ -46,7 +55,6 @@ public:
 	void Update(float dt);
 	void Render();
 	bool IsDone();
-	
 
 	float GetGrades();
 private:
@@ -69,12 +77,19 @@ private:
 	int m_Scorer{ 0 };
 
 
+
+
 	const float HitJudgmentTimePerfect = 0.05f;
 	const float HitJudgmentTimeAlmost = 0.3f;
 	const float HitJudgmentTimeMiss = 0.5f;
 
 	FrameAnimation m_HandAnimation;
 	FrameAnimation m_HammerAnimation;
+	FrameAnimation m_HammmerSmearAnimation;
+	FrameAnimation m_HammerPerfectAnimation;
+	FrameAnimation m_HammerAlmostAnimation;
+
+	FrameAnimation m_HandSmearAnimation;
 
 };
 

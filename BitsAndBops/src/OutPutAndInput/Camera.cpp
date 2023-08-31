@@ -1,61 +1,69 @@
 #include "Camera.h"
 #include "Core/FrameWork.h"
-#include "Math/matrix.h"
+#include "Math/Math.h"
+#include "Math/Matrix.h"
 
 
 Camera::Camera()
 {
 	CFrameWork* framework = CFrameWork::GetFrameWork();
-	m_OrthoWeight = framework->GetClientW();
-	m_OrthoHeight = framework->GetClientH();
+	m_Width = framework->GetClientW();
+	m_Height = framework->GetClientH();
 	CalculateMatrix();
 }
 
-void Camera::SetAngle(float angle)
+void Camera::SetScale(float scale)
 {
-	m_Angle = angle;
+	m_Scale = scale;
 	CalculateMatrix();
 }
 
-void Camera::SetPosition(float x, float y)
+void Camera::SetRotation(float angle)
 {
-	m_X = x;
-	m_Y = y;
+	m_RotationAngle = angle;
 	CalculateMatrix();
 }
 
-void Camera::SetOrthoSize(float w, float h)
+void Camera::SetOrtho(float left, float top, float width, float height)
 {
-	m_OrthoWeight = w;
-	m_OrthoHeight = h;
+	m_Left = left;
+	m_Top = top;
+	m_Width = width;
+	m_Height = height;
 	CalculateMatrix();
 }
 
-Matrix33 Camera::GetProjectionMatrix()
+Matrix3f Camera::GetProjectionMatrix()
 {
 	return m_ProjectionMatrix;
 }
 
-Matrix33 Camera::GetViewMatrix()
+Matrix3f Camera::GetViewMatrix()
 {
 	return m_ViewMatrix;
 }
 
-Matrix33 Camera::GetViewProjMatrix()
+Matrix3f Camera::GetViewProjMatrix()
 {
 	return m_ViewProjMatrix;
 }
 
 void Camera::CalculateMatrix()
 {
-	Matrix33 tm,rm;
-	tm.Translate(-m_X, -m_Y);
-	rm.Rotate_A(-m_Angle);
-	m_ViewMatrix = tm * rm;
+	Vector2 position = { m_Left,m_Top};
+	Vector2 center = { m_Width * 0.5f,m_Height * 0.5f };
 
-	Matrix33 sm;
-	sm.Scale(1.0f/m_OrthoWeight,1.0f/m_OrthoHeight);
-	m_ProjectionMatrix = sm;
+	Matrix3f cameraTransform = Matrix3f::Translate(position+center)
+	* Matrix3f::Scale({m_Scale,m_Scale})	  
+	* Matrix3f::Rotate(Math::Deg2Rad(m_RotationAngle))
+	* Matrix3f::Translate(-center);
 
-	m_ViewProjMatrix = m_ViewMatrix * m_ProjectionMatrix;
+	m_ViewMatrix = Matrix3f::Inverse(cameraTransform);
+	m_ProjectionMatrix = {
+		1.0f / m_Width,0,0,
+		0,1.0f / m_Height,0,
+		0,0,1
+	};
+
+	m_ViewProjMatrix =  m_ProjectionMatrix * m_ViewMatrix;
 }

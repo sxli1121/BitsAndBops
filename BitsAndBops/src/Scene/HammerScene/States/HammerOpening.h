@@ -1,7 +1,7 @@
 #pragma once
 #include "StateMachine/State.h"
 #include "Tools/Timer.h"
-
+//#include "OutPutAndInput/Camera.h"
 class CHammerScene;
 
 class HammerOpening  : public State
@@ -18,5 +18,6 @@ private:
 	TimerClock m_timer;
 	CHammerScene* m_Scene;
 	friend class CHammerScene;
+
 };
 

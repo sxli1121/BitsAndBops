@@ -9,6 +9,7 @@ void TweetOpening::OnEnter()
 {
 	CAudioManager::Get().PlayOnceAudio("JingleDraft");
 	m_timer.Begin();
+
 }
 
 void TweetOpening::OnUpdate(float dt)
@@ -18,7 +19,7 @@ void TweetOpening::OnUpdate(float dt)
 	double time = m_timer.GetTimerMilliSec();
 	if (time >= 6000)
 	{
-		Renderer::Clear(0, 0, 0);
+		//Renderer::Clear(0, 0, 0);
 	}
 	if (time >= 6500)
 	{

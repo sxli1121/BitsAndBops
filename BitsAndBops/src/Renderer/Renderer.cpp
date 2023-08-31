@@ -4,10 +4,13 @@
 #include "TextureManager.h"
 #include "Tools/Utils.h"
 #include "OutPutAndInput/Camera.h"
+
 #include <Windows.h>
 #include <objidl.h>
 #include <gdiplus.h>
 #include <cassert>
+
+#include "Math/Math.h"
 
 using namespace Gdiplus;
 
@@ -19,6 +22,9 @@ struct RendererData
 	int ClientHeight;
     HWND WindowHandle;
     ULONG_PTR GdiplusToken;
+
+    Matrix3f ViewportMatrix;
+    Matrix3f ViewProjectionMatrix;
 
     Gdiplus::Matrix* Transform;
     Gdiplus::Graphics* Graphics;
@@ -50,6 +56,8 @@ void Renderer::Init()
     s_Data.Graphics = Gdiplus::Graphics::FromHDC(s_Data.BackDC);
     s_Data.Transform = new Gdiplus::Matrix;
 
+    SetViewport(0, 0, s_Data.ClientWidth, s_Data.ClientHeight);
+
     TextureManager::Init();
 
 }
@@ -74,12 +82,20 @@ void Renderer::Clear(float r, float g, float b)
 void Renderer::DrawTexture(const Texture* texture, float x, float y,float width, float height, float rotation, float pivotX, float pivotY)
 {
     Image* image = texture->GetGdiImage();
+
+    const Matrix3f localTransform = Matrix3f::Translate({x,y})
+					* Matrix3f::Rotate(Math::Deg2Rad(rotation))
+					* Matrix3f::Scale({width,height})
+					* Matrix3f::Translate({ -pivotX, -pivotY });
+
+
+
+    Matrix3f m = s_Data.ViewportMatrix * s_Data.ViewProjectionMatrix * localTransform;
+
+
+
     s_Data.Transform->Reset();
-    s_Data.Transform->Translate(x, y);
-    s_Data.Transform->Rotate(rotation);
-    s_Data.Transform->Scale(width, height);
-    s_Data.Transform->Translate(-pivotX, -pivotY);
-    //ÉãÏñ»ú
+    s_Data.Transform->SetElements(m(0, 0), m(1, 0), m(0, 1), m(1, 1), m(0, 2), m(1, 2));
 
     s_Data.Graphics->SetTransform(s_Data.Transform);
     s_Data.Graphics->DrawImage(image,0.0f,0.0f,1.0f,1.0f);
@@ -105,6 +121,21 @@ void Renderer::DrawTex(std::string str, float x, float y, float w, float h, floa
     SolidBrush   solidBrush(Color(255, r*255.0f, g*255.0f, b*255.0f));
 
     s_Data.Graphics->DrawString(wstr.c_str(), -1, &font, rectF, NULL, &solidBrush);
+}
+
+void Renderer::SetViewport(int x, int y, int width, int height)
+{
+    s_Data.ViewportMatrix = {
+        (float)width,0,(float)x,
+        0, (float)height,(float)y,
+        0,0,1
+    };
+}
+
+void Renderer::SetViewProjection(const Matrix3f& m)
+{
+    s_Data.ViewProjectionMatrix = m;
+
 }
 
 void Renderer::SwapBuffers()

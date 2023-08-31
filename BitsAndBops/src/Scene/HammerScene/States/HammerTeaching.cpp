@@ -4,9 +4,6 @@
 #include "OutputAndInput/GameInput.h"
 #include "Audio/AudioManager.h"
 #include "Math/Matrix.h"
-#include "GameParticipator/MobileStation.h"
-#include "Animation/Animation.h"
-#include "Animation/HammerAnimation.h"
 #include "Renderer/Renderer.h"
 #include "Scene/HammerScene/States/HammerConfirming.h"
 
@@ -16,9 +13,10 @@ void HammerTeaching::OnEnter()
 {
 	CAudioManager::Get().PlayOnceAudio("Bits And Bops TUTORIAL 120");
 
-	m_Remainung = 3;
+	//m_Remainung = 3;
 
 	HammerLevel* CurrentLevel = new HammerLevel;
+	CurrentLevel->levelName = LevelName::HAMMER_TEACH;
 	CurrentLevel->Duration = 24.0f;
 	CurrentLevel->BPM = 120;
 	CurrentLevel->BeatsPerMeasure = 4;
@@ -51,6 +49,10 @@ void HammerTeaching::OnEnter()
 
 void HammerTeaching::OnUpdate(float dt)
 {
+
+
+	m_Scene->m_CameraScale = 0.7;
+
 	m_Scene->m_gameModeHammerTime->Update(dt);
 	m_Scene->m_gameModeHammerTime->Render();
 

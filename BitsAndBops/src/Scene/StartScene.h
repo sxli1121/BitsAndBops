@@ -1,8 +1,5 @@
 #pragma once
 #include "Core/Scene.h"
-#include "Math/vector.h"
-
-
 class CStartScene : public CScene
 {
 	float m_small;

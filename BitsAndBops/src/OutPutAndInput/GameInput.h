@@ -131,7 +131,7 @@ public:
 	int GetKeyState(unsigned char Key);
 	bool GetKeyDown(unsigned char Key);
 	bool GetCursor(int* x, int* y);
-
+	bool IsKeyPressed(unsigned char Key);
 };
 
 #endif

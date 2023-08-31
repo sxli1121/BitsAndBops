@@ -9,11 +9,15 @@
 #include "OutPutAndInput/Gameinput.h"
 #include "Scene/HammerScene/GameModeHammerTime.h"
 #include "Renderer/TextureManager.h"
-
+#include "OutPutAndInput/Camera.h"
+#include "Renderer/Renderer.h"
 //#include "Tools/TimerStamp.h"
 
 void CHammerScene::Init()
-{	
+{
+	Camera camera;
+	camera.GetViewProjMatrix();
+
 	////进场
 	TextureManager::Load("hammer_title_screen", L"Assets/Textures/FristRound/Pic/hammer_time_title_screen.png");
 	////进场
@@ -37,8 +41,7 @@ void CHammerScene::Init()
 	TextureManager::Load("hand1", L"Assets/Textures/FristRound/Pic/hand_1.png");
 	TextureManager::Load("hand2", L"Assets/Textures/FristRound/Pic/hand_2.png");
 	TextureManager::Load("hand3", L"Assets/Textures/FristRound/Pic/hand_3.png");
-	//TextureManager::Load("hand_smear",L"Assets/Textures/FristRound/Pic/hand_smear.png");
-	//////gameoutput->AddPic("hand_smear", "hand_smear", 0, 0, 978, 1305);
+	TextureManager::Load("hand_smear",L"Assets/Textures/FristRound/Pic/hand_smear.png");
 
 
 	//对话框
@@ -49,18 +52,18 @@ void CHammerScene::Init()
 	////gameoutput->AddPic("hammer", "hammer", 0, 0, 1479, 1001);
 	////锤子效果
 	//TextureManager::Load("hammer_effect_almost_1", L"Assets/Textures/FristRound/Pic/hammer_effect_almost_1.png");
-	////gameoutput->AddPic("hammer_almost1", "hammer_effect_almost_1", 0, 0, 46, 125);
+	//gameoutput->AddPic("hammer_almost1", "hammer_effect_almost_1", 0, 0, 46, 125);
 	//TextureManager::Load("hammer_effect_almost_2", L"Assets/Textures/FristRound/Pic/hammer_effect_almost_2.png");
-	////gameoutput->AddPic("hammer_almost2", "hammer_effect_almost_2", 0, 0, 41, 116);
-	//TextureManager::Load("hammer_effect_hit", L"Assets/Textures/FristRound/Pic/hammer_effect_hit.png");
-	////gameoutput->AddPic("hammer_hit", "hammer_effect_hit", 0, 0, 332, 58);
-	//TextureManager::Load("hammer_effect_perfect", L"Assets/Textures/FristRound/Pic/hammer_effect_perfect.png");
-	////gameoutput->AddPic("hammer_perfect", "hammer_effect_perfect", 0, 0, 409, 91);
+	//gameoutput->AddPic("hammer_almost2", "hammer_effect_almost_2", 0, 0, 41, 116);
+	TextureManager::Load("hammer_effect_hit", L"Assets/Textures/FristRound/Pic/hammer_effect_hit.png");
+	//gameoutput->AddPic("hammer_hit", "hammer_effect_hit", 0, 0, 332, 58);
+	TextureManager::Load("hammer_effect_perfect", L"Assets/Textures/FristRound/Pic/hammer_effect_perfect.png");
+	//gameoutput->AddPic("hammer_perfect", "hammer_effect_perfect", 0, 0, 409, 91);
 	//
 	////锤子自带效果
-	//TextureManager::Load("hammer_smear", L"Assets/Textures/FristRound/Pic/hammer_smear.png");
-	////gameoutput->AddPic("hammer_smear", "hammer_smear", 0, 0, 431, 985);
-	//
+	TextureManager::Load("hammer_smear", L"Assets/Textures/FristRound/Pic/hammer_smear.png");
+	
+	
 	////钉子
 	TextureManager::Load("nail_normal_1", L"Assets/Textures/FristRound/Pic/nail_normal_1.png");
 	TextureManager::Load("nail_normal_2", L"Assets/Textures/FristRound/Pic/nail_normal_2.png");
@@ -71,7 +74,10 @@ void CHammerScene::Init()
 	TextureManager::Load("nail_normal_7", L"Assets/Textures/FristRound/Pic/nail_normal_7.png");
 	//
 	//显示框
+	TextureManager::Load("bg_texture", L"Assets/Textures/FristRound/Pic/bg_texture.png");
+	TextureManager::Load("Clear", L"Assets/Textures/FristRound/Pic/Clear.png");
 	TextureManager::Load("fg", L"Assets/Textures/FristRound/Pic/fg.png");
+	TextureManager::Load("fg_numbers", L"Assets/Textures/FristRound/Pic/fg_numbers.png");
 
 	//箱子
 	TextureManager::Load("wood_centre", L"Assets/Textures/FristRound/Pic/wood_centre.png");
@@ -126,24 +132,31 @@ void CHammerScene::Init()
 
 	//CAudioManager::Get().PlayOnceAudio("Bits And Bops TUTORIAL 120");
 	m_gameModeHammerTime = new GameModeHammerTime;
+
+
+
+	//摄像机
+	m_Camera.SetOrtho(0, 0, 960, 540);
 }
 
 void CHammerScene::Update(float dt)
 {
+	m_Camera.SetScale(m_CameraScale);
+	m_Camera.SetRotation(m_CameraRotation);
+	m_Camera.SetOrtho(m_CameraPosition.x, m_CameraPosition.y, 960, 540);
+	Renderer::SetViewProjection(m_Camera.GetViewProjMatrix());
 
 	m_StateMachine->Update(dt);
-
-
-
-
-
 
 }
 
 void CHammerScene::End()
 {
-	//delete m_StateMachine;
-	//delete m_OpeningState;
-	//delete m_TeachingState;
+	delete m_StateMachine;
+	delete m_OpeningState;
+	delete m_TeachingState;
+	delete m_ConfirmState;
+	delete m_GameState;
+	delete m_SettlementState;
 }
 

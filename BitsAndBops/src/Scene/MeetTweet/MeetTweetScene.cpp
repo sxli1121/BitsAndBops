@@ -20,6 +20,8 @@ void MeetTweetScene::Init()
 	CAudioManager::Get().PushOnceAudio("JingleDraft", "Assets/Audios/MeetTweet/JingleDraft.wav");
 	TextureManager::Load("meet_and_tweet_title_screen", L"Assets/Textures/MeetTweet/meet_and_tweet_title_screen.png");
 	//背景
+	
+	TextureManager::Load("bg_outside", L"Assets/Textures/MeetTweet/bg_outside.png");
 	TextureManager::Load("bg_inside", L"Assets/Textures/MeetTweet/bg_inside.png");
 	TextureManager::Load("bg_inside_dark", L"Assets/Textures/MeetTweet/bg_inside_dark.png");
 	//收音机及收音机声音波
@@ -197,20 +199,26 @@ void MeetTweetScene::Init()
 	m_StateMachine->AddState(STATE_TWEET_TEACH2,m_TeachingTwoState);
 	m_StateMachine->AddState(STATE_TWEET_SETTLEMENT,m_SettlementingState);
 	//设置初始状态
-	m_StateMachine->Switch(STATE_TWEET_OPEN);
+	m_StateMachine->Switch(STATE_TWEET_TEACH1);
+
+	//教学环节音效
+	CAudioManager::Get().PushOnceAudio("Bits And Bops TUTORIAL 110","Assets/Audios/MeetTweet/Bits And Bops TUTORIAL 110.wav");
+
+
+	//提示音
+	CAudioManager::Get().PushOnceAudio("tweet", "Assets/Audios/MeetTweet/tweet.wav");
+
+
+	g_gameModeMeetTweet = new GameModeMeetTweet;
 
 
 }
 
 void MeetTweetScene::Update(float dt)
 {
-	m_Camera->SetAngle(50);
-	//Matrix  m = ;
-	Renderer::DrawTexture("wren_bop_2", 100, 100, 556 * 0.5, 415 * 0.5);
-	
-	
-	
-	//m_StateMachine->Update(dt);
+
+
+	m_StateMachine->Update(dt);
 }
 
 void MeetTweetScene::End()

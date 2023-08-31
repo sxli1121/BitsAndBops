@@ -4,9 +4,7 @@
 #include "OutputAndInput/GameInput.h"
 #include "Audio/AudioManager.h"
 #include "Math/Matrix.h"
-#include "GameParticipator/MobileStation.h"
 #include "Renderer/Renderer.h"
-#include "Scene/HammerScene/HammerScene.h"
 #include "Tools/Timer.h"
 
 void HammerGaming::OnEnter()
@@ -15,6 +13,7 @@ void HammerGaming::OnEnter()
 	m_timer.Begin();
 	//ÅäÖÃ¹Ø¿¨
 	HammerLevel* CurrentLevel = new HammerLevel;
+	CurrentLevel->levelName = LevelName::HAMMER_GAME;
 	CurrentLevel->Duration = 108.0f;
 	CurrentLevel->BPM = 130;
 	CurrentLevel->BeatsPerMeasure = 4;
@@ -53,13 +52,13 @@ void HammerGaming::OnEnter()
 	{96.0f, 97.0f, 98.0f, 98.75f  }
 		});
 		CurrentLevel->Blocks.push_back({
-	{104.0f, 104.5f, 105.0f, 106.5f, 107.0f, 107.5f  }
+	{104.0f, 104.5f, 105.0f, 106.5f, 107.0f, 107.5f }
 				});
 			CurrentLevel->Blocks.push_back({
 	{112.0f, 113.0f, 114.5f, 115.5f   }
 				});
 			CurrentLevel->Blocks.push_back({
-	{ 120.0f, 120.5f, 121.0f, 121.5f, 122.0f, 122.75f   }
+	{ 120.0f, 120.5f, 121.0f, 121.5f, 122.0f, 122.75f }
 				});
 			CurrentLevel->Blocks.push_back({
 	{128.0f, 128.75f, 129.5f }
@@ -94,8 +93,12 @@ void HammerGaming::OnEnter()
     			CurrentLevel->Blocks.push_back({
     {216.0f, 218.5f, 219.5f, 220.5f }
     				});
-    
-    
+
+
+	m_Scene->m_CameraRotation = 15;
+	m_Scene->m_CameraScale = 1.2f;
+
+
 	m_Scene->m_gameModeHammerTime->Init();
 	m_Scene->m_gameModeHammerTime->Play(CurrentLevel);
 
@@ -103,9 +106,69 @@ void HammerGaming::OnEnter()
 
 void HammerGaming::OnUpdate(float dt)
 {
+
 	m_Scene->m_gameModeHammerTime->Update(dt);
 	m_Scene->m_gameModeHammerTime->Render();
-	
+
+	double OpenOffTime = 13.0f * (60.0f / 130.0f);
+	float targetRotation = 0;
+	float targetScale = 0.8f;
+
+	if(m_timer.GetTimerMilliSec()/1000.0f <= 14.0f * (60.0f / 130.0f))
+	{
+		float speedTrasRotation = (15.0f - targetRotation) / OpenOffTime;
+		float speedTrasScale = (1.2f - targetScale) / OpenOffTime;
+
+		m_Scene->m_CameraRotation -=  speedTrasRotation * dt;
+		m_Scene->m_CameraScale -= speedTrasScale * dt;
+
+		if(m_Scene->m_CameraRotation <= 0 && m_Scene->m_CameraScale <= 0.7f)
+		{
+			m_Scene->m_CameraRotation = 0;
+			m_Scene->m_CameraScale = targetScale;
+		}
+
+		if(m_timer.GetTimerMilliSec() / 1000.0f <= 12.0f * (60.0f / 130.0f))
+		{
+
+			Renderer::DrawTexture("nail_normal_7", 685, 320, 28.57f, 8.33f, 0, 0.5f, 1.0f);
+			Renderer::DrawTexture("hammer", 1145.5f, -20, 499, 333.67f, 0, 1, 0);
+
+			Renderer::DrawTexture("hand2", 185, 270, 361.33f, 435, 15.0f, 0.868f, 0.927f);
+			Renderer::DrawTexture("nail_normal_1", 185, 320, 27, 69.67f, 0, 0.5f, 1.0f);
+
+			Renderer::DrawTexture("wood_centre", 50, 318, 215, 78, 0, 0, 0);
+			Renderer::DrawTexture("wood_right", 255, 318, 31.5f, 78, 0, 0, 0);
+
+			Renderer::DrawTexture("wood_left", 620, 318, 31.5f, 78, 0, 0, 0);
+			Renderer::DrawTexture("wood_centre", 645.5f, 318, 280, 78, 0, 0, 0);
+		}
+		else
+		{
+			float speedMobileMove = 4.0f * (60.0f / 130.0f);
+
+			mobile1x -= speedMobileMove * dt;
+			mobile2x += speedMobileMove * dt;
+
+			Renderer::DrawTexture("wood_centre", mobile1x, 318, 215, 78, 0, 0, 0);
+			Renderer::DrawTexture("wood_right", mobile1x + 195, 318, 31.5f, 78, 0, 0, 0);
+
+			Renderer::DrawTexture("wood_left", mobile2x, 318, 31.5f, 78, 0, 0, 0);
+			Renderer::DrawTexture("wood_centre", mobile2x + 25.5f, 318, 280, 78, 0, 0, 0);
+
+		}
+		Renderer::DrawTexture("fg", 0, 0, 960, 960);
+		Renderer::DrawTexture("fg_numbers", 320, 100, 540, 486.277f);
+
+
+	}
+	else if(m_timer.GetTimerMilliSec()/1000.0f >= OpenOffTime)
+	{
+		m_Scene->m_CameraRotation = 0;
+		m_Scene->m_CameraScale = targetScale;
+	}
+
+
 	double time = m_timer.GetTimerMilliSec();
 	if (time >= 108000)
 	{

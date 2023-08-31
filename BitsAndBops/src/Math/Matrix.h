@@ -1,49 +1,126 @@
 #pragma once
-#include "vector.h"
-#include <windows.h>
-class Matrix33 : public XFORM
-{
-public:
-	Matrix33();
-	//µ¥Î»¾ØÕó
-	void Identity();
-	//Ëõ·Å¾ØÕó
-	void Scale(float x, float y);
-	//Ðý×ª¾ØÕó
-	void Rotate_R(float r);
-	void Rotate_A(float a);
-	//Æ½ÒÆ¾ØÕó
-	void Translate(float x, float y);
 
-	Matrix33 operator * (const Matrix33& m);
+#include "Vector3.h"
+#include "Vector2.h"
+#include <cmath>
 
-	inline static Matrix33 T(float x, float y)
+	struct Matrix3f;
+	Matrix3f operator*(const Matrix3f& a, const Matrix3f& b);
+	Vector2 operator*(const Matrix3f& m, const Vector2& v);
+
+	// row-major
+	struct Matrix3f
 	{
-		Matrix33 m;
-		m.Translate(x, y);
-		return m;
-	}
+		union
+		{
+			float data[9]{ 1,0,0,0,1,0,0,0,1 };
+			Vector3 rows[3];
+		};
+		
+		float& operator()(int row, int col)
+		{
+			return data[col+3*row];
+		}
 
-	inline static Matrix33 RA(float a)
+		const float& operator()(int row, int col) const
+		{
+			return data[col + 3 * row];
+		}
+
+		inline static Matrix3f Translate(const Vector2& v)
+		{
+			Matrix3f m{
+				1,	  0,	v.x,
+				0,	  1,	v.y,
+				0,	  0,    1
+			};
+			return m;
+		}
+
+		inline static Matrix3f Scale(const Vector2& v)
+		{
+			Matrix3f m{
+				v.x,0, 0,
+				0,v.y, 0,
+				0, 0, 1
+			};
+			return m;
+		}
+
+		inline static Matrix3f Rotate(float radian)
+		{
+			Matrix3f m{
+				cos(radian),-sin(radian), 0,
+				sin(radian),cos(radian), 0,
+				0, 0, 1
+			};
+			return m;
+		}
+
+		inline static Matrix3f Inverse(const Matrix3f& m)
+		{
+			// computes the inverse of a matrix m
+			double det = m(0, 0) * (m(1, 1) * m(2, 2) - m(2, 1) * m(1, 2)) -
+				m(0, 1) * (m(1, 0) * m(2, 2) - m(1, 2) * m(2, 0)) +
+				m(0, 2) * (m(1, 0) * m(2, 1) - m(1, 1) * m(2, 0));
+
+			double invdet = 1 / det;
+
+			Matrix3f minv; // inverse of matrix m
+			minv(0, 0) = (m(1, 1) * m(2, 2) - m(2, 1) * m(1, 2)) * invdet;
+			minv(0, 1) = (m(0, 2) * m(2, 1) - m(0, 1) * m(2, 2)) * invdet;
+			minv(0, 2) = (m(0, 1) * m(1, 2) - m(0, 2) * m(1, 1)) * invdet;
+			minv(1, 0) = (m(1, 2) * m(2, 0) - m(1, 0) * m(2, 2)) * invdet;
+			minv(1, 1) = (m(0, 0) * m(2, 2) - m(0, 2) * m(2, 0)) * invdet;
+			minv(1, 2) = (m(1, 0) * m(0, 2) - m(0, 0) * m(1, 2)) * invdet;
+			minv(2, 0) = (m(1, 0) * m(2, 1) - m(2, 0) * m(1, 1)) * invdet;
+			minv(2, 1) = (m(2, 0) * m(0, 1) - m(0, 0) * m(2, 1)) * invdet;
+			minv(2, 2) = (m(0, 0) * m(1, 1) - m(1, 0) * m(0, 1)) * invdet;
+			
+			return minv;
+		}
+
+		inline static Matrix3f TSR(const Vector2& translation, const Vector2& scale = { 1,1 }, float rotation = 0.0f)
+		{
+			Matrix3f t = Translate(translation);
+			Matrix3f s = Scale(scale);
+			Matrix3f r = Rotate(rotation);
+			return t * s * r;
+		}
+
+		static Matrix3f Identity;
+	};
+
+	
+	inline Matrix3f operator*(const Matrix3f& a, const Matrix3f& b)
+    {
+	    Matrix3f c;
+		for (size_t row = 0; row < 3; row++)
+		{
+			for (size_t col = 0; col < 3; col++)
+			{
+				c(row, col) = 
+					  a(row, 0) * b(0, col) 
+					+ a(row, 1) * b(1, col)
+					+ a(row, 2) * b(2, col);
+			}
+		}
+		return c;
+    }
+
+	inline static Vector3 operator*(const Matrix3f& m, const Vector3& v)
 	{
-		Matrix33 m;
-		m.Rotate_A(a);
-		return m;
+		Vector3 c;
+		c.x = v.x * m(0, 0) + v.y * m(0, 1) + v.z * m(0, 2);
+		c.y = v.x * m(1, 0) + v.y * m(1, 1) + v.z * m(1, 2);
+		c.z = v.x * m(2, 0) + v.y * m(2, 1) + v.z * m(2, 2);
+		return c;
 	}
-	inline static Matrix33 S(float x, float y)
+	inline static Vector2 operator*(const Matrix3f& m, const Vector2& v)
 	{
-		Matrix33 m;
-		m.Scale(x,y);
-		return m;
+		Vector2 c;
+		c.x = v.x * m(0, 0) + v.y * m(0, 1) + 1.0f * m(0, 2);
+		c.y = v.x * m(1, 0) + v.y * m(1, 1) + 1.0f * m(1, 2);
+		return c;
 	}
-};
-
-inline Vector operator *(const Vector& v, const Matrix33& m)
-{
-	Vector v2;
-	v2.x = v.x * m.eM11 + v.y * m.eM21 + m.eDx;
-	v2.y = v.x * m.eM12 + v.y * m.eM22 + m.eDy;
-	return v2;
-}
-
 

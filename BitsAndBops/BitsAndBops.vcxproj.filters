@@ -15,16 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Animation\Animation.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Animation\HammerAnimation.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Math\Matrix.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\vector.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\StartScene.cpp">
@@ -51,9 +42,6 @@
     <ClCompile Include="src\Audio\AudioManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Animation\HammerEffect.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Scene\HammerScene\HammerScene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -73,12 +61,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\HammerScene\States\HammerSettlementing.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameParticipator\MobileStation.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameParticipator\Nail.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Renderer.cpp">
@@ -134,16 +116,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Animation\Animation.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Animation\HammerAnimation.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\Math\Matrix.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Math\vector.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\StartScene.h">
@@ -170,9 +143,6 @@
     <ClInclude Include="src\Audio\AudioManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Animation\HammerEffect.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\Scene\HammerScene\HammerScene.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -195,15 +165,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\HammerScene\States\HammerSettlementing.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameParticipator\Participator.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameParticipator\MobileStation.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameParticipator\Nail.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Renderer.h">
@@ -258,6 +219,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\MeetTweet\GameModeMeetTweet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Math.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Vector2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Vector3.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

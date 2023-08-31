@@ -6,26 +6,26 @@ class Camera
 public:
 	Camera();
 
-	void SetAngle(float angle);            //旋转
-	void SetPosition(float x, float y);         //移动
-	void SetOrthoSize(float w, float h);      //大小
+	void SetScale(float scale);
+	void SetRotation(float angle);            //旋转
+	void SetOrtho(float left,float top,float width, float height);      //大小
 
-	Matrix33 GetProjectionMatrix();
-	Matrix33 GetViewMatrix();
-	Matrix33 GetViewProjMatrix();
+	Matrix3f GetProjectionMatrix();
+	Matrix3f GetViewMatrix();
+	Matrix3f GetViewProjMatrix();
 
 private:
 	void CalculateMatrix();
 private:
-	float m_OrthoWeight {0};
-	float m_OrthoHeight{ 0 };
+	float m_Left{ 0 };
+	float m_Top{ 0 };
+	float m_Width {0};
+	float m_Height{ 0 };
+	float m_RotationAngle{ 0 };
+	float m_Scale = 1.0f;
 
-	float m_X{ 0 };
-	float m_Y{ 0 };
-	float m_Angle{ 0 };
-
-	Matrix33 m_ViewMatrix;
-	Matrix33 m_ProjectionMatrix;
-	Matrix33 m_ViewProjMatrix;
+	Matrix3f m_ViewMatrix;
+	Matrix3f m_ProjectionMatrix;
+	Matrix3f m_ViewProjMatrix;
 };
 

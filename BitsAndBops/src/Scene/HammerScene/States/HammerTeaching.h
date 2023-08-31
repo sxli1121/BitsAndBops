@@ -16,7 +16,7 @@ public:
 private:
 
 	CHammerScene* m_Scene{ nullptr };
-	int m_Remainung;
+	//int m_Remainung;
 	TimerClock m_timer;
 
 	friend class CHammerScene;

@@ -57,7 +57,9 @@ void FrameAnimation::Update(float dt)
 			return;
 		}
 		else if(m_Mode == AnimationMode::Loop) {
-			m_CurrentTime = 0.0f;
+			m_IsPlaying = true;
+			m_CurrentTime = 0;
+			m_CurrentFrameIndex = 0;
 		}
 	}
 

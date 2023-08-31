@@ -191,3 +191,8 @@ bool CGameInput::GetCursor(int* x, int* y)
 
 	return  TRUE == PtInRect(&r, p);
 }
+
+bool CGameInput::IsKeyPressed(unsigned char key)
+{
+	return GetKeyState(key) == _KS_DH;
+}

@@ -4,8 +4,6 @@
 
 #include "Scene/HammerScene/HammerScene.h"
 #include "Scene/MeetTweet/MeetTweetScene.h"
-#include "Scene/StartScene.h"
-#include "Math/vector.h"
 #include "Math/Matrix.h"
 
 //#include "Scene/HammerScene.h"

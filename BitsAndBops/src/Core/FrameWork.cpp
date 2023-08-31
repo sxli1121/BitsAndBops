@@ -9,6 +9,7 @@
 
 #include <time.h>
 #include <chrono>
+#include <sstream>
 //½¹µã
 static BOOL g_Act;
 CFrameWork* CFrameWork::frame_work = nullptr;
@@ -182,6 +183,11 @@ void CFrameWork::Run()
 			if (m_CurScene != nullptr)
 				m_CurScene->Update(dt);
 
+			// Draw FPS
+			float fps = 1.0f / dt;
+			std::stringstream ss;
+			ss << fps;
+			Renderer::DrawTex(ss.str(), 0, 0, 100, 100, 0, 1, 0);
 			Renderer::SwapBuffers();
 
 			//³¡¾°µÄÇÐ»»

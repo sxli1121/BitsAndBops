@@ -18,6 +18,9 @@ private:
 	int m_scorer {0};
 	TimerClock m_timer;
 
+	float mobile1x{50};
+	float mobile2x{ 620};
+
 	friend class CHammerScene;
 
 };

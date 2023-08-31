@@ -6,8 +6,8 @@ void TweetSettlementing::OnEnter()
 {
 	m_timer.Begin();
 
-	float grades = m_Scene->g_gameModeMeetTweet->GetGrades();
-	//grades = 0.5;
+	//float grades = m_Scene->g_gameModeMeetTweet->GetGrades();
+	float grades = 0.5;
 
 	if (grades > 0.9)
 	{
