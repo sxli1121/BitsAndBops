@@ -1,29 +1,14 @@
-#pragma once
-//¸ß¾«¶ÈÊ±ÖÓ
+ï»¿#pragma once
+//é«˜ç²¾åº¦æ—¶é’Ÿ
 #include <chrono>
-#include <vector>
-
 
 class TimerClock
 {
-	//¿ªÊ¼Ê±¼ä-£¨µ±Ç°Ê±¼ä-epoch(Ô­Ê¼Ê±¼ä´Á)£©
 	std::chrono::steady_clock::time_point StartTime;
-	//½áÊø¼ÆÊ±Ê±¼ä
-	//std::chrono::steady_clock::time_point EndTime;
-	//¼ä¸ôÊ±¼äµÄ±äÁ¿--£¨ÓÃÀ´ÅĞ¶Ï£©
-	//float TimeInterval;
-	//±à¼­Æ÷-£¨ÓÃÀ´´¢´æÊ±¼ä´Á£©-Êı¾İÀàĞÍ-£¨float£©
-	//¼ÓÔÚ±à¼­Æ÷ÖĞ
-	//std::vector<float> m_TimeStamp;
 
 public:
-	//TimerClock();
-	//~TimerClock();
-	//¸üĞÂÊ±¼ä
 	std::chrono::steady_clock::time_point GetNowTime();
-	//¿ªÊ¼¼ÆÊ±
-	 void Begin();
-	//»ñÈ¡ºÁÃë
+	void Begin();
 	double GetTimerMilliSec();
 };
 

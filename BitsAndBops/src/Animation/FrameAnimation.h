@@ -1,5 +1,5 @@
-#pragma once
-#include "Renderer/Texture.h"
+﻿#pragma once
+#include  "Math/Vector2.h"
 #include <vector>
 #include <string>
 
@@ -26,6 +26,8 @@ class FrameAnimation
 {
 public:
 	void AddFrame(AnimationKeyFrame frame);
+	void AddFrame(const std::string& textureId, const Vector2& position, const Vector2& size,
+		float rotation, const Vector2& pivot,float duration);
 
 	void SetMode(AnimationMode mode);
 	AnimationMode GetMode() { return m_Mode; }
@@ -36,7 +38,8 @@ public:
 	void Update(float dt);
 	void Render();
 
-	bool IsPlaying() { return m_IsPlaying; }
+	inline bool IsPlaying() const { return m_IsPlaying; }
+	inline float GetTime() const { return m_CurrentTime; }
 
 	void Reset()
 	{

@@ -1,20 +1,41 @@
-#include "FrameAnimation.h"
+ï»¿#include "FrameAnimation.h"
 #include "Renderer/TextureManager.h"
-#include "Core/Time.h"
 #include "Renderer/Renderer.h"
 #include <cassert>
-
-
 
 void FrameAnimation::AddFrame(AnimationKeyFrame frame)
 {
 	assert(TextureManager::GetTexture(frame.textureId) != nullptr);
 	if (m_Frames.size() != 0)
 	{
-		assert(frame.time > m_Frames[m_Frames.size() - 1].time);
+		assert(frame.time >= m_Frames[m_Frames.size() - 1].time);
 	}
 	m_Length = frame.time;
 	m_Frames.push_back(frame);
+}
+
+
+void FrameAnimation::AddFrame(const std::string& textureId, const Vector2& position, const Vector2& size,
+	float rotation, const Vector2& pivot, float duration)
+{
+	AnimationKeyFrame frame;
+	frame.textureId = textureId;
+	frame.x = position.x;
+	frame.y = position.y;
+	frame.width = size.x;
+	frame.height = size.y;
+	frame.rotation = rotation;
+	frame.pivotX = pivot.x;
+	frame.pivotY = pivot.y;
+	frame.time = !m_Frames.empty() ? m_Frames[m_Frames.size()-1].time : 0.0f;
+
+	AddFrame(frame);
+
+	if(duration > 0.0f)
+	{
+		frame.time += duration;
+		AddFrame(frame);
+	}
 }
 
 void FrameAnimation::SetMode(AnimationMode mode)
@@ -48,7 +69,7 @@ void FrameAnimation::Update(float dt)
 
 	m_CurrentTime += dt;
 
-	// ¼ì²éÊÇ²»ÊÇ²¥ÍêÁË
+	// æ£€æŸ¥æ˜¯ä¸æ˜¯æ’­å®Œäº†
 	if (m_CurrentTime > m_Length)
 	{
 		if (m_Mode == AnimationMode::Once)

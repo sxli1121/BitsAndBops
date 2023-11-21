@@ -33,7 +33,6 @@
     <ClCompile Include="src\Scene\HammerScene\States\HammerOpening.cpp" />
     <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\OutPutAndInput\Camera.cpp" />
-    <ClCompile Include="src\GameObject\CObject.cpp" />
     <ClCompile Include="src\Core\FrameWork.cpp" />
     <ClCompile Include="src\OutPutAndInput\GameInput.cpp" />
     <ClCompile Include="src\Enter\main.cpp" />
@@ -42,11 +41,11 @@
     <ClCompile Include="src\Scene\MenuScene.cpp" />
     <ClCompile Include="src\Scene\StartScene.cpp" />
     <ClCompile Include="src\Core\Scene_Manager.cpp" />
+    <ClCompile Include="src\Scene\TitleScene.cpp" />
     <ClCompile Include="src\StateMachine\StateMachine.cpp" />
     <ClCompile Include="src\Renderer\Texture.cpp" />
     <ClCompile Include="src\Renderer\TextureManager.cpp" />
     <ClCompile Include="src\Tools\Timer.cpp" />
-    <ClCompile Include="src\Tools\TimerStampManage.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Scene\MeetTweet\States\TweetOpening.cpp" />
     <ClCompile Include="src\Scene\MeetTweet\States\TweetSettlementing.cpp" />
@@ -71,7 +70,6 @@
     <ClInclude Include="src\Scene\HammerScene\States\HammerOpening.h" />
     <ClInclude Include="src\Audio\AudioManager.h" />
     <ClInclude Include="src\OutPutAndInput\Camera.h" />
-    <ClInclude Include="src\GameObject\CObject.h" />
     <ClInclude Include="src\Core\FrameWork.h" />
     <ClInclude Include="src\OutPutAndInput\GameInput.h" />
     <ClInclude Include="src\Math\Matrix.h" />
@@ -80,12 +78,12 @@
     <ClInclude Include="src\Scene\MenuScene.h" />
     <ClInclude Include="src\Scene\StartScene.h" />
     <ClInclude Include="src\Core\Scene_Manager.h" />
+    <ClInclude Include="src\Scene\TitleScene.h" />
     <ClInclude Include="src\StateMachine\State.h" />
     <ClInclude Include="src\StateMachine\StateMachine.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
     <ClInclude Include="src\Renderer\TextureManager.h" />
     <ClInclude Include="src\Tools\Timer.h" />
-    <ClInclude Include="src\Tools\TimerStampManage.h" />
     <ClInclude Include="src\Core\Time.h" />
     <ClInclude Include="src\Tools\Utils.h" />
     <ClInclude Include="src\Scene\MeetTweet\States\TweetOpening.h" />

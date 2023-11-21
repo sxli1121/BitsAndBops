@@ -20,7 +20,6 @@ private:
 
 	float mobile1x{50};
 	float mobile2x{ 620};
-
 	friend class CHammerScene;
 
 };

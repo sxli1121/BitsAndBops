@@ -21,9 +21,6 @@
     <ClCompile Include="src\Scene\StartScene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\CObject.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Enter\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -75,9 +72,6 @@
     <ClCompile Include="src\Tools\Timer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tools\TimerStampManage.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Time.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -114,15 +108,15 @@
     <ClCompile Include="src\Scene\MeetTweet\GameModeMeetTweet.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene\TitleScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Math\Matrix.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\StartScene.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameObject\CObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Scene.h">
@@ -179,9 +173,6 @@
     <ClInclude Include="src\Tools\Timer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tools\TimerStampManage.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Time.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -228,6 +219,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\Vector3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\TitleScene.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

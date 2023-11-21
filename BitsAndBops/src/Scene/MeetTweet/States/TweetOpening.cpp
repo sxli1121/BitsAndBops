@@ -1,5 +1,4 @@
 #include "TweetOpening.h"
-
 #include "TweetConfirming.h"
 #include "Audio/AudioManager.h"
 #include "Renderer/Renderer.h"
@@ -10,6 +9,8 @@ void TweetOpening::OnEnter()
 	CAudioManager::Get().PlayOnceAudio("JingleDraft");
 	m_timer.Begin();
 
+	m_Scene->m_CameraRotation = 0.0f;
+	m_Scene->m_CameraScale = 1.0f;
 }
 
 void TweetOpening::OnUpdate(float dt)
@@ -19,7 +20,7 @@ void TweetOpening::OnUpdate(float dt)
 	double time = m_timer.GetTimerMilliSec();
 	if (time >= 6000)
 	{
-		//Renderer::Clear(0, 0, 0);
+		Renderer::Clear(0, 0, 0);
 	}
 	if (time >= 6500)
 	{
@@ -30,5 +31,5 @@ void TweetOpening::OnUpdate(float dt)
 
 void TweetOpening::OnExit()
 {
-	
+
 }

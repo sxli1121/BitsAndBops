@@ -1,4 +1,4 @@
-#include "Timer.h"
+ï»¿#include "Timer.h"
 
 std::chrono::steady_clock::time_point TimerClock::GetNowTime()
 {
@@ -7,14 +7,11 @@ std::chrono::steady_clock::time_point TimerClock::GetNowTime()
 
 void TimerClock::Begin()
 {
-	//»ñÈ¡¸Õ¿ªÊ¼µÄÊ±¼ä
-	
 	StartTime = std::chrono::high_resolution_clock::now();
 }
 
 double TimerClock::GetTimerMilliSec()
 {
-	//»ñÈ¡Ê±¼ä¼ä¸ô
 	auto now = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(now - StartTime).count();
 	return duration / 1000000.0f;

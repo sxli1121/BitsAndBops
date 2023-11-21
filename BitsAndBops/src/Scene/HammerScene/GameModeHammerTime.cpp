@@ -1,8 +1,9 @@
-#include "GameModeHammerTime.h"
+ï»¿#include "GameModeHammerTime.h"
+
 #include "Renderer/Renderer.h"
-#include "OutPutAndInput/Gameinput.h"
 #include "Core/Time.h"
 #include "Audio/AudioManager.h"
+#include "OutPutAndInput/Gameinput.h"
 
 void GameModeHammerTime::Init()
 {
@@ -16,59 +17,25 @@ void GameModeHammerTime::Init()
 	m_NextNailIndex = 0;
 	m_LevelFinished = false;
 	m_mobileSpeed = 0;
-	m_Scorer = 0;
-	//ÊÖ
+	m_Scor = 0;
+
+
+	//æ‰‹
 	m_HandAnimation.Reset();
 	m_HandAnimation.SetMode(AnimationMode::Once);
 	float rotation = 15.0f;
 	m_HandAnimation.AddFrame({
-		0,
-		"hand1",
-		50,
-		50,
-		515.73,
-		435,
-		rotation,
-		0.868f,
-		0.927f
-		});
+		0,"hand1",50,50,515.73,435,rotation,0.868f,0.927f });
 
 	m_HandAnimation.AddFrame({
-		0.05f,
-		"hand2",
-		100,
-		230,
-		359.67f,
-		435,
-		rotation,
-		0.868f,
-		0.927f
-		});
+		0.05f,"hand2",100,230,359.67f,435,rotation,0.868f,0.927f });
 
 	m_HandAnimation.AddFrame({
-		0.1f,
-		"hand3",
-		185,
-		270,
-		361.33f,
-		435,
-		rotation,
-		0.868f,
-		0.927f
-		});
+		0.1f,"hand3",185,270,361.33f,435,rotation,0.868f,0.927f});
 
 
 	m_HandAnimation.AddFrame({
-		0.20f,
-		"hand2",
-		185,
-		270,
-		361.33f,
-		435,
-		rotation,
-		0.868f,
-		0.927f
-		});
+		0.20f,"hand2",185,270,361.33f,435,rotation,0.868f,0.927f});
 
 
 	m_HandSmearAnimation.Reset();
@@ -103,7 +70,7 @@ void GameModeHammerTime::Init()
 	m_HammerAnimation.AddFrame({
 		0.0f,
 		"hammer",
-	1100.5f,
+	1085.5f,
 	-20,
 		499,
 		333.67f,
@@ -115,7 +82,7 @@ void GameModeHammerTime::Init()
 	m_HammerAnimation.AddFrame({
 	0.08f,
 	"hammer",
-	1105.5f,
+	1075.5f,
 	-20,
 		499,
 		333.67f,
@@ -126,7 +93,7 @@ void GameModeHammerTime::Init()
 	m_HammerAnimation.AddFrame({
 		0.2f,
 		"hammer",
-	1105.5f,
+	1075.5f,
 	-20,
 		499,
 		333.67f,
@@ -140,7 +107,7 @@ void GameModeHammerTime::Init()
 	m_HammmerSmearAnimation.AddFrame({
 		0.0f,
 		"hammer_smear",
-		785,
+		775,
 		-60,
 		143.67f,
 		328.33,
@@ -152,7 +119,7 @@ void GameModeHammerTime::Init()
 	m_HammmerSmearAnimation.AddFrame({
 	0.12f,
 	"hammer_smear",
-		765,
+		775,
 	-40,
 	143.67f,
 	328.33,
@@ -166,7 +133,7 @@ void GameModeHammerTime::Init()
 	m_HammerPerfectAnimation.AddFrame({
 		0.0f,
 		"hammer_effect_perfect",
-		580,
+		550,
 		290,
 	136.33f,
 	30.33,
@@ -178,7 +145,7 @@ void GameModeHammerTime::Init()
 	m_HammerPerfectAnimation.AddFrame({
 	0.12f,
 	"hammer_effect_perfect",
-		580,
+		550,
 		290,
 	136.33f,
 	30.33,
@@ -193,7 +160,7 @@ void GameModeHammerTime::Init()
 	m_HammerAlmostAnimation.AddFrame({
 		0.0f,
 		"hammer_effect_hit",
-		580,
+		550,
 		290,
 	136.33f,
 	30.33,
@@ -205,7 +172,7 @@ void GameModeHammerTime::Init()
 	m_HammerAlmostAnimation.AddFrame({
 	0.12f,
 	"hammer_effect_hit",
-		580,
+		550,
 		290,
 	136.33f,
 	30.33,
@@ -231,18 +198,28 @@ void GameModeHammerTime::Play(HammerLevel* lever)
 void GameModeHammerTime::Update(float dt)
 {
 	GenerateNails();
+	double currentTime = Time::GetRealtimeSinceStartup() - m_StartTime;
 
-	//°´¼üÅĞ¶Ï
+	float nailFromPosX = 120;
+	float nailToPosX = 560;
+	if (currentTime >= ( 60.0f / m_CurrentLevel->BPM ) * 200.0f)
+	{
+		m_mobileSpeed = (nailToPosX - nailFromPosX) / ((60.0f / m_CurrentLevel->BPM) * 8.0f);
+		m_CurrentLevel->BeatsPerMeasure = 8.0f;
+	}
+	
+
+	//æŒ‰é”®åˆ¤æ–­
 	CGameInput* input = CGameInput::GetGameInput();
 	if (input->GetKeyState(_GI_K_SPACE) == _KS_DC && 0x8001)
 	{
-		//²¥·Å´¸×ÓµÄ¶¯»­
+		//æ’­æ”¾é”¤å­çš„åŠ¨ç”»
 		m_HammerAnimation.Play();
 		m_HammmerSmearAnimation.Play();
 
 
-		//²¥·Å´¸×ÓµÄÒôĞ§
-		//±éÀú¶¤×Ó-ÕÒµ½µÚÒ»¸önomal ×´Ì¬µÄ¶¤×Ó
+		//æ’­æ”¾é”¤å­çš„éŸ³æ•ˆ
+		//éå†é’‰å­-æ‰¾åˆ°ç¬¬ä¸€ä¸ªnomal çŠ¶æ€çš„é’‰å­
 		for (NailObject& nail : m_AllNails)
 		{
 			if (nail.State == NailState::Normal)
@@ -257,7 +234,7 @@ void GameModeHammerTime::Update(float dt)
 					nail.State = NailState::Perfect;
 					m_HammerPerfectAnimation.Play();
 					CAudioManager::Get().PlayOnceAudio("SFX_HT_NailHammerHit");
-					m_Scorer += 2;
+					m_Scor += 2;
 
 				}
 				else if (abs(diffBeat) <= HitJudgmentTimeAlmost)
@@ -272,7 +249,7 @@ void GameModeHammerTime::Update(float dt)
 					}
 					m_HammerAlmostAnimation.Play();
 					CAudioManager::Get().PlayOnceAudio("SFX_HT_NailPlace");
-					m_Scorer += 1;
+					m_Scor += 1;
 				}
 				break;
 			}
@@ -292,16 +269,11 @@ void GameModeHammerTime::Update(float dt)
 
 void GameModeHammerTime::Render()
 {
-	Renderer::DrawTexture("bg_texture", -500, -870, 2500, 579, 10);
-	Renderer::DrawTexture("bg_texture", -500, -300, 2500, 579,10);
-	Renderer::DrawTexture("bg_texture", -500, 278, 2500, 579, 10);
-	Renderer::DrawTexture("bg_texture", -500, 855, 2500, 579, 10);
-	Renderer::DrawTexture("bg_texture", -500, 1430, 2500, 579, 10);
-	Renderer::DrawTexture("Clear", 0, 0, 960, 960);
 
-	//Renderer::Clear(220.0f / 255.0f, 222.0f / 255.0f, 198 / 255.0f);
+	Renderer::Clear(220.0f / 255.0f, 222.0f / 255.0f, 198 / 255.0f);
 
 	DrawNails();
+
 
 	if (m_HandAnimation.IsPlaying())
 	{
@@ -313,7 +285,7 @@ void GameModeHammerTime::Render()
 	}
 
 	CGameInput* input = CGameInput::GetGameInput();
-	if (m_HammerAnimation.IsPlaying() || input->GetKeyState(_GI_K_SPACE) == _KS_DH)
+	if (m_HammerAnimation.IsPlaying() || (input->GetKeyState(_GI_K_SPACE) == _KS_DH && m_HammerAnimation.GetTime() > 0))
 	{
 		m_HammerAnimation.Render();
 	}
@@ -330,6 +302,11 @@ void GameModeHammerTime::Render()
 		m_HammerAlmostAnimation.Render();
 	}
 
+	Renderer::DrawTexture("bg_texture", 480, 15, 2500, 579, 0, 0.5f, 1);
+	Renderer::DrawTexture("bg_texture", 10, 10, 2500, 579, 0, 1, 0);
+	Renderer::DrawTexture("bg_texture", 10, 590, 2500, 579, 0, 1, 0);
+	Renderer::DrawTexture("bg_texture", 950, 10, 2500, 579, 0, 0, 0);
+	Renderer::DrawTexture("bg_texture", 950, 590, 2500, 579, 0, 0, 0);
 
 	if(m_CurrentLevel->levelName == LevelName::HAMMER_GAME)
 	{  
@@ -343,6 +320,11 @@ bool GameModeHammerTime::IsDone()
 	return false;
 }
 
+bool GameModeHammerTime::GetLevelFinished()
+{
+	return m_LevelFinished;
+}
+
 
 float GameModeHammerTime::GetGrades()
 {
@@ -352,19 +334,31 @@ float GameModeHammerTime::GetGrades()
 void GameModeHammerTime::GenerateNails()
 {
 	if (m_LevelFinished) return;
+
 	double currentTime = Time::GetRealtimeSinceStartup() - m_StartTime;
+
+	float nailFromPosX = 120;
+	float nailToPosX = 560;
 
 	float beatUnitTime = (60.0f / m_CurrentLevel->BPM);
 	HammerBlock block = m_CurrentLevel->Blocks[m_NextBlockIndex];
 	float nailBornBeats = block.Nails[m_NextNailIndex];
 	float nailBornTime = beatUnitTime * nailBornBeats;
 
-	// Éú³ÉÆ½Ì¨
+	// ç”Ÿæˆå¹³å°
 	if (m_NextNailIndex == 0 && m_AllMobile.size() == m_NextBlockIndex)
 	{
 		float mobileFromPosX = 0;
 		float mobileToPosX = 120;
+
 		float mobileArriveTime = nailBornTime - (mobileToPosX - mobileFromPosX) / m_mobileSpeed;
+
+		if (currentTime >= (60.0f / m_CurrentLevel->BPM) * 194.0f)
+		{
+			float m_SecondmobileSpeed = (nailToPosX - nailFromPosX) / ((60.0f / m_CurrentLevel->BPM) * 8.0f);
+			mobileArriveTime = nailBornTime - (mobileToPosX - mobileFromPosX) / m_SecondmobileSpeed;
+		}
+
 		double elapsedTime = currentTime - mobileArriveTime;
 		if (currentTime >= mobileArriveTime)
 		{
@@ -372,16 +366,12 @@ void GameModeHammerTime::GenerateNails()
 		
 			float mobileWidth = distanceBreat * beatUnitTime * m_mobileSpeed;
 
-			
 			MobileStation mobile;
 			mobile.x = elapsedTime * m_mobileSpeed;
 			mobile.MobileWidth = mobileWidth;
 			m_AllMobile.push_back(mobile);
 		}
 	}
-
-
-
 
 	if (currentTime >= nailBornTime)
 	{
@@ -391,7 +381,7 @@ void GameModeHammerTime::GenerateNails()
 		nail.State = NailState::Normal;
 
 		m_AllNails.push_back(nail);
-		//²¥·Å¶¯»­-ÊÖ
+		//æ’­æ”¾åŠ¨ç”»-æ‰‹
 		m_HandAnimation.Play();
 		m_HandSmearAnimation.Play();
 
@@ -414,21 +404,14 @@ void GameModeHammerTime::UpdateNails(float dt)
 
 	double currentTime = Time::GetRealtimeSinceStartup() - m_StartTime;
 
-	//¸üĞÂÒÆ¶¯Ì¨µÄÎ»ÖÃ
+	//æ›´æ–°ç§»åŠ¨å°çš„ä½ç½®
 
 	for (MobileStation& mobile : m_AllMobile)
 	{
 		mobile.x += m_mobileSpeed * dt;
 	}
-	//for (auto it = m_AllMobile.begin(); it != m_AllMobile.end();)
-	//{
-	//	if (it->x >= 1000)
-	//		it = m_AllMobile.erase(it);
-	//	else 
-	//		it++;
-	//}
 
-	// ¸üĞÂ¶¤×ÓÎ»ÖÃ
+	// æ›´æ–°é’‰å­ä½ç½®
 	{
 		
 		for (NailObject& nail : m_AllNails)
@@ -438,20 +421,21 @@ void GameModeHammerTime::UpdateNails(float dt)
 			if (nail.State == NailState::Normal)
 			{
 				float beatUnitTime = (60.0f / m_CurrentLevel->BPM);
-				float missTime = beatUnitTime * (nail.BornBetas + m_CurrentLevel->BeatsPerMeasure + HitJudgmentTimeMiss);
+			
+				float missTime = beatUnitTime * (nail.BornBetas + m_CurrentLevel->BeatsPerMeasure  + HitJudgmentTimeMiss);
 
 				if (currentTime > missTime)
 				{
 					nail.State = NailState::Miss;
 
-					//ÒôĞ§
+					//éŸ³æ•ˆ
 					CAudioManager::Get().PlayOnceAudio("SFX_HT_NailMissTilt");
 				}
 			}
 		}
 	}
 
-	// Ïú»ÙÔ½½çµÄ¶¤×Ó
+	// é”€æ¯è¶Šç•Œçš„é’‰å­
 	for (auto it = m_AllNails.begin(); it != m_AllNails.end(); )
 	{
 		if (it->x >= 1000)
@@ -501,9 +485,13 @@ void GameModeHammerTime::DrawNails()
 
 float  GameModeHammerTime::CalculateGrades()
 {
-	//m_scoror / ×Ü³É¼¨µÄ±ÈÀı
-	float nailNum = m_AllNails.size(); 
-	float grades = m_Scorer / nailNum * 2;
+	float numNails =0;
+	for(auto& block : m_CurrentLevel->Blocks)
+	{
+		numNails += block.Nails.size();
+	}
+	//m_scoror / æ€»æˆç»©çš„æ¯”ä¾‹
+	float grades = m_Scor / (numNails * 2);
 	return grades;
 }
 

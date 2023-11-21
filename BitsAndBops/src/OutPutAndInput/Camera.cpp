@@ -3,7 +3,6 @@
 #include "Math/Math.h"
 #include "Math/Matrix.h"
 
-
 Camera::Camera()
 {
 	CFrameWork* framework = CFrameWork::GetFrameWork();

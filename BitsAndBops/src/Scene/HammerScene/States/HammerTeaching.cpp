@@ -1,13 +1,9 @@
-#include "HammerTeaching.h"
+﻿#include "HammerTeaching.h"
 #include "Scene/HammerScene/HammerScene.h"
-
-#include "OutputAndInput/GameInput.h"
-#include "Audio/AudioManager.h"
-#include "Math/Matrix.h"
-#include "Renderer/Renderer.h"
 #include "Scene/HammerScene/States/HammerConfirming.h"
 
-
+#include "Audio/AudioManager.h"
+#include "Renderer/Renderer.h"
 
 void HammerTeaching::OnEnter()
 {
@@ -45,14 +41,12 @@ void HammerTeaching::OnEnter()
 
 	m_timer.Begin();
 
+	m_Scene->m_CameraRotation = 0;
+	m_Scene->m_CameraScale = 0.9f;
 }
 
 void HammerTeaching::OnUpdate(float dt)
 {
-
-
-	m_Scene->m_CameraScale = 0.7;
-
 	m_Scene->m_gameModeHammerTime->Update(dt);
 	m_Scene->m_gameModeHammerTime->Render();
 
@@ -63,7 +57,7 @@ void HammerTeaching::OnUpdate(float dt)
 		Renderer::Clear(0, 0, 0);
 	}
 
-	if (time >= 26000)
+	if (time >= 26000 )
 	{
 		m_Scene->GetStateMachine()->Switch(STATE_HAMMER_CONFIRM);
 		m_Scene->m_ConfirmState->SetStateMark(ToState::STATE_GAME);

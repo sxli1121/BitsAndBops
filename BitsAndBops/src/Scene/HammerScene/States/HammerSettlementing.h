@@ -30,8 +30,6 @@ private:
 
 	bool m_IsAudioPlay{ false };
 	bool m_IsTextAudioPlay{ false };
-
-
 	friend class CHammerScene;
 
 };

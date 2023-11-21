@@ -1,19 +1,23 @@
-#include "TweetSettlementing.h"
+﻿#include "TweetSettlementing.h"
 #include  "Audio/AudioManager.h"
 #include "Scene/MeetTweet/MeetTweetScene.h"
 #include "Renderer/Renderer.h"
+#include "OutPutAndInput/GameInput.h"
+#include "Core/FrameWork.h"
+
 void TweetSettlementing::OnEnter()
 {
+	m_IsAudioPlay = false;
+	m_IsTextAudioPlay = false;
+
 	m_timer.Begin();
+	float grades = m_Scene->g_gameModeMeetTweet->GetGrades();
 
-	//float grades = m_Scene->g_gameModeMeetTweet->GetGrades();
-	float grades = 0.5;
-
-	if (grades > 0.9)
+	if (grades > 0.8)
 	{
 		m_Grades = TweetGradesResule::GRADES_PERFECT;
 	}
-	else if (grades > 0.75)
+	else if (grades > 0.6)
 	{
 		m_Grades = TweetGradesResule::GRADES_COOL;
 	}
@@ -22,11 +26,15 @@ void TweetSettlementing::OnEnter()
 		m_Grades = TweetGradesResule::GRADES_TRYAGAIN;
 	}
 	CAudioManager::Get().PlayLoopAudio("SFX_MT_Ambience");
+
+	m_Scene->m_CameraRotation = 0;
+	m_Scene->m_CameraScale = 1.0f;
+	m_Scene->m_CameraPosition = { 0,0 };
 }
 
 void TweetSettlementing::OnUpdate(float dt)
 {
-	//���ͼ ���� ��Ч��Ч��ͼ
+
 	double currentTime = m_timer.GetTimerMilliSec();
 
 	Renderer(currentTime);
@@ -44,7 +52,7 @@ void TweetSettlementing::OnUpdate(float dt)
 	}
 	else if (m_Grades == TweetGradesResule::GRADES_COOL)
 	{
-		if (m_IsAudioPlay == false && currentTime >= 3000)
+		if (m_IsAudioPlay == false && currentTime >= 2000)
 		{
 			CAudioManager::Get().PlayOnceAudio("COOL");
 			m_IsAudioPlay = true;
@@ -52,13 +60,20 @@ void TweetSettlementing::OnUpdate(float dt)
 	}
 	else
 	{
-		if (m_IsAudioPlay == false && currentTime >= 3000)
+		if (m_IsAudioPlay == false && currentTime >= 2000)
 		{
 			CAudioManager::Get().PlayOnceAudio("TRY AGAIN");
 			m_IsAudioPlay = true;
 		}
 	}
 
+	CGameInput* input = CGameInput::GetGameInput();
+	if(currentTime >= 6000 && input->GetKeyState(_GI_K_SPACE) == _KS_UC)
+	{
+		OnExit();
+		CFrameWork* frameWork = CFrameWork::GetFrameWork();
+		frameWork->SetNextScene("Menu");
+	}
 }
 
 void TweetSettlementing::OnExit()
@@ -70,10 +85,10 @@ void TweetSettlementing::Renderer(double currentTime)
 {
 	if (m_Grades == TweetGradesResule::GRADES_PERFECT)
 	{
-		Renderer::DrawTexture("results_art_meetandtweet_amazing", 300, 30, 326.5f, 226.5f);
+		Renderer::DrawTexture("results_art_meetandtweet_amazing", 300, 20, 326.5f, 226.5f);
 		if (currentTime >= 1000)
 		{
-			Renderer::DrawString(u8"You made a friend for life!", 350, 270, 400, 100);
+			Renderer::DrawString(u8"You made a friend for life!", 330, 230, 500, 100);
 		}
 		if (currentTime >= 2000)
 		{
@@ -86,7 +101,7 @@ void TweetSettlementing::Renderer(double currentTime)
 		Renderer::DrawTexture("results_art_meetandtweet_cool", 300, 30, 326.5f, 226.5f);
 		if (currentTime >= 1000)
 		{
-			Renderer::DrawString("That's enough chit-chat for one day.", 330, 270, 400, 100);
+			Renderer::DrawString("That's enough chit-chat for one day.", 280, 230, 400, 100);
 		}
 		if (currentTime >= 2000)
 		{
@@ -99,7 +114,7 @@ void TweetSettlementing::Renderer(double currentTime)
 		Renderer::DrawTexture("results_art_meetandtweet_tryagain", 300, 30, 326.5f, 226.5f);
 		if (currentTime >= 1000)
 		{
-			Renderer::DrawString("Try letting someone else speak occasionally.", 325, 270, 400, 100);
+			Renderer::DrawString("Try letting someone else speak occasionally.", 260, 230, 600, 100);
 		}
 		if (currentTime >= 2000)
 		{
@@ -143,4 +158,5 @@ void TweetSettlementing::PlayAudio(double currentTime)
 		}
 
 	}
+
 }

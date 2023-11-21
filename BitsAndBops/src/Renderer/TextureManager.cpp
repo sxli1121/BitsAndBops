@@ -24,9 +24,10 @@ void TextureManager::Shutdown()
 
 Texture* TextureManager::Load(const std::string& id, const wchar_t* fileName)
 {
-	assert(GetTexture(id) == nullptr);
+	Texture* texture = GetTexture(id);
+	if (texture != nullptr) return texture;
 
-	Texture* texture = Texture::Load(fileName);
+	texture = Texture::Load(fileName);
 	assert(texture != nullptr);
 
 	s_Data.TextureMap[id] = texture;

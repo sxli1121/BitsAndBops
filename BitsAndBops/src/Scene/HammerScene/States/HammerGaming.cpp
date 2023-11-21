@@ -1,17 +1,15 @@
-#include "HammerGaming.h"
+﻿#include "HammerGaming.h"
 #include "Scene/HammerScene/HammerScene.h"
-
-#include "OutputAndInput/GameInput.h"
 #include "Audio/AudioManager.h"
-#include "Math/Matrix.h"
 #include "Renderer/Renderer.h"
+#include "Math/Matrix.h"
 #include "Tools/Timer.h"
 
 void HammerGaming::OnEnter()
 {
 	CAudioManager::Get().PlayOnceAudio("HammerTime");
 	m_timer.Begin();
-	//���ùؿ�
+	//配置关卡
 	HammerLevel* CurrentLevel = new HammerLevel;
 	CurrentLevel->levelName = LevelName::HAMMER_GAME;
 	CurrentLevel->Duration = 108.0f;
@@ -42,6 +40,7 @@ void HammerGaming::OnEnter()
 		CurrentLevel->Blocks.push_back({
 	{72.0f, 72.5f, 73.0f, 73.5f}
 			});
+
 		CurrentLevel->Blocks.push_back({
 	{80.0f, 80.5f, 81.0f, 81.5f, 82.0f }
 			});
@@ -60,21 +59,27 @@ void HammerGaming::OnEnter()
 			CurrentLevel->Blocks.push_back({
 	{ 120.0f, 120.5f, 121.0f, 121.5f, 122.0f, 122.75f }
 				});
+	//缩小
 			CurrentLevel->Blocks.push_back({
 	{128.0f, 128.75f, 129.5f }
 				});
+	//旋转 左
 			CurrentLevel->Blocks.push_back({
 	{136.0f, 137.0f, 138.0f, 138.75f  }
 				});
+	//旋转 右 放大
 			CurrentLevel->Blocks.push_back({
     {144.0f, 146.5f, 147.0f, 147.5f   }
     				});
+	//缩小
     			CurrentLevel->Blocks.push_back({
     {152.0f, 152.5f, 153.0f, 153.5f, 154.5f, 155.5f    }
     				});
+	//倒着
     			CurrentLevel->Blocks.push_back({
     {160.0f, 160.5f, 161.5f, 162.5f, 163.5f  }
     				});
+	//右面旋转
     			CurrentLevel->Blocks.push_back({
     {168.0f, 170.0f, 171.0f   }
     				});
@@ -99,6 +104,10 @@ void HammerGaming::OnEnter()
 	m_Scene->m_CameraScale = 1.2f;
 
 
+	m_scorer = 0;
+	mobile1x = 50;
+	mobile2x = 620;
+
 	m_Scene->m_gameModeHammerTime->Init();
 	m_Scene->m_gameModeHammerTime->Play(CurrentLevel);
 
@@ -110,11 +119,14 @@ void HammerGaming::OnUpdate(float dt)
 	m_Scene->m_gameModeHammerTime->Update(dt);
 	m_Scene->m_gameModeHammerTime->Render();
 
-	double OpenOffTime = 13.0f * (60.0f / 130.0f);
+
+	float UniteBeatTime = 60.0f / 130.0f;
+
+	double OpenOffTime = 14.0f * UniteBeatTime;
 	float targetRotation = 0;
 	float targetScale = 0.8f;
 
-	if(m_timer.GetTimerMilliSec()/1000.0f <= 14.0f * (60.0f / 130.0f))
+	if(m_timer.GetTimerMilliSec()/1000.0f <= 14.0f * UniteBeatTime)
 	{
 		float speedTrasRotation = (15.0f - targetRotation) / OpenOffTime;
 		float speedTrasScale = (1.2f - targetScale) / OpenOffTime;
@@ -128,7 +140,7 @@ void HammerGaming::OnUpdate(float dt)
 			m_Scene->m_CameraScale = targetScale;
 		}
 
-		if(m_timer.GetTimerMilliSec() / 1000.0f <= 12.0f * (60.0f / 130.0f))
+		if(m_timer.GetTimerMilliSec() / 1000.0f <= 12.0f * UniteBeatTime)
 		{
 
 			Renderer::DrawTexture("nail_normal_7", 685, 320, 28.57f, 8.33f, 0, 0.5f, 1.0f);
@@ -145,7 +157,7 @@ void HammerGaming::OnUpdate(float dt)
 		}
 		else
 		{
-			float speedMobileMove = 4.0f * (60.0f / 130.0f);
+			float speedMobileMove = 4.0f * UniteBeatTime;
 
 			mobile1x -= speedMobileMove * dt;
 			mobile2x += speedMobileMove * dt;
@@ -157,6 +169,13 @@ void HammerGaming::OnUpdate(float dt)
 			Renderer::DrawTexture("wood_centre", mobile2x + 25.5f, 318, 280, 78, 0, 0, 0);
 
 		}
+		Renderer::DrawTexture("bg_texture", 480, 15, 2500, 579, 0, 0.5f, 1);
+		Renderer::DrawTexture("bg_texture", 10, 10, 2500, 579, 0, 1, 0);
+		Renderer::DrawTexture("bg_texture", 10, 590, 2500, 579, 0, 1, 0);
+		Renderer::DrawTexture("bg_texture", 950, 10, 2500, 579, 0, 0, 0);
+		Renderer::DrawTexture("bg_texture", 950, 590, 2500, 579, 0, 0, 0);
+
+
 		Renderer::DrawTexture("fg", 0, 0, 960, 960);
 		Renderer::DrawTexture("fg_numbers", 320, 100, 540, 486.277f);
 
@@ -170,11 +189,108 @@ void HammerGaming::OnUpdate(float dt)
 
 
 	double time = m_timer.GetTimerMilliSec();
+	//镜头的变换
+	if (time / 1000 >= UniteBeatTime * 64.0f)
+	{
+		m_Scene->m_CameraScale = 1.2f;
+	}
+	if ((time / 1000 >= UniteBeatTime * 80.0f && time / 1000 < UniteBeatTime * 84.0f)
+		|| (time / 1000 >= UniteBeatTime * 88.0f && time / 1000 < UniteBeatTime * 92.0f)
+		|| (time / 1000 >= UniteBeatTime * 96.0f && time / 1000 < UniteBeatTime * 100.0f)
+		|| (time / 1000 >= UniteBeatTime * 104.0f && time / 1000 < UniteBeatTime * 108.0f)
+		|| (time / 1000 >= UniteBeatTime * 112.0f && time / 1000 < UniteBeatTime * 116.0f)
+		|| (time / 1000 >= UniteBeatTime * 120.0f && time / 1000 < UniteBeatTime * 124.0f))
+	{
+		m_Scene->m_CameraScale = 0.5f;
+		m_Scene->m_CameraPosition = { -150,-30 };
+	}
+	if ((time / 1000 >= UniteBeatTime * 84.0f && time / 1000 < UniteBeatTime * 88.0f)
+			|| (time / 1000 >= UniteBeatTime * 92.0f && time / 1000 < UniteBeatTime * 96.0f)
+			|| (time / 1000 >= UniteBeatTime * 100.0f && time / 1000 < UniteBeatTime * 104.0f)
+			|| (time / 1000 >= UniteBeatTime * 108.0f && time / 1000 < UniteBeatTime * 112.0f)
+			|| (time / 1000 >= UniteBeatTime * 116.0f && time / 1000 < UniteBeatTime * 120.0f)
+			|| (time / 1000 >= UniteBeatTime * 124.0f && time / 1000 < UniteBeatTime * 128.0f))
+	{
+		m_Scene->m_CameraScale = 0.5f;
+		m_Scene->m_CameraPosition = { 100,-30 };
+	}
+
+
+	if (time / 1000 >= UniteBeatTime * 128.0f)
+	{
+		m_Scene->m_CameraScale = 0.7f;
+		m_Scene->m_CameraPosition = {0,0};
+	}
+	if (time / 1000 >= UniteBeatTime * 128.75)
+	{
+		m_Scene->m_CameraScale = 0.9f;
+		m_Scene->m_CameraPosition = { 0,0 };
+	}
+	if (time / 1000 >= UniteBeatTime * 129.5f)
+	{
+		m_Scene->m_CameraScale = 1.1f;
+		m_Scene->m_CameraPosition = { 0,0 };
+	}
+
+
+	if (time / 1000 >= UniteBeatTime * 132.0f)
+	{
+		m_Scene->m_CameraScale = 1.2f;
+		m_Scene->m_CameraPosition = { 0,0 };
+	}
+	if (time / 1000 >= UniteBeatTime * 132.75)
+	{
+		m_Scene->m_CameraScale = 1.4f;
+		m_Scene->m_CameraPosition = { 0,0 };
+	}
+	if (time / 1000 >= UniteBeatTime * 133.5f)
+	{
+		m_Scene->m_CameraScale = 1.5f;
+		m_Scene->m_CameraPosition = { 0,0 };
+	}
+
+	
+	if (time / 1000 >= UniteBeatTime * 136.0f)
+	{
+		m_Scene->m_CameraScale = 1.2f;
+		m_Scene->m_CameraRotation = 10;
+	}
+	if (time / 1000 >= UniteBeatTime * 144.0f)
+	{
+		m_Scene->m_CameraScale = 0.8f;
+		m_Scene->m_CameraRotation = -10;
+	}
+	if (time / 1000 >= UniteBeatTime * 152.0f)
+	{
+		m_Scene->m_CameraScale = 1.1f;
+		m_Scene->m_CameraRotation = -10;
+	}
+	if (time / 1000 >= UniteBeatTime * 160.0f)
+	{
+		m_Scene->m_CameraScale = 1.1f;
+		m_Scene->m_CameraRotation = -170;
+	}
+
+	if (time / 1000 >= UniteBeatTime * 168.0f)
+	{
+		m_Scene->m_CameraScale = 0.8f;
+		m_Scene->m_CameraRotation = 20;
+	}
+
+	if (time / 1000 >= UniteBeatTime * 200)
+	{
+		m_Scene->m_CameraScale = 0.8f;
+		m_Scene->m_CameraRotation = 0;
+	}
+
+
+
+
 	if (time >= 108000)
 	{
 		Renderer::Clear(0, 0, 0);
 	}
-	if (time >= 109000)
+	if (time >= 108500)
 	{
 		m_Scene->GetStateMachine()->Switch(STATE_HAMMER_SETTLEMENT);
 	}

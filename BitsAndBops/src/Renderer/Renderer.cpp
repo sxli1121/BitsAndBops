@@ -4,13 +4,12 @@
 #include "TextureManager.h"
 #include "Tools/Utils.h"
 #include "OutPutAndInput/Camera.h"
+#include "Math/Math.h"
 
 #include <d2d1.h>
 #include <d2d1helper.h>
 #include <dwrite.h>
 #include <wincodec.h>
-
-#include "Math/Math.h"
 #include <cassert>
 
 #pragma comment(lib, "d2d1.lib")
@@ -82,7 +81,8 @@ void Renderer::Clear(float r, float g, float b)
     s_Data.RenderTarget->Clear(ColorF(r, g, b));
 }
 
-void Renderer::DrawTexture(const Texture* texture, float x, float y, float width, float height, float rotation, float pivotX, float pivotY)
+void Renderer::DrawTexture(const Texture* texture, float x, float y, 
+    float width, float height, float rotation, float pivotX, float pivotY,const Matrix3f& local2World)
 {
     ID2D1Bitmap* bitmap = texture->GetBitmap();
 
@@ -91,7 +91,7 @@ void Renderer::DrawTexture(const Texture* texture, float x, float y, float width
         * Matrix3f::Scale({ width,height })
         * Matrix3f::Translate({ -pivotX, -pivotY });
 
-    Matrix3f m = s_Data.ViewportMatrix  * s_Data.ViewProjectionMatrix * localTransform;
+    Matrix3f m = s_Data.ViewportMatrix  * s_Data.ViewProjectionMatrix * local2World * localTransform;
 
     D2D1_MATRIX_3X2_F transform = {
         m(0, 0), m(1, 0),
@@ -113,26 +113,39 @@ void Renderer::DrawTexture(const std::string& id, float x, float y, float width,
 {
     Texture* texture = TextureManager::GetTexture(id);
     assert(texture != nullptr);
+    if (texture == nullptr) return;
+
     Renderer::DrawTexture(texture, x, y, width, height, rotation, pivotX, pivotY);
 }
 
-void Renderer::DrawString(std::string str, float x, float y, float w, float h, float r, float g, float b)
+void Renderer::DrawTexture(const std::string& id, const Vector2& position, const Vector2& scale, float rotation,
+	const Vector2& pivot, const Matrix3f& local2World)
 {
+    Texture* texture = TextureManager::GetTexture(id);
+    assert(texture != nullptr);
+    if (texture == nullptr) return;
+
+    DrawTexture(texture, position.x, position.y, scale.x, scale.y, rotation, pivot.x, pivot.y, local2World);
+}
+
+void Renderer::DrawString(std::string str, float x, float y, float w, float h, float r, float g, float b,float fontSize,const wchar_t* fontName)
+{
+
     s_Data.RenderTarget->SetTransform(Matrix3x2F::Identity());
 
     IDWriteTextFormat* textFormat;
     s_Data.WriteFactory->CreateTextFormat(
-        L"Arial",
+        fontName,
         NULL,
         DWRITE_FONT_WEIGHT_NORMAL,
         DWRITE_FONT_STYLE_NORMAL,
         DWRITE_FONT_STRETCH_NORMAL,
-        12.0f,
-        L"en-us",
+        fontSize,
+        L"zh-cn",
         &textFormat
     );
 
-    textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+    textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
     textFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
     ID2D1SolidColorBrush* brush;
@@ -140,16 +153,11 @@ void Renderer::DrawString(std::string str, float x, float y, float w, float h, f
 
     std::wstring wstr = Utils::utf8_to_wstring(str);
 
-
-    const Matrix3f localTransform = Matrix3f::Translate({ x,y }) *Matrix3f::Scale({ w,h });
-    Matrix3f m = s_Data.ViewportMatrix * s_Data.ViewProjectionMatrix * localTransform;
-    Vector2 lt = m * Vector2(0,0);
-    Vector2 rb = m * Vector2(1, 1);
     D2D1_RECT_F rect;
-    rect.left = lt.x;
-    rect.right = rb.x;
-    rect.top = lt.y;
-    rect.bottom = rb.y;
+    rect.left = x;
+    rect.right = x+w;
+    rect.top = y;
+    rect.bottom = y+h;
 
     s_Data.RenderTarget->DrawText(
         wstr.c_str(),

@@ -1,7 +1,7 @@
-#pragma once
+﻿#pragma once
 #include "StateMachine/State.h"
 #include "Tools/Timer.h"
-//#include "OutPutAndInput/Camera.h"
+
 class CHammerScene;
 
 class HammerOpening  : public State

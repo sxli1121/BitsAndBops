@@ -17,6 +17,8 @@ private:
 	MeetTweetScene* m_Scene;
 	TimerClock m_timer;
 	int m_scorer{ 0 };
+	int m_BlindY{ 340 };
+	bool m_blindAudioPlay{ false };
 
 	friend class MeetTweetScene;
 };

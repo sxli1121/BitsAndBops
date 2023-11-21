@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Animation/FrameAnimation.h"
 #include <vector>
 
@@ -48,7 +48,6 @@ struct MobileStation
 
 class GameModeHammerTime
 {
-
 public:
 	void Init();
 	void Play(HammerLevel* lever);
@@ -56,6 +55,7 @@ public:
 	void Render();
 	bool IsDone();
 
+	bool GetLevelFinished();
 	float GetGrades();
 private:
 	void GenerateNails();
@@ -74,14 +74,11 @@ private:
 	int m_NextNailIndex{ 0 };
 	bool m_LevelFinished{ false };
 	float m_mobileSpeed{ 0.0f };
-	int m_Scorer{ 0 };
-
-
-
+	int m_Scor{ 0 };
 
 	const float HitJudgmentTimePerfect = 0.05f;
-	const float HitJudgmentTimeAlmost = 0.3f;
-	const float HitJudgmentTimeMiss = 0.5f;
+	const float HitJudgmentTimeAlmost = 0.2f;
+	const float HitJudgmentTimeMiss = 0.3f;
 
 	FrameAnimation m_HandAnimation;
 	FrameAnimation m_HammerAnimation;
@@ -90,6 +87,5 @@ private:
 	FrameAnimation m_HammerAlmostAnimation;
 
 	FrameAnimation m_HandSmearAnimation;
-
 };
 

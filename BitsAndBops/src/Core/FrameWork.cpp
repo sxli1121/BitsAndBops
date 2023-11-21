@@ -1,4 +1,4 @@
-#include "FrameWork.h"
+ï»¿#include "FrameWork.h"
 #include "OutputAndInput/GameInput.h"
 #include "Core/Scene_Manager.h"
 #include "Core/Scene.h"
@@ -6,15 +6,14 @@
 #include "Audio/AudioManager.h"
 #include "Renderer/Renderer.h"
 
-
 #include <time.h>
 #include <chrono>
 #include <sstream>
-//½¹µã
+//ç„¦ç‚¹
 static BOOL g_Act;
 CFrameWork* CFrameWork::frame_work = nullptr;
 
-//ÏûÏ¢À¹½Ø
+//æ¶ˆæ¯æ‹¦æˆª
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg,
 	WPARAM wParam, LPARAM lParam)
 {
@@ -94,7 +93,7 @@ void CFrameWork::Init(HINSTANCE hInstance,
 	m_ClientW = 960;
 	m_ClientH = 540;
 	g_Act = TRUE;
-	//1) Ìî³ä´°¿Ú½á¹¹Ìå
+	//1) å¡«å……çª—å£ç»“æ„ä½“
 	WNDCLASS wc;
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
 	wc.lpfnWndProc = WndProc;
@@ -105,9 +104,9 @@ void CFrameWork::Init(HINSTANCE hInstance,
 	wc.hIcon = LoadIcon(0, IDI_APPLICATION);
 	wc.hCursor = LoadCursor(0, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	wc.lpszClassName = "Ê®ËÄ";
+	wc.lpszClassName = "åå››";
 
-	//2£©×¢²á´°¿Ú£¨¸Ã´°¿Ú½á¹¹Ìå±ØĞëÌî³äºÃÊı¾İ£©
+	//2ï¼‰æ³¨å†Œçª—å£ï¼ˆè¯¥çª—å£ç»“æ„ä½“å¿…é¡»å¡«å……å¥½æ•°æ®ï¼‰
 	RegisterClass(&wc);
 	int sw = GetSystemMetrics(SM_CXSCREEN);
 	int sh = GetSystemMetrics(SM_CYSCREEN);
@@ -123,16 +122,16 @@ void CFrameWork::Init(HINSTANCE hInstance,
 
 	AdjustWindowRect(&rect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, FALSE);
 
-	//3£©ÓÃ´°¿Ú½á¹¹ÌåÀ´´´½¨´°¿Ú
-	m_hWnd = CreateWindow(wc.lpszClassName, "µÚÒ»¸ö´°¿Ú",
+	//3ï¼‰ç”¨çª—å£ç»“æ„ä½“æ¥åˆ›å»ºçª—å£
+	m_hWnd = CreateWindow(wc.lpszClassName, "Bits And Bops",
 		WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX,
 		rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
 		HWND_DESKTOP, 0, wc.hInstance, 0);
 
-	//4£©ÏÔÊ¾´°¿Ú£¨´°¿Ú¾ä±ú£¬ÏÔÊ¾·½Ê½£©
+	//4ï¼‰æ˜¾ç¤ºçª—å£ï¼ˆçª—å£å¥æŸ„ï¼Œæ˜¾ç¤ºæ–¹å¼ï¼‰
 	ShowWindow(m_hWnd, nCmdShow);
 
-	//5£©¸üĞÂ´°¿Ú£¨´°¿Ú¾ä±ú£©
+	//5ï¼‰æ›´æ–°çª—å£ï¼ˆçª—å£å¥æŸ„ï¼‰
 	UpdateWindow(m_hWnd);
 
 	Time::Init();
@@ -159,24 +158,22 @@ void CFrameWork::Run()
 		m_CurScene->Init();
 
 	CGameInput* gi = CGameInput::GetGameInput();
-	//6£©ÏûÏ¢Ñ­»·
+	//6ï¼‰æ¶ˆæ¯å¾ªç¯
 	MSG msg = {};
 	while (msg.message != WM_QUIT)
 	{
-		//Èç¹ûÓĞÏûÏ¢¾Í´¦ÀíÏûÏ¢ ·ñÔòÖ´ĞĞÓÎÏ·
+		//å¦‚æœæœ‰æ¶ˆæ¯å°±å¤„ç†æ¶ˆæ¯ å¦åˆ™æ‰§è¡Œæ¸¸æˆ
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		//else if (g_Act)
 		{
 			auto now = std::chrono::high_resolution_clock::now();
 			auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(now - lastUpdateTime).count();
 			lastUpdateTime = now;
 			float dt = duration / 1000000000.0f;
 
-			//ÊäÈëÊä³ö³õÊ¼»¯-µ±Ç°³¡¾°ÔËĞĞ
 		
 			gi->Update();
 			Renderer::Clear(0,0,0);      
@@ -186,7 +183,6 @@ void CFrameWork::Run()
 		
 			Renderer::SwapBuffers();
 
-			//³¡¾°µÄÇĞ»»
 			if (m_NextScene)
 			{
 				m_CurScene->End();
@@ -195,11 +191,6 @@ void CFrameWork::Run()
 				m_CurScene->Init();
 			}
 		}
-		/*else
-		{
-			WaitMessage();
-		}
-		Sleep(1);*/
 	}
 
 	CAudioManager::Get().Shutdown();

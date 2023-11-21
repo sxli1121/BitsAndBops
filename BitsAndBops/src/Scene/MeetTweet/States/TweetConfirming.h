@@ -22,14 +22,12 @@ public:
 
 	void SetStateMark(ToState stateId) { m_StateMark = stateId; }
 private:
-
 	void ToTeachOneTextUpdate();
 	void ToTeachTwoTextUpdate();
 	void ToGameTextUpdate();
 
 	void PlayAudio();
 private:
-
 	MeetTweetScene* m_Scene{ nullptr };
 	ToState m_StateMark{ ToState::STATE_GAME };
 	int m_Mark{ 0 };

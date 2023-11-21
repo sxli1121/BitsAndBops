@@ -1,13 +1,9 @@
 #pragma once
 #include "Core/Scene.h"
-#include "Tools/Timer.h"
-#include "Tools/TimerStampManage.h"
 #include "StateMachine/StateMachine.h"
-#include "Animation/FrameAnimation.h"
 #include "Scene/HammerScene/GameModeHammerTime.h"
 #include "OutPutAndInput/Camera.h"
-#include <vector>
-
+#include "Scene/TitleScene.h"
 
 class TimerClock;
 class CAudioManager;
@@ -40,7 +36,6 @@ public:
 	void End();
 	//≥°æ∞π‹¿Ì
 	StateMachine* GetStateMachine() { return m_StateMachine; }
-
 private:
 	StateMachine* m_StateMachine{ nullptr };
 
@@ -62,6 +57,8 @@ private:
 	friend class HammerSettlementing;
 
 	GameModeHammerTime* m_gameModeHammerTime{ nullptr };
+
+	GameMode m_GameMode;
 };
 
 

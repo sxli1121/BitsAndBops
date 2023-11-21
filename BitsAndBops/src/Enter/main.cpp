@@ -1,30 +1,27 @@
-#include <Windows.h>
+ï»¿#include <Windows.h>
 #include "Core/FrameWork.h"
 #include "Scene/StartScene.h"
-
+#include "Scene/TitleScene.h"
+#include "Scene/MenuScene.h"
 #include "Scene/HammerScene/HammerScene.h"
 #include "Scene/MeetTweet/MeetTweetScene.h"
-#include "Math/Matrix.h"
 
-//#include "Scene/HammerScene.h"
+
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPreInstance, PSTR lpCmdLine, INT iCmdShow)
 {
-	//¿ò¼ÜµÄµ¥Àý
-	CFrameWork* jk = CFrameWork::GetFrameWork();
-	//¿ò¼Ü³õÊ¼»¯
-	jk->Init(hInstance, hPreInstance, lpCmdLine, iCmdShow);
-	//Éú³É¿ò¼ÜÖÐµÄ³¡¾°
-	jk->AddScene("Start", new CStartScene);
-	jk->AddScene("Hammer", new CHammerScene);
-	jk->AddScene("MeetTweet", new MeetTweetScene);
+	CFrameWork* frameWork = CFrameWork::GetFrameWork();
 
-	//¿ªÊ¼³¡¾°
-	//jk->SetStartScene("Start");
-	jk->SetStartScene("Hammer");
-	//jk->SetStartScene("MeetTweet");
-	//ÔËÐÐ
+	frameWork->Init(hInstance, hPreInstance, lpCmdLine, iCmdShow);
+	frameWork->AddScene("Start", new CStartScene);
+	frameWork->AddScene("Title", new CTitleScene);
+	frameWork->AddScene("Menu", new MenuScene);
+	frameWork->AddScene("Hammer", new CHammerScene);
+	frameWork->AddScene("MeetTweet", new MeetTweetScene);
+
+	//frameWork->SetStartScene("Start");
+	frameWork->SetStartScene("Hammer");
+
 	CFrameWork::GetFrameWork()->Run();
-
 	return 1;
 }

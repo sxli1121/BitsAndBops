@@ -1,17 +1,18 @@
-#include "HammerConfirming.h"
+﻿#include "HammerConfirming.h"
+#include "Scene/HammerScene/HammerScene.h"
+
 #include "Audio/AudioManager.h"
 #include "Renderer/Renderer.h"
 #include "OutPutAndInput/GameInput.h"
-#include "Scene/HammerScene/HammerScene.h"
-
-
+#include "Scene/TitleScene.h"
 
 void HammerConfirming::OnEnter()
 {
 	CAudioManager::Get().PlayLoopAudio("construction_ambience");
 	m_Mark = 0;
 
-
+	m_Scene->m_CameraRotation = 0;
+	m_Scene->m_CameraScale = 1.0f;
 }
 
 void HammerConfirming::OnUpdate(float dt)
@@ -36,7 +37,6 @@ void HammerConfirming::OnUpdate(float dt)
 		ToTeachTextUpdate();
 	}
 
-	//正式场景更新
 	if (m_StateMark == ToState::STATE_GAME)
 	{
 		ToGameTextUpdate();
@@ -56,20 +56,29 @@ void HammerConfirming::ToTeachTextUpdate()
 
 	if (m_Mark == 0)
 	{
-		Renderer::DrawString("Let's build something!", 50, 50, 800, 100, 0.0f, 0.0f, 0.0f);
-		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
+		if(m_Scene->m_GameMode == GameMode::Mode_English)
+			Renderer::DrawString("Let's build something!", 60, 50, 800, 100, 0.0f, 0.0f, 0.0f,22, L"l_10646");
+		else if (m_Scene->m_GameMode == GameMode::Mode_Chinese)
+			Renderer::DrawString(u8"我们来打造一些东西吧!", 60, 0, 800, 200, 0.0f, 0.0f, 0.0f,22);
+
+		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC) 
 		{
+			 
 			PlayAudio();
 			m_Mark += 1;
 		}
 	}
-	else if (m_Mark == 1)
+	else if (m_Mark >= 1)
 	{
-		Renderer::DrawString("I'll put the nail downs,and you hammer time in.", 50, 50, 800, 100, 0.0f, 0.0f, 0.0f);
+
+		if (m_Scene->m_GameMode == GameMode::Mode_English)
+			Renderer::DrawString("I'll put the nail downs,and you hammer time in.", 60, 50, 800, 100, 0.0f, 0.0f, 0.0f, 22, L"l_10646");
+		else if (m_Scene->m_GameMode == GameMode::Mode_Chinese)
+			Renderer::DrawString(u8"我负责放钉子,你负责用锤子将他们敲进去.", 60, 0, 800, 200, 0.0f, 0.0f, 0.0f);
+
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();
-			m_Mark += 1;
 			//状态切换
 			m_Scene->m_StateMachine->Switch(STATE_HAMMER_TEACH);
 		}
@@ -82,7 +91,12 @@ void HammerConfirming::ToGameTextUpdate()
 
 	if (m_Mark == 0)
 	{
-		Renderer::DrawString("Fantastic!", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
+		if (m_Scene->m_GameMode == GameMode::Mode_English)
+			Renderer::DrawString("Fantastic!", 60, 60, 800, 100, 0.0f, 0.0f, 0.0f, 22, L"l_10646");
+		else if (m_Scene->m_GameMode == GameMode::Mode_Chinese)
+			Renderer::DrawString(u8"太棒了!", 60, 40, 800, 100, 0.0f, 0.0f, 0.0f);
+
+		
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();
@@ -91,21 +105,30 @@ void HammerConfirming::ToGameTextUpdate()
 	}
 	else if (m_Mark == 1)
 	{
-		Renderer::DrawString("There instructions get pretty complicated,so make sure you keep,an ear out for the change in rhythm.", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
+
+		if (m_Scene->m_GameMode == GameMode::Mode_English)
+			Renderer::DrawString("There instructions get pretty complicated,so make sure you keep,an ear out for the change in rhythm.", 60, 60, 800, 100, 0.0f, 0.0f, 0.0f, 22, L"l_10646");
+		else if (m_Scene->m_GameMode == GameMode::Mode_Chinese)
+			Renderer::DrawString(u8"接下来会变得复杂一些,请一定注意节奏的变化.", 60, 40, 800, 100, 0.0f, 0.0f, 0.0f);
+
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();
 			m_Mark += 1;
 		}
 	}
-	else if (m_Mark == 2)
+	else if (m_Mark >= 2)
 	{
-		Renderer::DrawString("Let's build this!", 60, 80, 800, 100, 0.0f, 0.0f, 0.0f);
+
+		if (m_Scene->m_GameMode == GameMode::Mode_English)
+			Renderer::DrawString("Let's build this!", 60, 60, 800, 100, 0.0f, 0.0f, 0.0f, 22, L"l_10646");
+		else if (m_Scene->m_GameMode == GameMode::Mode_Chinese)
+			Renderer::DrawString(u8"我们开始吧.", 60, 40, 800, 100, 0.0f, 0.0f, 0.0f);
+
 		if (input->GetKeyState(_GI_K_SPACE) == _KS_DC)
 		{
 			PlayAudio();
-			m_Mark += 1;
-			//状态切换
+
 			m_Scene->m_StateMachine->Switch(STATE_HAMMER_GAME);
 		}
 	}
